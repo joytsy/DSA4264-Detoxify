@@ -1,0 +1,29 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0  # Check the latest stable version
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-ast
+      - id: check-yaml
+      - id: requirements-txt-fixer
+
+  - repo: https://github.com/psf/black
+    rev: 23.1a1  # Use the latest stable version
+    hooks:
+      - id: black
+
+  - repo: https://github.com/charliermarsh/ruff-pre-commit
+    rev: v0.0.285  # Use the latest version
+    hooks:
+      - id: ruff
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.2.0
+    hooks:
+      - id: mypy
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0  # Latest version
+    hooks:
+      - id: check-added-large-files
