@@ -4,7 +4,6 @@ generated using Kedro 0.19.8
 """
 
 from kedro.pipeline import Pipeline, node, pipeline
-
 from kedro_data.pipelines.data_processing.nodes import remove_deleted_comments
 
 
