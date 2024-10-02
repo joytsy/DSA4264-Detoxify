@@ -1,0 +1,22 @@
+# Data Processing Pipeline
+# Raw data from 2020-2022
+data_2020_2021:
+  type: pandas.CSVDataset
+  filepath: data/01_raw/Reddit-Threads_2020-2021.csv # Path to your CSV file for 2020-2021
+  load_args:
+    engine: "python"
+    on_bad_lines: "skip" # Skip rows with bad formatting
+
+# Raw data from 2023 onwards
+data_2022_2023:
+  type: pandas.CSVDataset
+  filepath: data/01_raw/Reddit-Threads_2022-2023.csv # Path to your CSV file for 2022-2023
+  load_args:
+    engine: "python"
+    on_bad_lines: "skip" # Skip rows with bad formatting
+
+# Processed data (after filtering deleted/removed comments)
+removed_deleted_comments_data:
+  type: pandas.CSVDataset # You can change this to another format if needed
+  filepath: data/03_primary/removed_deleted_comments_data.csv # Output path for the cleaned data
+  versioned: true # Enable versioning for the processed data

@@ -1,29 +1,68 @@
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0  # Check the latest stable version
+    rev: v4.5.0
     hooks:
-      - id: trailing-whitespace
-      - id: end-of-file-fixer
-      - id: check-ast
+      - id: check-json
+        exclude: "^.*/tsconfig.*.json$"
+      - id: check-toml
       - id: check-yaml
+      - id: check-added-large-files
+      - id: end-of-file-fixer
       - id: requirements-txt-fixer
+      - id: trailing-whitespace
+      - id: detect-private-key
+      - id: mixed-line-ending
+
+  # Removes unnecessary # noqa comments.
+  - repo: https://github.com/asottile/yesqa
+    rev: v1.5.0
+    hooks:
+      - id: yesqa
+
+  # Check for blanket (overly broad) noqa comments and encourage type annotations.
+  - repo: https://github.com/pre-commit/pygrep-hooks
+    rev: v1.10.0
+    hooks:
+      - id: python-check-blanket-noqa
+      - id: python-use-type-annotations
 
   - repo: https://github.com/psf/black
-    rev: 23.1a1  # Use the latest stable version
+    rev: 24.4.2
     hooks:
       - id: black
+        args: [--safe]
 
-  - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: v0.0.285  # Use the latest version
+  - repo: https://github.com/nbQA-dev/nbQA
+    rev: 1.8.5
     hooks:
-      - id: ruff
+      - id: nbqa-black
+        additional_dependencies: [black==24.4.2]
+      - id: nbqa-isort
+        additional_dependencies: [isort==5.13.2]
+        args: [--profile=black]
 
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.2.0
+  - repo: https://github.com/DavidAnson/markdownlint-cli2
+    rev: v0.13.0
     hooks:
-      - id: mypy
+      - id: markdownlint-cli2
+        args: [--fix]
 
-  - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0  # Latest version
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v4.0.0-alpha.8
     hooks:
-      - id: check-added-large-files
+      - id: prettier
+        args: [--write]
+        types_or: [css, json, yaml, markdown]
+        additional_dependencies:
+          - prettier@3.2.5
+
+  - repo: https://github.com/myint/autoflake
+    rev: v2.3.1
+    hooks:
+      - id: autoflake
+        args:
+          [
+            "--in-place",
+            "--remove-unused-variables",
+            "--remove-all-unused-imports",
+          ]
