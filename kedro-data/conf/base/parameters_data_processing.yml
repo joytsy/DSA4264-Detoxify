@@ -5,5 +5,5 @@
 # Link: https://docs.kedro.org/en/0.19.8/configuration/parameters.html
 
 to_remove_texts:
-  - "deleted"
-  - "removed"
+  - "[deleted]"
+  - "[removed]"

@@ -1,5 +1,9 @@
 # kedro_data
 
+## Pipeline Architecture
+
+![Kedro Pipeline](images/kedro-pipeline.png)
+
 ## Overview
 
 This is your new Kedro project with Kedro-Viz setup, which was generated using `kedro 0.19.8`.

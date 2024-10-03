@@ -1,8 +1,9 @@
 {
   "data_2020_2021": { "rows": 2949420, "columns": 9, "file_size": 1271769170 },
   "removed_deleted_comments_data": {
-    "rows": 2949418,
+    "rows": 2663811,
     "columns": 9,
     "file_size": 0
-  }
+  },
+  "removed_nan_comments_data": { "rows": 2663779, "columns": 9, "file_size": 0 }
 }

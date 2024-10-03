@@ -18,5 +18,10 @@ data_2022_2023:
 # Processed data (after filtering deleted/removed comments)
 removed_deleted_comments_data:
   type: pandas.CSVDataset # You can change this to another format if needed
-  filepath: data/03_primary/removed_deleted_comments_data.csv # Output path for the cleaned data
+  filepath: data/02_intermediate/removed_deleted_comments_data.csv # Output path for the cleaned data
+  versioned: true # Enable versioning for the processed data
+
+removed_nan_comments_data:
+  type: pandas.CSVDataset # You can change this to another format if needed
+  filepath: data/02_intermediate/removed_nan_comments_data.csv # Output path for the cleaned data
   versioned: true # Enable versioning for the processed data

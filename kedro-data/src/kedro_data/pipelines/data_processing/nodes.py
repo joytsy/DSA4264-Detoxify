@@ -22,9 +22,30 @@ def remove_deleted_comments(
     Returns:
         pd.DataFrame: Filtered DataFrame after removing the specified text values.
     """
-    # Filter out rows where 'text' contains '[deleted]' or '[removed]'
+    # Strip spaces from the texts to remove (but do not modify the 'text' column)
+    to_remove_texts = [text.strip() for text in to_remove_texts]
+
+    # Filter out rows where 'text' contains any of the values in to_remove_texts
     removed_deleted_comments_data = data_2020_2021[
         ~data_2020_2021["text"].isin(to_remove_texts)
     ]
 
     return removed_deleted_comments_data
+
+
+def remove_nan_values(
+    removed_deleted_comments_data: pd.DataFrame,
+) -> pd.DataFrame:
+    """
+    Removes rows from the DataFrame that contain NaN values.
+
+    Args:
+        data (pd.DataFrame): The input DataFrame.
+
+    Returns:
+        pd.DataFrame: Cleaned DataFrame with NaN values removed.
+    """
+    # Remove rows with any NaN values
+    removed_nan_comments_data = removed_deleted_comments_data.dropna()
+
+    return removed_nan_comments_data

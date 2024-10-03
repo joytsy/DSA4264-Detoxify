@@ -4,7 +4,11 @@ generated using Kedro 0.19.8
 """
 
 from kedro.pipeline import Pipeline, node, pipeline
-from kedro_data.pipelines.data_processing.nodes import remove_deleted_comments
+
+from kedro_data.pipelines.data_processing.nodes import (
+    remove_deleted_comments,
+    remove_nan_values,
+)
 
 
 def create_pipeline(**kwargs) -> Pipeline:
@@ -18,6 +22,14 @@ def create_pipeline(**kwargs) -> Pipeline:
                 ],
                 outputs="removed_deleted_comments_data",  # Output dataset name
                 name="remove_deleted_comments_node",
+            ),
+            node(
+                func=remove_nan_values,
+                inputs=[
+                    "removed_deleted_comments_data",
+                ],
+                outputs="removed_nan_comments_data",
+                name="remove_nan_comments_node",
             ),
         ]
     )
