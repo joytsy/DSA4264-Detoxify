@@ -1,0 +1,31 @@
+{
+  "default": true,
+  "line-length": {
+    "line_length": 120,
+    "code_blocks": false,
+    "tables": false
+  },
+  "no-inline-html": false,
+  "first-line-heading": {
+    "level": 2
+  },
+  "no-trailing-punctuation": {
+    "punctuation": ".,;:"
+  },
+  "no-duplicate-header": true,
+  "header-increment": true,
+  "no-multiple-blanks": {
+    "maximum": 1
+  },
+  "fenced-code-language": true,
+  "no-empty-url": true,
+  "list-indent": {
+    "indent": 2
+  },
+  "ul-style": {
+    "style": "consistent"
+  },
+  "ol-prefix": {
+    "style": "ordered"
+  }
+}
