@@ -1,1 +1,1 @@
-link = "<http://fake101/singapore.co>"
+[Broken Link Example](http://fake101/singapore.co)
