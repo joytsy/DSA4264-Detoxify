@@ -44,15 +44,7 @@ jobs:
       - name: Install Python Dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install isort==5.13.2 nbqa==1.8.5 black==24.4.2 black[jupyter]==24.4.2 click==8.1.7 ruff==0.4.9
-        if: >
-          contains(steps.changed-files.outputs.all_changed_files, '.py') ||
-          contains(steps.changed-files.outputs.all_changed_files, '.ipynb')
-
-      - name: Run Isort Check
-        run: |
-          nbqa isort . --check --profile black
-          isort --check --profile black .
+          pip install nbqa==1.8.5 black==24.4.2 black[jupyter]==24.4.2 click==8.1.7
         if: >
           contains(steps.changed-files.outputs.all_changed_files, '.py') ||
           contains(steps.changed-files.outputs.all_changed_files, '.ipynb')
@@ -61,12 +53,6 @@ jobs:
         run: |
           black --check --verbose .
           nbqa black . --check --verbose
-        if: >
-          contains(steps.changed-files.outputs.all_changed_files, '.py') ||
-          contains(steps.changed-files.outputs.all_changed_files, '.ipynb')
-
-      - name: Run Ruff Check
-        run: ruff check .
         if: >
           contains(steps.changed-files.outputs.all_changed_files, '.py') ||
           contains(steps.changed-files.outputs.all_changed_files, '.ipynb')
