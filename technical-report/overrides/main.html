@@ -1,0 +1,35 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+  {{ super() }}
+
+  {# Authors #}
+  {% if page.meta.updated or (page.meta._authors is defined and page.meta._authors|length > 0) %}
+    <div class="author-block">
+
+      {% if page.meta.updated %}
+      <span class="author-block-updated">
+        Updated {{ page.meta.updated }}
+      </span>
+      {% endif %}
+
+      {% if page.meta._authors is defined and page.meta._authors|length > 0 %}
+        <div class="author-block-authors">
+          {% for author in page.meta._authors %}
+            <div class="author-individual">
+              <a href="{{ author.url }}" target="_blank">
+                <img src="{{ author.avatar }}" alt=""/>
+              </a>
+              <div class="author-hover-content">
+                <span class="author-role">{{ author.role }}</span>
+                <span class="author-name">{{ author.name }}</span>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  {% endif %}
+
+{% endblock %}
