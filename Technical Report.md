@@ -3,7 +3,9 @@
 # Technical Report
 
 **Project: {insert project name}**
-**Members: {insert project members}**
+
+**Members: Joy, Richmond, Sarah, Kylie, Yijing**
+
 Last updated on {last updated date}
 
 ## Section 1: Context
