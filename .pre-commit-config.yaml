@@ -7,7 +7,11 @@ repos:
       - id: check-toml
       - id: check-yaml
         exclude: "mkdocs.yml"
+        exclude: "mkdocs.yml"
       - id: check-added-large-files
+        args: [--maxkb=2500]
+      - id: end-of-file-fixer
+      - id: requirements-txt-fixer
         args: [--maxkb=15000]
       - id: trailing-whitespace
       - id: detect-private-key
@@ -66,6 +70,15 @@ repos:
             "--remove-unused-variables",
             "--remove-all-unused-imports",
           ]
+
+  - repo: local
+    hooks:
+      - id: mkdocs-build
+        name: Build MkDocs
+        entry: mkdocs build --strict
+        language: system
+        pass_filenames: false
+        files: '^(mkdocs\.yml|docs/.*\.md)$'
 
   - repo: local
     hooks:
