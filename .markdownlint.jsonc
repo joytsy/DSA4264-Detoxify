@@ -16,5 +16,8 @@
   "MD033": false,
 
   // MD041/first-line-heading/first-line-h1 : First line in a file should be a top-level heading : https://github.com/DavidAnson/markdownlint/blob/v0.34.0/doc/md041.md
-  "MD041": false
+  "MD041": false,
+
+  // MD046/code-block-style : Expects indented code blocks instead of fences : https://github.com/DavidAnson/markdownlint/blob/main/doc/md046.md
+  "MD046": false
 }
