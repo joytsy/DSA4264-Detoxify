@@ -1,0 +1,75 @@
+.author-block {
+  margin-top: 4em;
+  padding-top: 1em;
+  border-top: solid hsla(0, 0%, 50%, 0.4);
+  border-top-width: 2px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+
+.author-block .author-block-updated {
+  font-size: small;
+  opacity: 0.7;
+}
+
+.author-block .author-block-authors {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  gap: 0.5em;
+  margin-top: 1em;
+}
+
+.author-block .author-block-authors img {
+  max-height: 40px;
+  max-width: 40px;
+  border-radius: 100%;
+}
+
+.author-block .author-individual {
+  position: relative;
+}
+
+.author-block .author-individual .author-hover-content {
+  background-color: var(--md-default-bg-color);
+  box-shadow: var(--md-shadow-z1);
+  border-radius: 0.2rem;
+  padding: 0.2rem 0.6rem;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  transition: all ease-in-out;
+  transition-duration: 150ms;
+  transition-delay: 30ms;
+  position: absolute;
+  width: fit-content;
+  left: 50%;
+  bottom: 0;
+  opacity: 0;
+  transform-origin: left;
+  scale: 0.7;
+  transform: translateX(-50%) translateY(100%);
+}
+
+.author-block .author-individual:hover .author-hover-content {
+  bottom: -0.2em;
+  scale: 1;
+  opacity: 1;
+}
+
+.author-block .author-hover-content .author-role {
+  font-size: small;
+  opacity: 0.7;
+}
+
+.author-block .author-hover-content .author-name {
+  font-size: 0.6rem;
+  text-wrap: nowrap;
+}
