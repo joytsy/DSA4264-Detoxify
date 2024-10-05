@@ -10,7 +10,6 @@ repos:
       - id: check-added-large-files
         args: [--maxkb=2500]
       - id: end-of-file-fixer
-      - id: requirements-txt-fixer
       - id: trailing-whitespace
       - id: detect-private-key
       - id: mixed-line-ending
