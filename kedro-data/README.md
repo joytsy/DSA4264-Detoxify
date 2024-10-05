@@ -19,16 +19,6 @@ In order to get the best out of the template:
 - Don't commit data to your repository
 - Don't commit any credentials or your local configuration to your repository. Keep all your credentials and local configuration in `conf/local/`
 
-## How to install dependencies
-
-Declare any dependencies in `requirements.txt` for `pip` installation.
-
-To install them, run:
-
-```python
-pip install -r requirements.txt
-```
-
 ## How to run your Kedro pipeline
 
 You can run your Kedro project with:
@@ -48,13 +38,3 @@ You can run your Kedro project specific node with:
 ```python
 kedro run --nodes=”remove_deleted_comments_node”
 ```
-
-## How to test your Kedro project
-
-Have a look at the files `src/tests/test_run.py` and `src/tests/pipelines/data_science/test_pipeline.py` for instructions on how to write your tests. Run the tests as follows:
-
-```python
-pytest
-```
-
-To configure the coverage threshold, look at the `.coveragerc` file.
