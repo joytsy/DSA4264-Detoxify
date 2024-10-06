@@ -19,22 +19,29 @@ In order to get the best out of the template:
 - Don't commit data to your repository
 - Don't commit any credentials or your local configuration to your repository. Keep all your credentials and local configuration in `conf/local/`
 
-## How to run your Kedro pipeline
+## How to Run Your Kedro Pipeline
 
-You can run your Kedro project with:
+1. Navigate to the `data/01_raw` folder of the project:
 
-```python
-kedro run
-```
+   Add the following data files:
 
-You can run your Kedro project specific pipeline with:
+   - `Reddit-Threads_2020-2021.csv`
+   - `Reddit-Threads_2022-2023.csv`
 
-```python
-kedro run --pipeline="data_processing"
-```
+2. Run the entire Kedro project:
 
-You can run your Kedro project specific node with:
+   ```python
+   kedro run
+   ```
 
-```python
-kedro run --nodes=”remove_deleted_comments_node”
-```
+3. Run a specific pipeline:
+
+   ```python
+   kedro run --pipeline="<pipeline-name>"
+   ```
+
+4. (Optional) Run a specific node:
+
+   ```python
+   kedro run --nodes="<pipeline-name>”
+   ```
