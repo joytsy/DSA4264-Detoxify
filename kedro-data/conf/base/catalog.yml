@@ -15,13 +15,34 @@ data_2022_2023:
     engine: "python"
     on_bad_lines: "skip" # Skip rows with bad formatting
 
-# Processed data (after filtering deleted/removed comments)
-removed_deleted_comments_data:
+# concatenated_raw_data
+merged_raw_data:
   type: pandas.CSVDataset # You can change this to another format if needed
-  filepath: data/02_intermediate/removed_deleted_comments_data.csv # Output path for the cleaned data
+  filepath: data/02_intermediate/merged_raw_data.csv # Output path for the cleaned data
   versioned: true # Enable versioning for the processed data
 
-removed_nan_comments_data:
+# Processed data (after filtering deleted/removed comments)
+removed_deleted_text_data:
   type: pandas.CSVDataset # You can change this to another format if needed
-  filepath: data/02_intermediate/removed_nan_comments_data.csv # Output path for the cleaned data
+  filepath: data/02_intermediate/removed_deleted_text_data.csv # Output path for the cleaned data
+  versioned: true # Enable versioning for the processed data
+
+removed_nan_text_data:
+  type: pandas.CSVDataset # You can change this to another format if needed
+  filepath: data/02_intermediate/removed_nan_text_data.csv # Output path for the cleaned data
+  versioned: true # Enable versioning for the processed data
+
+clean_text_column_data:
+  type: pandas.CSVDataset # You can change this to another format if needed
+  filepath: data/02_intermediate/clean_text_column_data.csv # Output path for the cleaned data
+  versioned: true # Enable versioning for the processed data
+
+process_timestamp_to_year_data:
+  type: pandas.CSVDataset # You can change this to another format if needed
+  filepath: data/02_intermediate/process_timestamp_to_year_data.csv # Output path for the cleaned data
+  versioned: true # Enable versioning for the processed data
+
+removed_deleted_username_data:
+  type: pandas.CSVDataset # You can change this to another format if needed
+  filepath: data/02_intermediate/removed_deleted_username_data.csv # Output path for the cleaned data
   versioned: true # Enable versioning for the processed data
