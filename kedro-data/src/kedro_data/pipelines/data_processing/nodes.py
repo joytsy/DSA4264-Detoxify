@@ -26,18 +26,19 @@ def remove_deleted_text(
     Filters the input DataFrame by removing rows where the 'text' column contains specific values like '[deleted]' or '[removed]'.
 
     Args:
-        data_2020_2021 (pd.DataFrame): DataFrame containing social media text from 2020-2021.
+        merged_raw_data (pd.DataFrame): Merged DataFrame containing social media text data from 2020-2023.
         to_remove_texts (List[str]): List of text entries (e.g., '[deleted]', '[removed]') to filter out.
 
     Returns:
         pd.DataFrame: Filtered DataFrame after removing the specified text values.
     """
-    # Strip spaces from the texts to remove (but do not modify the 'text' column)
     to_remove_texts = [text.strip() for text in to_remove_texts]
 
-    # Filter out rows where 'text' contains any of the values in to_remove_texts
+    # Apply filtering with progress tracking
     removed_deleted_text_data = merged_raw_data[
-        ~merged_raw_data["text"].isin(to_remove_texts)
+        ~merged_raw_data["text"].isin(
+            tqdm(to_remove_texts, desc="Removing deleted texts")
+        )
     ]
 
     return removed_deleted_text_data
@@ -63,14 +64,14 @@ def remove_nan_values(
 
 def clean_text_column(removed_nan_text_data: pd.DataFrame) -> pd.DataFrame:
     """
-    Cleans the 'text' column of a dataframe by removing unwanted characters,
+    Cleans the 'text' column of a DataFrame by removing unwanted characters,
     replacing specific patterns, and removing excess spaces.
 
     Args:
-        data: The input dataframe containing a 'text' column to be cleaned.
+        removed_nan_text_data (pd.DataFrame): Input DataFrame with the 'text' column to be cleaned.
 
     Returns:
-        A dataframe with the cleaned 'text' column.
+        pd.DataFrame: DataFrame with the cleaned 'text' column.
     """
 
     def clean_text(text):
@@ -94,10 +95,13 @@ def clean_text_column(removed_nan_text_data: pd.DataFrame) -> pd.DataFrame:
 
         return cleaned_text
 
-    clean_text_column_data = removed_nan_text_data
+    clean_text_column_data = removed_nan_text_data.copy()
 
-    # Apply the cleaning function to the 'text' column
-    clean_text_column_data["text"] = clean_text_column_data["text"].apply(clean_text)
+    # Apply the cleaning function to the 'text' column with progress tracking
+    tqdm.pandas(desc="Cleaning text column")
+    clean_text_column_data["text"] = clean_text_column_data["text"].progress_apply(
+        clean_text
+    )
 
     return clean_text_column_data
 
@@ -137,21 +141,22 @@ def remove_deleted_username(
     to_remove_texts: List[str],
 ) -> pd.DataFrame:
     """
-    Filters the input DataFrame by removing rows where the 'text' column contains specific values like '[deleted]' or '[removed]'.
+    Filters the input DataFrame by removing rows where the 'username' column contains specific values like '[deleted]' or '[removed]'.
 
     Args:
-        merged_raw_data (pd.DataFrame): DataFrame from 2020 to 2023.
-        to_remove_texts (List[str]): List of text entries (e.g., '[deleted]', '[removed]') to filter out.
+        process_timestamp_to_year_data (pd.DataFrame): DataFrame with the extracted year column.
+        to_remove_texts (List[str]): List of username entries (e.g., '[deleted]', '[removed]') to filter out.
 
     Returns:
-        pd.DataFrame: Filtered DataFrame after removing the specified text values.
+        pd.DataFrame: Filtered DataFrame after removing the specified username values.
     """
-    # Strip spaces from the texts to remove (but do not modify the 'text' column)
     to_remove_texts = [text.strip() for text in to_remove_texts]
 
-    # Filter out rows where 'text' contains any of the values in to_remove_texts
+    # Filter out rows with progress tracking
     removed_deleted_username_data = process_timestamp_to_year_data[
-        ~process_timestamp_to_year_data["username"].isin(to_remove_texts)
+        ~process_timestamp_to_year_data["username"].isin(
+            tqdm(to_remove_texts, desc="Removing deleted usernames")
+        )
     ]
 
     return removed_deleted_username_data
