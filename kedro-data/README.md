@@ -37,11 +37,11 @@ In order to get the best out of the template:
 3. Run a specific pipeline:
 
    ```python
-   kedro run --pipeline="<pipeline-name>"
+   kedro run --pipeline="pipeline-name"
    ```
 
 4. (Optional) Run a specific node:
 
    ```python
-   kedro run --nodes="<pipeline-name>”
+   kedro run --nodes="node-name”
    ```

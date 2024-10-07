@@ -7,3 +7,4 @@
 to_remove_texts:
   - "[deleted]"
   - "[removed]"
+  - "nan"
