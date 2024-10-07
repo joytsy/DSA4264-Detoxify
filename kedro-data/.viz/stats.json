@@ -1,22 +1,8 @@
 {
-  "data_2020_2021": { "rows": 2949420, "columns": 9, "file_size": 1271769170 },
-  "data_2022_2023": { "rows": 1983309, "columns": 9, "file_size": 991236436 },
-  "merged_raw_data": { "rows": 4932729, "columns": 9, "file_size": 0 },
-  "removed_deleted_text_data": {
-    "rows": 4504384,
-    "columns": 9,
-    "file_size": 0
-  },
-  "removed_nan_text_data": { "rows": 4504329, "columns": 9, "file_size": 0 },
-  "clean_text_column_data": { "rows": 4504329, "columns": 9, "file_size": 0 },
-  "process_timestamp_to_year_data": {
-    "rows": 4504329,
-    "columns": 10,
-    "file_size": 0
-  },
   "removed_deleted_username_data": {
     "rows": 4392069,
     "columns": 10,
     "file_size": 0
-  }
+  },
+  "concatenated_texts_data": { "rows": 3421733, "columns": 11, "file_size": 0 }
 }

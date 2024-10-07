@@ -6,7 +6,6 @@ generated using Kedro 0.19.8
 from typing import List
 import re
 import pandas as pd
-import tqdm
 
 
 def merged_raw(
@@ -34,11 +33,9 @@ def remove_deleted_text(
     """
     to_remove_texts = [text.strip() for text in to_remove_texts]
 
-    # Apply filtering with progress tracking
+    # Apply filtering without progress tracking, since it's unnecessary for `isin`
     removed_deleted_text_data = merged_raw_data[
-        ~merged_raw_data["text"].isin(
-            tqdm(to_remove_texts, desc="Removing deleted texts")
-        )
+        ~merged_raw_data["text"].isin(to_remove_texts)
     ]
 
     return removed_deleted_text_data
@@ -97,11 +94,8 @@ def clean_text_column(removed_nan_text_data: pd.DataFrame) -> pd.DataFrame:
 
     clean_text_column_data = removed_nan_text_data.copy()
 
-    # Apply the cleaning function to the 'text' column with progress tracking
-    tqdm.pandas(desc="Cleaning text column")
-    clean_text_column_data["text"] = clean_text_column_data["text"].progress_apply(
-        clean_text
-    )
+    # Apply the cleaning function to the 'text' column without progress tracking
+    clean_text_column_data["text"] = clean_text_column_data["text"].apply(clean_text)
 
     return clean_text_column_data
 
@@ -152,11 +146,9 @@ def remove_deleted_username(
     """
     to_remove_texts = [text.strip() for text in to_remove_texts]
 
-    # Filter out rows with progress tracking
+    # Filter out rows without progress tracking
     removed_deleted_username_data = process_timestamp_to_year_data[
-        ~process_timestamp_to_year_data["username"].isin(
-            tqdm(to_remove_texts, desc="Removing deleted usernames")
-        )
+        ~process_timestamp_to_year_data["username"].isin(to_remove_texts)
     ]
 
     return removed_deleted_username_data
@@ -177,12 +169,8 @@ def concatenate_texts(removed_deleted_username_data: pd.DataFrame) -> pd.DataFra
     processed_ids = set()  # Track processed IDs instead of removing rows immediately
     reply_dict = {}  # Dictionary to store replies based on parent_id
 
-    # Build the reply dictionary for fast lookup with tqdm to track progress
-    for idx, row in tqdm(
-        removed_deleted_username_data.iterrows(),
-        desc="Building reply_dict",
-        total=len(removed_deleted_username_data),
-    ):
+    # Build the reply dictionary for fast lookup
+    for idx, row in removed_deleted_username_data.iterrows():
         parent_id = row["parent_id"]
         if parent_id not in reply_dict:
             reply_dict[parent_id] = []
@@ -191,8 +179,8 @@ def concatenate_texts(removed_deleted_username_data: pd.DataFrame) -> pd.DataFra
     # Group rows by link_id to find Reddit posts (threads can be within these)
     grouped = removed_deleted_username_data.groupby("link_id")
 
-    # Use tqdm to display a progress bar for group processing
-    for link_id, group in tqdm(grouped, desc="Processing Posts", total=len(grouped)):
+    # Process each group (link_id) of posts
+    for link_id, group in grouped:
         group = group.reset_index()  # reset index here to get clean integer indexing
 
         for idx, current_comment in group.iterrows():
