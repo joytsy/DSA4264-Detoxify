@@ -6,6 +6,7 @@ generated using Kedro 0.19.8
 from typing import List
 import re
 import pandas as pd
+import tqdm
 
 
 def merged_raw(
@@ -154,3 +155,90 @@ def remove_deleted_username(
     ]
 
     return removed_deleted_username_data
+
+
+def concatenate_texts(removed_deleted_username_data: pd.DataFrame) -> pd.DataFrame:
+    """
+    Processes the input DataFrame by concatenating comment threads and creating
+    a complete or incomplete thread summary using a dictionary lookup.
+
+    Args:
+        removed_deleted_username_data (pd.DataFrame): DataFrame with comments after filtering out removed/deleted users.
+
+    Returns:
+        pd.DataFrame: DataFrame with concatenated comment threads.
+    """
+    result = []
+    processed_ids = set()  # Track processed IDs instead of removing rows immediately
+    reply_dict = {}  # Dictionary to store replies based on parent_id
+
+    # Build the reply dictionary for fast lookup with tqdm to track progress
+    for idx, row in tqdm(
+        removed_deleted_username_data.iterrows(),
+        desc="Building reply_dict",
+        total=len(removed_deleted_username_data),
+    ):
+        parent_id = row["parent_id"]
+        if parent_id not in reply_dict:
+            reply_dict[parent_id] = []
+        reply_dict[parent_id].append(row)
+
+    # Group rows by link_id to find Reddit posts (threads can be within these)
+    grouped = removed_deleted_username_data.groupby("link_id")
+
+    # Use tqdm to display a progress bar for group processing
+    for link_id, group in tqdm(grouped, desc="Processing Posts", total=len(grouped)):
+        group = group.reset_index()  # reset index here to get clean integer indexing
+
+        for idx, current_comment in group.iterrows():
+            # Skip comments that have already been processed in a thread
+            if current_comment["id"] in processed_ids:
+                continue
+
+            thread_text = (
+                f"id of {current_comment['id']} said this: {current_comment['text']}.\n"
+            )
+            processed_ids.add(current_comment["id"])
+            concatenated_count = 1  # Start count for the thread
+
+            # Track if this is a complete thread
+            complete_thread = current_comment["parent_id"] == current_comment["link_id"]
+
+            # Try to find and concatenate linked replies using the reply dictionary
+            while True:
+                # Use the reply dictionary to find replies efficiently
+                next_comments = reply_dict.get(f"t1_{current_comment['id']}", [])
+                if next_comments:
+                    current_comment = next_comments[0]  # Get the next reply
+                    thread_text += f"id of {current_comment['id']} replied to id of {current_comment['parent_id'][3:]}: {current_comment['text']}\n"
+                    processed_ids.add(current_comment["id"])
+                    concatenated_count += 1
+                else:
+                    break  # Stop once no further replies are found
+
+            # Append the result
+            result.append(
+                {
+                    "text": thread_text.strip(),  # Remove trailing newlines
+                    "timestamp": current_comment[
+                        "timestamp"
+                    ],  # Use the timestamp of the first comment
+                    "username": current_comment["username"],
+                    "link": current_comment["link"],
+                    "link_id": link_id,
+                    "parent_id": current_comment[
+                        "parent_id"
+                    ],  # Keep parent_id of top comment
+                    "id": current_comment["id"],  # Keep id of the top comment
+                    "subreddit_id": current_comment["subreddit_id"],
+                    "moderation": current_comment["moderation"],
+                    "concatenated_count": concatenated_count,  # Number of comments in the thread
+                    "complete_thread": complete_thread,  # Mark whether the thread is complete
+                }
+            )
+
+    # Create a DataFrame for the concatenated threads
+    concatenated_texts_data = pd.DataFrame(result)
+
+    # Return the processed data
+    return concatenated_texts_data

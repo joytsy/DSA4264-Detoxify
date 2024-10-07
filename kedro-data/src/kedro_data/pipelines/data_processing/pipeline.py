@@ -12,6 +12,7 @@ from kedro_data.pipelines.data_processing.nodes import (
     clean_text_column,
     process_timestamp_to_year,
     remove_deleted_username,
+    concatenate_texts,
 )
 
 
@@ -22,18 +23,18 @@ def create_pipeline(**kwargs) -> Pipeline:
                 func=merged_raw,
                 inputs=[
                     "data_2020_2021",
-                    "data_2022_2023",  # The dataset name as per the catalog.yml
+                    "data_2022_2023",
                 ],
-                outputs="merged_raw_data",  # Output dataset name
+                outputs="merged_raw_data",
                 name="merged_raw_node",
             ),
             node(
                 func=remove_deleted_text,
                 inputs=[
-                    "merged_raw_data",  # The dataset name as per the catalog.yml
-                    "params:to_remove_texts",  # Parameters defined in parameters.yml
+                    "merged_raw_data",
+                    "params:to_remove_texts",
                 ],
-                outputs="removed_deleted_text_data",  # Output dataset name
+                outputs="removed_deleted_text_data",
                 name="remove_deleted_text_node",
             ),
             node(
@@ -68,6 +69,14 @@ def create_pipeline(**kwargs) -> Pipeline:
                 ],
                 outputs="removed_deleted_username_data",
                 name="removed_deleted_username_node",
+            ),
+            node(
+                func=concatenate_texts,
+                inputs=[
+                    "removed_deleted_username_data",
+                ],
+                outputs="concatenated_texts_data",
+                name="concatenate_texts_node",
             ),
         ]
     )

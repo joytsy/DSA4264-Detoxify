@@ -46,3 +46,8 @@ removed_deleted_username_data:
   type: pandas.CSVDataset # You can change this to another format if needed
   filepath: data/02_intermediate/removed_deleted_username_data.csv # Output path for the cleaned data
   versioned: true # Enable versioning for the processed data
+
+concatenated_texts_data:
+  type: pandas.CSVDataset # You can change this to another format if needed
+  filepath: data/03_primary/concatenated_texts_data.csv # Output path for the cleaned data
+  versioned: true # Enable versioning for the processed data
