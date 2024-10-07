@@ -11,7 +11,29 @@ This project is part of DSA4264, focusing on the use of Detoxify for analyzing t
 
 ## How to Set Up the Project
 
-1. **Install Dependencies**
+1. **Create a Virtual Environment** (Ensure that you are using **Python 3.12**)
+
+   Windows:
+
+   ```bash
+   md penv
+   cd penv
+   python -m venv .
+   Scripts\activate  # To activate the virtual environment
+   deactivate  # To deactivate the environment
+   ```
+
+   Mac:
+
+   ```bash
+   mkdir penv
+   cd penv
+   python3.12 -m venv .
+   source bin/activate  # To activate the virtual environment
+   deactivate  # To deactivate the environment
+   ```
+
+2. **Install Dependencies**
 
    To install the required dependencies, run:
 
@@ -19,7 +41,7 @@ This project is part of DSA4264, focusing on the use of Detoxify for analyzing t
    pip install -r requirements.txt
    ```
 
-2. **Set Up Pre-Commit Hooks**
+3. **Set Up Pre-Commit Hooks**
 
    To maintain code quality, set up the pre-commit hooks by running:
 
@@ -27,7 +49,7 @@ This project is part of DSA4264, focusing on the use of Detoxify for analyzing t
    pre-commit install
    ```
 
-3. **Navigate to the Data Directory**
+4. **Navigate to the Data Directory**
 
    Change into the `kedro-data` directory to configure and manage the data processing pipeline:
 
@@ -35,6 +57,6 @@ This project is part of DSA4264, focusing on the use of Detoxify for analyzing t
    cd kedro-data
    ```
 
-4. **Configure the Data Pipeline**
+5. **Configure the Data Pipeline**
 
    After navigating to the kedro-data directory, follow the instructions provided there to set up and run the data processing pipeline.
