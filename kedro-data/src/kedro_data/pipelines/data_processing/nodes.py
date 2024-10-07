@@ -225,6 +225,7 @@ def concatenate_texts(removed_deleted_username_data: pd.DataFrame) -> pd.DataFra
                     "id": current_comment["id"],  # Keep id of the top comment
                     "subreddit_id": current_comment["subreddit_id"],
                     "moderation": current_comment["moderation"],
+                    "year": current_comment["year"],
                     "concatenated_count": concatenated_count,  # Number of comments in the thread
                     "complete_thread": complete_thread,  # Mark whether the thread is complete
                 }
