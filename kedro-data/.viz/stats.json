@@ -1,8 +1,12 @@
 {
-  "removed_deleted_username_data": {
-    "rows": 4392069,
-    "columns": 10,
-    "file_size": 0
+  "concatenated_texts_data": {
+    "rows": 3414958,
+    "columns": 12,
+    "file_size": 4096
   },
-  "concatenated_texts_data": { "rows": 3421733, "columns": 11, "file_size": 0 }
+  "clean_concatenated_texts_data": {
+    "rows": 3414958,
+    "columns": 12,
+    "file_size": 0
+  }
 }

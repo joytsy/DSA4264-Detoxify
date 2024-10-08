@@ -19,7 +19,7 @@ This project is part of DSA4264, focusing on the use of Detoxify for analyzing t
    md penv
    cd penv
    python -m venv .
-   Scripts\activate  # To activate the virtual environment
+   .\penv\Scripts\activate  # To activate the virtual environment
    deactivate  # To deactivate the environment
    ```
 
@@ -29,7 +29,7 @@ This project is part of DSA4264, focusing on the use of Detoxify for analyzing t
    mkdir penv
    cd penv
    python3.12 -m venv .
-   source bin/activate  # To activate the virtual environment
+   ./penv/source bin/activate  # To activate the virtual environment
    deactivate  # To deactivate the environment
    ```
 

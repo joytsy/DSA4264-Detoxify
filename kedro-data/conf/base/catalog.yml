@@ -1,53 +1,71 @@
 # Data Processing Pipeline
+
 # Raw data from 2020-2022
 data_2020_2021:
   type: pandas.CSVDataset
-  filepath: data/01_raw/Reddit-Threads_2020-2021.csv # Path to your CSV file for 2020-2021
+  filepath: data/01_raw/Reddit-Threads_2020-2021.csv # Path to your CSV file for Reddit threads from 2020-2021
   load_args:
     engine: "python"
-    on_bad_lines: "skip" # Skip rows with bad formatting
+    on_bad_lines: "skip" # Skip rows with bad formatting to ensure smooth data loading
 
 # Raw data from 2023 onwards
 data_2022_2023:
   type: pandas.CSVDataset
-  filepath: data/01_raw/Reddit-Threads_2022-2023.csv # Path to your CSV file for 2022-2023
+  filepath: data/01_raw/Reddit-Threads_2022-2023.csv # Path to your CSV file for Reddit threads from 2022-2023
   load_args:
     engine: "python"
-    on_bad_lines: "skip" # Skip rows with bad formatting
+    on_bad_lines: "skip" # Skip rows with bad formatting to ensure smooth data loading
 
-# concatenated_raw_data
+# Merged raw data from 2020 to 2023
 merged_raw_data:
-  type: pandas.CSVDataset # You can change this to another format if needed
-  filepath: data/02_intermediate/merged_raw_data.csv # Output path for the cleaned data
-  versioned: true # Enable versioning for the processed data
+  type: pandas.CSVDataset # CSV format for the merged raw data
+  filepath: data/02_intermediate/merged_raw_data.csv # Output path for the merged data from both datasets
+  versioned: true # Enable versioning to keep track of changes in the merged dataset
 
-# Processed data (after filtering deleted/removed comments)
+# Data after removing deleted comments
 removed_deleted_text_data:
-  type: pandas.CSVDataset # You can change this to another format if needed
-  filepath: data/02_intermediate/removed_deleted_text_data.csv # Output path for the cleaned data
-  versioned: true # Enable versioning for the processed data
+  type: pandas.CSVDataset # CSV format for the cleaned dataset
+  filepath: data/02_intermediate/removed_deleted_text_data.csv # Output path after removing rows with deleted comments
+  versioned: true # Enable versioning to keep track of changes in the cleaned dataset
 
+# Data after removing rows where 'text' contains NaN
 removed_nan_text_data:
-  type: pandas.CSVDataset # You can change this to another format if needed
-  filepath: data/02_intermediate/removed_nan_text_data.csv # Output path for the cleaned data
-  versioned: true # Enable versioning for the processed data
+  type: pandas.CSVDataset # CSV format for the cleaned dataset
+  filepath: data/02_intermediate/removed_nan_text_data.csv # Output path after removing rows where 'text' has NaN values
+  versioned: true # Enable versioning to keep track of changes after NaN values are removed
 
+# Data after cleaning the 'text' column
 clean_text_column_data:
-  type: pandas.CSVDataset # You can change this to another format if needed
-  filepath: data/02_intermediate/clean_text_column_data.csv # Output path for the cleaned data
-  versioned: true # Enable versioning for the processed data
+  type: pandas.CSVDataset # CSV format for the cleaned dataset
+  filepath: data/02_intermediate/clean_text_column_data.csv # Output path for data with a cleaned 'text' column (e.g., removing special characters)
+  versioned: true # Enable versioning to track changes in the 'text' column cleaning process
 
+# Data after second removal of rows where 'text' contains NaN
+second_removal_nan_text_data:
+  type: pandas.CSVDataset # CSV format for the cleaned dataset
+  filepath: data/02_intermediate/second_removal_nan_text_data.csv # Output path after second removal of rows where 'text' has NaN values
+  versioned: true # Enable versioning to keep track of changes after NaN values are removed
+
+# Data after processing the 'timestamp' column to extract year
 process_timestamp_to_year_data:
-  type: pandas.CSVDataset # You can change this to another format if needed
-  filepath: data/02_intermediate/process_timestamp_to_year_data.csv # Output path for the cleaned data
-  versioned: true # Enable versioning for the processed data
+  type: pandas.CSVDataset # CSV format for the processed data
+  filepath: data/02_intermediate/process_timestamp_to_year_data.csv # Output path after converting the 'timestamp' column into the year format
+  versioned: true # Enable versioning to keep track of changes in the timestamp processing
 
+# Data after removing rows with deleted usernames
 removed_deleted_username_data:
-  type: pandas.CSVDataset # You can change this to another format if needed
-  filepath: data/02_intermediate/removed_deleted_username_data.csv # Output path for the cleaned data
-  versioned: true # Enable versioning for the processed data
+  type: pandas.CSVDataset # CSV format for the cleaned dataset
+  filepath: data/02_intermediate/removed_deleted_username_data.csv # Output path for data with deleted usernames removed
+  versioned: true # Enable versioning to track changes in the username cleaning process
 
+# Final dataset after concatenating texts (if applicable, e.g., comment threads)
 concatenated_texts_data:
-  type: pandas.CSVDataset # You can change this to another format if needed
-  filepath: data/03_primary/concatenated_texts_data.csv # Output path for the cleaned data
-  versioned: true # Enable versioning for the processed data
+  type: pandas.CSVDataset # CSV format for the final cleaned dataset
+  filepath: data/02_intermediate/concatenated_texts_data.csv # Output path for the final data with concatenated texts, such as comment threads
+  versioned: true # Enable versioning to track the evolution of the concatenated dataset
+
+# Clean final dataset after removing "gt "
+clean_concatenated_texts_data:
+  type: pandas.CSVDataset # CSV format for the final cleaned dataset
+  filepath: data/03_primary/clean_concatenated_texts_data.csv # Output path for the final data with concatenated texts, such as comment threads
+  versioned: true # Enable versioning to track the evolution of the concatenated dataset
