@@ -72,22 +72,18 @@ def clean_text_column(removed_nan_text_data: pd.DataFrame) -> pd.DataFrame:
     """
 
     def clean_text(text):
-        # Replace '>' at the start of the line with 'Quoting'
-        cleaned_text = re.sub(r"^>\s*", "Quoting: ", text, flags=re.MULTILINE)
-
-        # Remove \> (backslash followed by greater-than sign)
-        cleaned_text = cleaned_text.replace(r"\>", "")
-
-        # Remove all weird Unicode characters, keeping only alphabets, digits, and whitespace
-        cleaned_text = re.sub(r"[^a-zA-Z0-9\s]", "", cleaned_text)
+        # Remove all characters except alphabets, digits, whitespace, quotes (single and double), exclamation marks, full stops, commas, and colons
+        cleaned_text = re.sub(
+            r"[^\w\s\"'\.,!:]", "", text
+        )  # Add ':' to the allowed characters
 
         # Remove multiple spaces
         cleaned_text = re.sub(r"\s+", " ", cleaned_text)
 
-        # Remove leading spaces
+        # Manually remove leading spaces
         cleaned_text = re.sub(r"^\s+", "", cleaned_text)
 
-        # Remove trailing spaces
+        # Manually remove trailing spaces
         cleaned_text = re.sub(r"\s+$", "", cleaned_text)
 
         return cleaned_text
@@ -100,7 +96,27 @@ def clean_text_column(removed_nan_text_data: pd.DataFrame) -> pd.DataFrame:
     return clean_text_column_data
 
 
-def process_timestamp_to_year(clean_text_column_data: pd.DataFrame) -> pd.DataFrame:
+def second_removal_nan_values(
+    clean_text_column_data: pd.DataFrame,
+) -> pd.DataFrame:
+    """
+    Removes rows from the DataFrame that contain NaN values.
+
+    Args:
+        data (pd.DataFrame): The input DataFrame.
+
+    Returns:
+        pd.DataFrame: Cleaned DataFrame with NaN values removed.
+    """
+    # Remove rows with any NaN values
+    second_removal_nan_text_data = clean_text_column_data.dropna()
+
+    return second_removal_nan_text_data
+
+
+def process_timestamp_to_year(
+    second_removal_nan_text_data: pd.DataFrame,
+) -> pd.DataFrame:
     """
     Converts the 'timestamp' column in the DataFrame to datetime,
     extracts the year, and handles NaN values.
@@ -111,7 +127,7 @@ def process_timestamp_to_year(clean_text_column_data: pd.DataFrame) -> pd.DataFr
     Returns:
     pd.DataFrame: Updated DataFrame with the extracted 'year' column.
     """
-    process_timestamp_to_year_data = clean_text_column_data
+    process_timestamp_to_year_data = second_removal_nan_text_data
     # Convert 'timestamp' to datetime
     process_timestamp_to_year_data["timestamp"] = pd.to_datetime(
         process_timestamp_to_year_data["timestamp"], errors="coerce"
@@ -166,7 +182,7 @@ def concatenate_texts(removed_deleted_username_data: pd.DataFrame) -> pd.DataFra
         pd.DataFrame: DataFrame with concatenated comment threads.
     """
     result = []
-    processed_ids = set()  # Track processed IDs instead of removing rows immediately
+    processed_ids = set()  # Track processed IDs to avoid duplicating threads
     reply_dict = {}  # Dictionary to store replies based on parent_id
 
     # Build the reply dictionary for fast lookup
@@ -181,13 +197,24 @@ def concatenate_texts(removed_deleted_username_data: pd.DataFrame) -> pd.DataFra
 
     # Process each group (link_id) of posts
     for link_id, group in grouped:
-        group = group.reset_index()  # reset index here to get clean integer indexing
+        group = group.reset_index(drop=True)  # reset index to clean up indexing
 
         for idx, current_comment in group.iterrows():
             # Skip comments that have already been processed in a thread
             if current_comment["id"] in processed_ids:
                 continue
 
+            # Start tracking the top-level comment details
+            top_comment_timestamp = current_comment["timestamp"]
+            top_comment_username = current_comment["username"]
+            top_comment_link = current_comment["link"]
+            top_comment_parent_id = current_comment["parent_id"]
+            top_comment_id = current_comment["id"]
+            top_comment_subreddit_id = current_comment["subreddit_id"]
+            top_comment_moderation = current_comment["moderation"]
+            top_comment_year = current_comment["year"]
+
+            # Initialize the thread text and add the first comment
             thread_text = (
                 f"id of {current_comment['id']} said this: {current_comment['text']}.\n"
             )
@@ -197,37 +224,38 @@ def concatenate_texts(removed_deleted_username_data: pd.DataFrame) -> pd.DataFra
             # Track if this is a complete thread
             complete_thread = current_comment["parent_id"] == current_comment["link_id"]
 
-            # Try to find and concatenate linked replies using the reply dictionary
+            # Use a while loop to concatenate replies, ensuring comments are processed only once
             while True:
                 # Use the reply dictionary to find replies efficiently
                 next_comments = reply_dict.get(f"t1_{current_comment['id']}", [])
                 if next_comments:
                     current_comment = next_comments[0]  # Get the next reply
-                    thread_text += f"id of {current_comment['id']} replied to id of {current_comment['parent_id'][3:]}: {current_comment['text']}\n"
-                    processed_ids.add(current_comment["id"])
-                    concatenated_count += 1
+                    # Only process this comment if it's not processed already
+                    if current_comment["id"] not in processed_ids:
+                        # Append the next comment using varied bridging words
+                        thread_text += f"id of {current_comment['id']} replied to id of {current_comment['parent_id'][3:]}: {current_comment['text']}\n"
+                        processed_ids.add(current_comment["id"])
+                        concatenated_count += 1
+                    else:
+                        break  # If comment has already been processed, break to avoid duplication
                 else:
                     break  # Stop once no further replies are found
 
-            # Append the result
+            # Append the result with the concatenated thread
             result.append(
                 {
-                    "text": thread_text.strip(),  # Remove trailing newlines
-                    "timestamp": current_comment[
-                        "timestamp"
-                    ],  # Use the timestamp of the first comment
-                    "username": current_comment["username"],
-                    "link": current_comment["link"],
+                    "text": thread_text.strip(),
+                    "timestamp": top_comment_timestamp,
+                    "username": top_comment_username,
+                    "link": top_comment_link,
                     "link_id": link_id,
-                    "parent_id": current_comment[
-                        "parent_id"
-                    ],  # Keep parent_id of top comment
-                    "id": current_comment["id"],  # Keep id of the top comment
-                    "subreddit_id": current_comment["subreddit_id"],
-                    "moderation": current_comment["moderation"],
-                    "year": current_comment["year"],
-                    "concatenated_count": concatenated_count,  # Number of comments in the thread
-                    "complete_thread": complete_thread,  # Mark whether the thread is complete
+                    "parent_id": top_comment_parent_id,
+                    "id": top_comment_id,
+                    "subreddit_id": top_comment_subreddit_id,
+                    "moderation": top_comment_moderation,
+                    "year": top_comment_year,
+                    "concatenated_count": concatenated_count,
+                    "complete_thread": complete_thread,
                 }
             )
 
@@ -236,3 +264,23 @@ def concatenate_texts(removed_deleted_username_data: pd.DataFrame) -> pd.DataFra
 
     # Return the processed data
     return concatenated_texts_data
+
+
+def clean_concatenated_texts(concatenated_texts_data: pd.DataFrame) -> pd.DataFrame:
+    """
+    Cleans the concatenated_texts_data by removing all occurrences of 'gt ' from the 'text' column.
+
+    Args:
+        concatenated_texts_data (pd.DataFrame): DataFrame containing concatenated comment threads.
+
+    Returns:
+        pd.DataFrame: Cleaned DataFrame with 'gt ' removed from the 'text' column.
+    """
+    clean_concatenated_texts_data = concatenated_texts_data
+
+    # Remove all occurrences of 'gt ' from the 'text' column
+    clean_concatenated_texts_data["text"] = clean_concatenated_texts_data[
+        "text"
+    ].str.replace("gt ", "", regex=False)
+
+    return clean_concatenated_texts_data

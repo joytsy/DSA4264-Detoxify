@@ -10,9 +10,11 @@ from kedro_data.pipelines.data_processing.nodes import (
     remove_deleted_text,
     remove_nan_values,
     clean_text_column,
+    second_removal_nan_values,
     process_timestamp_to_year,
     remove_deleted_username,
     concatenate_texts,
+    clean_concatenated_texts,
 )
 
 
@@ -54,9 +56,17 @@ def create_pipeline(**kwargs) -> Pipeline:
                 name="clean_text_column_node",
             ),
             node(
-                func=process_timestamp_to_year,
+                func=second_removal_nan_values,
                 inputs=[
                     "clean_text_column_data",
+                ],
+                outputs="second_removal_nan_text_data",
+                name="second_removal_nan_text_node",
+            ),
+            node(
+                func=process_timestamp_to_year,
+                inputs=[
+                    "second_removal_nan_text_data",
                 ],
                 outputs="process_timestamp_to_year_data",
                 name="process_timestamp_to_year_node",
@@ -77,6 +87,14 @@ def create_pipeline(**kwargs) -> Pipeline:
                 ],
                 outputs="concatenated_texts_data",
                 name="concatenate_texts_node",
+            ),
+            node(
+                func=clean_concatenated_texts,
+                inputs=[
+                    "concatenated_texts_data",
+                ],
+                outputs="clean_concatenated_texts_data",
+                name="clean_concatenate_texts_node",
             ),
         ]
     )
