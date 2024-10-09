@@ -1,13 +1,12 @@
 {
-  "data_2020_2021": { "rows": 2949420, "columns": 9, "file_size": 1271769170 },
-  "removed_deleted_comments_data": {
-    "rows": 2663811,
-    "columns": 9,
-    "file_size": 128
+  "concatenated_texts_data": {
+    "rows": 3414958,
+    "columns": 12,
+    "file_size": 4096
   },
-  "removed_nan_comments_data": {
-    "rows": 2663779,
-    "columns": 9,
-    "file_size": 128
+  "clean_concatenated_texts_data": {
+    "rows": 3414958,
+    "columns": 12,
+    "file_size": 0
   }
 }
