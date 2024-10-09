@@ -3,7 +3,11 @@
   "removed_deleted_comments_data": {
     "rows": 2663811,
     "columns": 9,
-    "file_size": 0
+    "file_size": 128
   },
-  "removed_nan_comments_data": { "rows": 2663779, "columns": 9, "file_size": 0 }
+  "removed_nan_comments_data": {
+    "rows": 2663779,
+    "columns": 9,
+    "file_size": 128
+  }
 }
