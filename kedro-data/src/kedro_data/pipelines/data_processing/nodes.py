@@ -283,4 +283,8 @@ def clean_concatenated_texts(concatenated_texts_data: pd.DataFrame) -> pd.DataFr
         "text"
     ].str.replace("gt ", "", regex=False)
 
+    clean_concatenated_texts_data["text"] = clean_concatenated_texts_data[
+        "text"
+    ].str.replace("gt", "", regex=False)
+
     return clean_concatenated_texts_data
