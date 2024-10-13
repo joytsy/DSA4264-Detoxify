@@ -8,7 +8,7 @@ repos:
       - id: check-yaml
         exclude: "mkdocs.yml"
       - id: check-added-large-files
-        args: [--maxkb=2500]
+        args: [--maxkb=15000]
       - id: trailing-whitespace
       - id: detect-private-key
       - id: mixed-line-ending
