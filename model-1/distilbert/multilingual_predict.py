@@ -2,14 +2,14 @@ import torch
 from transformers import DistilBertTokenizer, DistilBertForSequenceClassification
 
 # Load the fine-tuned model and tokenizer
-model_save_path = r"C:\Users\richm\OneDrive\Desktop\DSA4264\DSA4264-Detoxify\model-1\distilbert\distilbert_model.pth"
+model_save_path = r"C:\Users\richm\OneDrive\Desktop\DSA4264\DSA4264-Detoxify\model-1\distilbert\multilingual_distilbert_model.pth"
 model = DistilBertForSequenceClassification.from_pretrained(
-    "distilbert-base-uncased", num_labels=7
+    "distilbert-base-multilingual-cased", num_labels=7
 )
 model.load_state_dict(torch.load(model_save_path, map_location=torch.device("cpu")))
 model.eval()
 
-tokenizer = DistilBertTokenizer.from_pretrained("distilbert-base-uncased")
+tokenizer = DistilBertTokenizer.from_pretrained("distilbert-base-multilingual-cased")
 
 # Device (CPU or GPU)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
