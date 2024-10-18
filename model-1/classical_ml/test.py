@@ -2,7 +2,7 @@
 from detector import Detector
 
 detector = Detector()
-prompt = "People like the LGBTQ+ are piece of thrash, if they dont leave immediately i will hit them with a bat"
+prompt = "i love the weather"
 prediction = detector.predict(prompt)
 print(f"Predicted class: {prediction}")
 
