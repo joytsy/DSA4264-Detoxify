@@ -85,7 +85,7 @@ def create_pipeline(**kwargs) -> Pipeline:
                 inputs=[
                     "removed_deleted_username_data",
                 ],
-                outputs="concatenated_texts_data",
+                outputs=["concatenated_texts_data", "individual_comments_data"],
                 name="concatenate_texts_node",
             ),
             node(

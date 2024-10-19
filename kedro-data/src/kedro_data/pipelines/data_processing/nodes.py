@@ -261,9 +261,12 @@ def concatenate_texts(removed_deleted_username_data: pd.DataFrame) -> pd.DataFra
 
     # Create a DataFrame for the concatenated threads
     concatenated_texts_data = pd.DataFrame(result)
+    individual_comments_data = collect_individual_comments(
+        removed_deleted_username_data
+    )
 
     # Return the processed data
-    return concatenated_texts_data
+    return concatenated_texts_data, individual_comments_data
 
 
 def clean_concatenated_texts(concatenated_texts_data: pd.DataFrame) -> pd.DataFrame:
@@ -288,3 +291,20 @@ def clean_concatenated_texts(concatenated_texts_data: pd.DataFrame) -> pd.DataFr
     ].str.replace("gt", "", regex=False)
 
     return clean_concatenated_texts_data
+
+
+def collect_individual_comments(
+    removed_deleted_username_data: pd.DataFrame,
+) -> pd.DataFrame:
+    """
+    Collects individual comments without concatenating the text. Each comment and its metadata will be preserved individually.
+
+    Args:
+        removed_deleted_username_data (pd.DataFrame): DataFrame with comments after filtering out removed/deleted users.
+
+    Returns:
+        pd.DataFrame: DataFrame with individual comments and their metadata.
+    """
+    individual_comments_data = removed_deleted_username_data.copy()
+
+    return individual_comments_data
