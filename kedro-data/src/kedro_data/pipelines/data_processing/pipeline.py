@@ -77,7 +77,10 @@ def create_pipeline(**kwargs) -> Pipeline:
                     "process_timestamp_to_year_data",
                     "params:to_remove_texts",
                 ],
-                outputs="removed_deleted_username_data",
+                outputs=[
+                    "removed_deleted_username_data",
+                    "removed_deleted_username_data_primary",
+                ],  # Two outputs
                 name="removed_deleted_username_node",
             ),
             node(
@@ -85,7 +88,7 @@ def create_pipeline(**kwargs) -> Pipeline:
                 inputs=[
                     "removed_deleted_username_data",
                 ],
-                outputs=["concatenated_texts_data", "individual_comments_data"],
+                outputs=["concatenated_texts_data"],
                 name="concatenate_texts_node",
             ),
             node(

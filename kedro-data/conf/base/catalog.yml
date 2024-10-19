@@ -58,6 +58,12 @@ removed_deleted_username_data:
   filepath: data/02_intermediate/removed_deleted_username_data.csv # Output path for data with deleted usernames removed
   versioned: true # Enable versioning to track changes in the username cleaning process
 
+# Data after removing rows with deleted usernames (also stored in primary)
+removed_deleted_username_data_primary:
+  type: pandas.CSVDataset # CSV format for the cleaned dataset
+  filepath: data/03_primary/removed_deleted_username_data.csv # Output path for data with deleted usernames removed
+  versioned: true # Enable versioning to track changes in the username cleaning process
+
 # Final dataset after concatenating texts (if applicable, e.g., comment threads)
 concatenated_texts_data:
   type: pandas.CSVDataset # CSV format for the final cleaned dataset
