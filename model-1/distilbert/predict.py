@@ -47,4 +47,4 @@ class_labels = [
 ]
 predicted_label = class_labels[predicted_class]
 
-print(f"Predicted class: {predicted_class}, Predicted label: {predicted_label}")
+print(f"Predicted label: {predicted_label}")
