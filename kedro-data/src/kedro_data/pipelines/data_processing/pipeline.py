@@ -79,7 +79,7 @@ def create_pipeline(**kwargs) -> Pipeline:
                 ],
                 outputs=[
                     "removed_deleted_username_data",
-                    "removed_deleted_username_data_primary",
+                    "single_comment_data",
                 ],  # Two outputs
                 name="removed_deleted_username_node",
             ),
