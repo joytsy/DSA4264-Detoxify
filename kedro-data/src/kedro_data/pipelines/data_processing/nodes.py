@@ -166,8 +166,9 @@ def remove_deleted_username(
     removed_deleted_username_data = process_timestamp_to_year_data[
         ~process_timestamp_to_year_data["username"].isin(to_remove_texts)
     ]
+    single_comment_data = removed_deleted_username_data.copy()
 
-    return removed_deleted_username_data
+    return removed_deleted_username_data, single_comment_data
 
 
 def concatenate_texts(removed_deleted_username_data: pd.DataFrame) -> pd.DataFrame:
