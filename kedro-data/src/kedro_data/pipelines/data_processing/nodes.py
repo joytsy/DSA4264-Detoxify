@@ -6,6 +6,7 @@ generated using Kedro 0.19.8
 from typing import List
 import re
 import pandas as pd
+from nltk.corpus import stopwords
 
 
 def merged_raw(
@@ -166,126 +167,151 @@ def remove_deleted_username(
     removed_deleted_username_data = process_timestamp_to_year_data[
         ~process_timestamp_to_year_data["username"].isin(to_remove_texts)
     ]
-    single_comment_data = removed_deleted_username_data.copy()
 
-    return removed_deleted_username_data, single_comment_data
+    return removed_deleted_username_data
 
 
-def concatenate_texts(removed_deleted_username_data: pd.DataFrame) -> pd.DataFrame:
+# def concatenate_texts(removed_deleted_username_data: pd.DataFrame) -> pd.DataFrame:
+#     """
+#     Processes the input DataFrame by concatenating comment threads and creating
+#     a complete or incomplete thread summary using a dictionary lookup.
+
+#     Args:
+#         removed_deleted_username_data (pd.DataFrame): DataFrame with comments after filtering out removed/deleted users.
+
+#     Returns:
+#         pd.DataFrame: DataFrame with concatenated comment threads.
+#     """
+#     result = []
+#     processed_ids = set()  # Track processed IDs to avoid duplicating threads
+#     reply_dict = {}  # Dictionary to store replies based on parent_id
+
+#     # Build the reply dictionary for fast lookup
+#     for idx, row in removed_deleted_username_data.iterrows():
+#         parent_id = row["parent_id"]
+#         if parent_id not in reply_dict:
+#             reply_dict[parent_id] = []
+#         reply_dict[parent_id].append(row)
+
+#     # Group rows by link_id to find Reddit posts (threads can be within these)
+#     grouped = removed_deleted_username_data.groupby("link_id")
+
+#     # Process each group (link_id) of posts
+#     for link_id, group in grouped:
+#         group = group.reset_index(drop=True)  # reset index to clean up indexing
+
+#         for idx, current_comment in group.iterrows():
+#             # Skip comments that have already been processed in a thread
+#             if current_comment["id"] in processed_ids:
+#                 continue
+
+#             # Start tracking the top-level comment details
+#             top_comment_timestamp = current_comment["timestamp"]
+#             top_comment_username = current_comment["username"]
+#             top_comment_link = current_comment["link"]
+#             top_comment_parent_id = current_comment["parent_id"]
+#             top_comment_id = current_comment["id"]
+#             top_comment_subreddit_id = current_comment["subreddit_id"]
+#             top_comment_moderation = current_comment["moderation"]
+#             top_comment_year = current_comment["year"]
+
+#             # Initialize the thread text and add the first comment
+#             thread_text = (
+#                 f"id of {current_comment['id']} said this: {current_comment['text']}.\n"
+#             )
+#             processed_ids.add(current_comment["id"])
+#             concatenated_count = 1  # Start count for the thread
+
+#             # Track if this is a complete thread
+#             complete_thread = current_comment["parent_id"] == current_comment["link_id"]
+
+#             # Use a while loop to concatenate replies, ensuring comments are processed only once
+#             while True:
+#                 # Use the reply dictionary to find replies efficiently
+#                 next_comments = reply_dict.get(f"t1_{current_comment['id']}", [])
+#                 if next_comments:
+#                     current_comment = next_comments[0]  # Get the next reply
+#                     # Only process this comment if it's not processed already
+#                     if current_comment["id"] not in processed_ids:
+#                         # Append the next comment using varied bridging words
+#                         thread_text += f"id of {current_comment['id']} replied to id of {current_comment['parent_id'][3:]}: {current_comment['text']}\n"
+#                         processed_ids.add(current_comment["id"])
+#                         concatenated_count += 1
+#                     else:
+#                         break  # If comment has already been processed, break to avoid duplication
+#                 else:
+#                     break  # Stop once no further replies are found
+
+#             # Append the result with the concatenated thread
+#             result.append(
+#                 {
+#                     "text": thread_text.strip(),
+#                     "timestamp": top_comment_timestamp,
+#                     "username": top_comment_username,
+#                     "link": top_comment_link,
+#                     "link_id": link_id,
+#                     "parent_id": top_comment_parent_id,
+#                     "id": top_comment_id,
+#                     "subreddit_id": top_comment_subreddit_id,
+#                     "moderation": top_comment_moderation,
+#                     "year": top_comment_year,
+#                     "concatenated_count": concatenated_count,
+#                     "complete_thread": complete_thread,
+#                 }
+#             )
+
+#     # Create a DataFrame for the concatenated threads
+#     concatenated_texts_data = pd.DataFrame(result)
+
+#     # Return the processed data
+#     return concatenated_texts_data
+
+
+def clean_gt_texts(removed_deleted_username_data: pd.DataFrame) -> pd.DataFrame:
     """
-    Processes the input DataFrame by concatenating comment threads and creating
-    a complete or incomplete thread summary using a dictionary lookup.
+    Cleans the removed_deleted_username_data by removing all occurrences of 'gt ' from the 'text' column.
 
     Args:
-        removed_deleted_username_data (pd.DataFrame): DataFrame with comments after filtering out removed/deleted users.
-
-    Returns:
-        pd.DataFrame: DataFrame with concatenated comment threads.
-    """
-    result = []
-    processed_ids = set()  # Track processed IDs to avoid duplicating threads
-    reply_dict = {}  # Dictionary to store replies based on parent_id
-
-    # Build the reply dictionary for fast lookup
-    for idx, row in removed_deleted_username_data.iterrows():
-        parent_id = row["parent_id"]
-        if parent_id not in reply_dict:
-            reply_dict[parent_id] = []
-        reply_dict[parent_id].append(row)
-
-    # Group rows by link_id to find Reddit posts (threads can be within these)
-    grouped = removed_deleted_username_data.groupby("link_id")
-
-    # Process each group (link_id) of posts
-    for link_id, group in grouped:
-        group = group.reset_index(drop=True)  # reset index to clean up indexing
-
-        for idx, current_comment in group.iterrows():
-            # Skip comments that have already been processed in a thread
-            if current_comment["id"] in processed_ids:
-                continue
-
-            # Start tracking the top-level comment details
-            top_comment_timestamp = current_comment["timestamp"]
-            top_comment_username = current_comment["username"]
-            top_comment_link = current_comment["link"]
-            top_comment_parent_id = current_comment["parent_id"]
-            top_comment_id = current_comment["id"]
-            top_comment_subreddit_id = current_comment["subreddit_id"]
-            top_comment_moderation = current_comment["moderation"]
-            top_comment_year = current_comment["year"]
-
-            # Initialize the thread text and add the first comment
-            thread_text = (
-                f"id of {current_comment['id']} said this: {current_comment['text']}.\n"
-            )
-            processed_ids.add(current_comment["id"])
-            concatenated_count = 1  # Start count for the thread
-
-            # Track if this is a complete thread
-            complete_thread = current_comment["parent_id"] == current_comment["link_id"]
-
-            # Use a while loop to concatenate replies, ensuring comments are processed only once
-            while True:
-                # Use the reply dictionary to find replies efficiently
-                next_comments = reply_dict.get(f"t1_{current_comment['id']}", [])
-                if next_comments:
-                    current_comment = next_comments[0]  # Get the next reply
-                    # Only process this comment if it's not processed already
-                    if current_comment["id"] not in processed_ids:
-                        # Append the next comment using varied bridging words
-                        thread_text += f"id of {current_comment['id']} replied to id of {current_comment['parent_id'][3:]}: {current_comment['text']}\n"
-                        processed_ids.add(current_comment["id"])
-                        concatenated_count += 1
-                    else:
-                        break  # If comment has already been processed, break to avoid duplication
-                else:
-                    break  # Stop once no further replies are found
-
-            # Append the result with the concatenated thread
-            result.append(
-                {
-                    "text": thread_text.strip(),
-                    "timestamp": top_comment_timestamp,
-                    "username": top_comment_username,
-                    "link": top_comment_link,
-                    "link_id": link_id,
-                    "parent_id": top_comment_parent_id,
-                    "id": top_comment_id,
-                    "subreddit_id": top_comment_subreddit_id,
-                    "moderation": top_comment_moderation,
-                    "year": top_comment_year,
-                    "concatenated_count": concatenated_count,
-                    "complete_thread": complete_thread,
-                }
-            )
-
-    # Create a DataFrame for the concatenated threads
-    concatenated_texts_data = pd.DataFrame(result)
-
-    # Return the processed data
-    return concatenated_texts_data
-
-
-def clean_concatenated_texts(concatenated_texts_data: pd.DataFrame) -> pd.DataFrame:
-    """
-    Cleans the concatenated_texts_data by removing all occurrences of 'gt ' from the 'text' column.
-
-    Args:
-        concatenated_texts_data (pd.DataFrame): DataFrame containing concatenated comment threads.
+        removed_deleted_username_data (pd.DataFrame): DataFrame containing concatenated comment threads.
 
     Returns:
         pd.DataFrame: Cleaned DataFrame with 'gt ' removed from the 'text' column.
     """
-    clean_concatenated_texts_data = concatenated_texts_data
+    clean_gt_texts_data = removed_deleted_username_data
 
     # Remove all occurrences of 'gt ' from the 'text' column
-    clean_concatenated_texts_data["text"] = clean_concatenated_texts_data[
-        "text"
-    ].str.replace("gt ", "", regex=False)
+    clean_gt_texts_data["text"] = clean_gt_texts_data["text"].str.replace(
+        "gt ", "", regex=False
+    )
 
-    clean_concatenated_texts_data["text"] = clean_concatenated_texts_data[
-        "text"
-    ].str.replace("gt", "", regex=False)
+    clean_gt_texts_data["text"] = clean_gt_texts_data["text"].str.replace(
+        "gt", "", regex=False
+    )
 
-    return clean_concatenated_texts_data
+    return clean_gt_texts_data
+
+
+def remove_stopwords_and_lowercase(clean_gt_texts_data: pd.DataFrame) -> pd.DataFrame:
+    """
+    Removes stopwords and lowercases the 'text' column.
+
+    Args:
+        clean_gt_texts_data (pd.DataFrame): DataFrame containing text data after cleaning.
+
+    Returns:
+        pd.DataFrame: DataFrame with stopwords removed and text lowercased.
+    """
+    stop_words = set(stopwords.words("english"))
+
+    remove_stopwords_and_lowercase_data = clean_gt_texts_data
+
+    # Convert to lowercase and remove stopwords
+    remove_stopwords_and_lowercase_data["text"] = remove_stopwords_and_lowercase_data[
+        "text"
+    ].apply(
+        lambda x: " ".join(
+            [word for word in x.lower().split() if word not in stop_words]
+        )
+    )
+
+    return remove_stopwords_and_lowercase_data

@@ -14,71 +14,122 @@ llm = HuggingFaceEndpoint(
     huggingfacehub_api_token=hf_token,
 )
 
-question = """id of gxeiu21 replied to id of gxeilbl: So useless Just like your skull
-id of gxej1ew replied to id of gxeiu21: Is this the stupid hill your ignorant self wishes to die on Are you just hoping ill stop calling you out
-id of gxejkym replied to id of gxej1ew: Is this the stupid hill your brainless self wishes to die on Are you just hoping for me to acknowledge your projections
-id of gxejqr8 replied to id of gxejkym: Go on sherlock, tell me what you think projection means. Sounds like you're using another word you know fuck all about You know... like xenophobia, culture, 'lapse of judgment' etc
-id of gxek6ep replied to id of gxejqr8: If you dont stop, i will really do something to you. Sounds like you're just reusing the same vocabulary all over again because that's all you know You know... like fool, idiot, einstein etc."""
-template = '''<|begin_of_text|><|start_header_id|>system<|end_header_id|>
-prompt = """
-You are an expert annotator. Your task is to classify the following text into one of the following categories:
+question = """i love the weather today"""
+template = """<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+“””
+You are an expert annotator. Your task is to classify the following text into one of the categories below. The categories reflect increasing intensity levels, with higher numbers indicating greater severity of hate or toxic speech. There is a category for "No Hate/Toxic," which covers neutral or positive speech with no harmful content. The classification is based on the explicit language used in the comment, without considering the speaker's intent or context.
 
-1. No Hate/Toxic: The comment contains no hate or toxic speech.
-2. Hate 1: Bias and prejudice (e.g., attitudes or beliefs about a group).
-3. Hate 2: Discrimination (expressing dislike or exclusion but without a call to action).
-4. Hate 3: Threats and violence (contains direct threats, incitement to violence, or serious harm).
-5. Toxic 1: Baseless complaints (complaints or frustrations without direct harm).
-6. Toxic 2: Insults or sarcasm directed at someone (humiliation or belittling without inciting violence).
-7. Toxic 3: Insults with high level of hostility, aggressive, harassment or threats of harm (incitement to self-harm or targeted harassment).
+Sensitive Groups for Hate and No Hate/Toxic Speech:
+Only groups defined by the following characteristics are considered sensitive groups. If the group does not fall into one of these categories, it is not a sensitive group, and the speech should be classified as Toxic if harmful:
+- Nationality (e.g., Americans, Singaporeans, Canadians, Mexicans, Chinese)
+- Race (e.g., Black, White, Asian, Indigenous peoples)
+- Ethnicity (e.g., Jewish, Arab, Han Chinese, Latinx, Kurds)
+- Religion (e.g., Muslims, Christians, Hindus, Jews, Buddhists)
+- Gender (e.g., Men, Women, Non-binary)
+- Sexual orientation (e.g., Gay, Lesbian, Bisexual, Asexual, Pansexual)
+- Disability (e.g., Individuals with physical disabilities, Individuals with cognitive impairments, Individuals with mental health conditions, Individuals with visual or hearing impairments)
+- Skin colour (e.g., Dark-skinned, Light-skinned, Brown-skinned, Pale-skinned individuals)
+- Age (e.g., Children, Adolescents, Elderly, Middle-aged individuals)
+- Generational group (e.g., Boomers, Gen X, Gen Y, Gen Z)
+- Socio-economic status (e.g., Low-income individuals, Middle-class, Wealthy individuals, Working-class)
+- Immigration status (e.g., Refugees, Asylum seekers, Immigrants, Foreign workers, Undocumented immigrants)
 
-Please classify each comment based on the most severe form of speech present, either hate or toxic speech (but not both). Follow the step-by-step reasoning process below to ensure accurate classification.
+Non-Sensitive Groups for Toxic and No Hate/Toxic Speech:
+Any group, thing, species, surroundings, or entity not defined by the above sensitive characteristics is considered a non-sensitive group. This includes:
+- Political views, professions, beliefs, lifestyle choices (e.g., antivaxxers, wumao, gamers)
+- Objects, animals, places, environmental elements, or any other non-human categories
+If a statement targets one of these non-sensitive groups, it should be classified as Toxic rather than Hate.
 
-Definitions:
+Hate Speech Categories (targeting sensitive groups):
+1. Hate 1: Bias and prejudice — Expressing negative stereotypes, generalizations, or biases toward sensitive groups. The focus is on harmful perceptions or attitudes, without any exclusion or incitement.
+2. Hate 2: Discrimination — Exclusion or unfair treatment of sensitive groups through statements that imply denial of rights or access, without inciting harm.
+3. Hate 3: Threats and violence — Inciting harm, issuing threats, or calling for action against sensitive groups.
 
-- Hate speech targets specific groups based on attributes like race, ethnicity, religion, gender, sexual orientation, disability, or other personal characteristics.
-  - Hate 1: Bias and prejudice against a group (e.g., "Foreigners are taking all our jobs").
-  - Hate 2: Discrimination, denying opportunities or service based on group membership (e.g., "I won’t serve anyone who looks Indian").
-  - Hate 3: Threats or incitement to violence against a group (e.g., "If immigrants don’t leave, I will make them suffer").
+Toxic Speech Categories (targeting non-sensitive groups, individuals, things, surroundings, species, or entities):
+4. Toxic 1: Negative complaints or expressions of dissatisfaction that contain mildly harmful or disrespectful language. These statements express unwarranted blame, criticism, or negativity that goes beyond neutral discourse, making them demeaning or unnecessarily critical. But it does not escalate to direct insults or threats.
+5. Toxic 2: Clear insults, sarcasm, or mocking directed at individuals, groups, things, surroundings, or entities that is explicitly harmful or demeaning.
+6. Toxic 3: Harassment or encouragement of harm or violence, directed at individuals, groups, things, surroundings, or entities. This includes statements that incite harm or abusive behavior, whether directed at people or non-human entities.
 
-- Toxic speech refers to general hostility or negativity that may not be tied to specific groups but creates a harmful environment.
-  - Toxic 1: Baseless complaints or frustrations (e.g., "This job is a waste of time").
-  - Toxic 2: Insults or sarcasm directed at someone, humiliation or belittling without inciting violence (e.g., "You’re so stupid").
-  - Toxic 3: Insults with high level of hostility, aggressive, harassment or threats of harm (e.g., "Go end your life, no one cares about you").
+No Hate/Toxic (targeting any group):
+Positive, neutral, or constructive statements with no harmful or toxic elements. This category includes comments with mild negativity or frustration, lighthearted joke, casual observations, playful sarcasm, concerns, warnings or light teasing, as long as they are not intended to insult or demean. These statements should be classified as No Hate/Toxic if they remain respectful or constructive, even if slightly critical or negative.
 
-Step-by-Step Classification Process:
+Instructions:
+1. Identify the target: Determine who or what the comment is addressing. Is it directed at a specific group, individual, thing, species, or surroundings?
 
-1. Identify Target: Determine whether the text targets a specific group or an individual (group = hate, individual = toxic).
-2. Assess Intensity: Evaluate the severity of the statement. Does it express an opinion, incite discrimination, or make threats?
-3. Apply Hate or Toxic Levels: Assign a label based on the most severe behavior present in the text (choose either hate or toxic, not both).
-4. Final Classification: Choose the highest relevant category based on the content.
+2. Determine group sensitivity: Based on the characteristics provided, decide if the target  is in the sensitive group.
+   - If the target involves any sensitive characteristic strictly in this list: nationality, race, ethnicity, religion, gender, sexual orientation, disability, skin colour, age, generational group, socio-economic status and immigration status. Proceed to the Hate or No Hate/Toxic categories.
+   - If the target does not involve any sensitive characteristic, proceed to the Toxic or No Hate/Toxic categories.
+
+3. Analyze the language and classify the comment:
+   - **Classify the comment as a whole based solely on the overall meaning, not individual words**. Do not classify the statement as Toxic or Hate just because it contains negative words or phrases. Focus on the overall intent and meaning of the comment.
+   - **Hate categories** (for sensitive groups):
+     - Hate 1 (Bias and Prejudice): Negative generalizations, stereotypes, or biases toward the sensitive group. Focus on harmful perceptions or attitudes without excluding or denying access to rights or opportunities.
+     - Hate 2 (Discrimination): Statements that imply exclusion, denial of access, or rights for the sensitive group. Any language implying exclusion from resources, jobs, services, or rights should be prioritized as Hate 2.
+     - Hate 3 (Incitement of Harm or Violence): Direct threats or calls to harm the sensitive group.
+
+   - **Toxic categories** (for non-sensitive groups, individuals, things, surroundings, species, or entities):
+     - Toxic 1: Negative complaints or expressions of dissatisfaction that contain mildly harmful or disrespectful language. These statements express unwarranted blame, criticism, or negativity that goes beyond neutral discourse, making them demeaning or unnecessarily critical. But it does not escalate to direct insults or threats.
+     - Toxic 2: Clear insults, sarcasm, or mocking directed at individuals, things, surroundings, species, or entities that is explicitly harmful or demeaning.
+     - Toxic 3: Harassment or encouragement of harm or violence, directed at individuals, things, surroundings, species, or entities. This includes statements that incite harm or abusive behavior, whether directed at people or non-human entities.
+
+   - **No Hate/Toxic** (for any group):
+     - Positive, neutral, or constructive statements with no harmful or toxic elements. This category includes comments with mild negativity or frustration, lighthearted jokes, casual observations, playful sarcasm, concerns, warnings, or light teasing, as long as they are not intended to insult or demean. These statements should be classified as No Hate/Toxic if they remain respectful or constructive, even if slightly critical or negative.
+
+Output:
+- Sensitive Group: Yes/No
+- Classification:
+- Reasoning: Provide reasoning for the classification based on the specific example, similar to the format below:
+
+Example:
+- Sensitive Group: Yes
+- Classification: Hate 1
+- Reasoning: This statement targets a sensitive group (expats, based on nationality/immigration status). It includes bias and negative generalizations, stereotyping their treatment, and suggests exclusion.
 
 Examples:
 
-Example 1:
-Text: "Foreigners are taking all our jobs."
-1. Identify Target: The comment targets a specific group (foreigners).
-2. Assess Intensity: The comment expresses bias against this group but does not call for action.
-3. Apply Hate or Toxic Levels: This qualifies as Hate 1 (bias and prejudice).
-4. Final Classification: Hate 1
+- Example 1: "Expats in Singapore always expect preferential treatment in jobs and housing."
+   - Sensitive Group: Yes
+   - Classification: Hate 1
+   - Reasoning: This statement targets a sensitive group (expats, based on nationality/immigration status). It includes bias and negative generalizations, stereotyping their expectations of their treatment.
 
-Example 2:
-Text: "You’re an idiot, why do you even try?"
-1. Identify Target: The comment targets an individual.
-2. Assess Intensity: This is a direct insult aimed at belittling the person.
-3. Apply Hate or Toxic Levels: This qualifies as Toxic 2 (insults and sarcasm).
-4. Final Classification: Toxic 2
+- Example 2: "I don't let Indians come to my restaurant because they are smelly."
+   - Sensitive Group: Yes
+   - Classification: Hate 2
+   - Reasoning: This statement targets a sensitive group (Indians, based on ethnicity). It expresses negative generalizations and exclusion by denying Indians from accessing the restaurant, demeaning the group, implying unfair treatment without inciting violence.
 
-Example 3:
-Text: "I refuse to serve Black people in my restaurant."
-1. Identify Target: The comment targets a specific group (Black people).
-2. Assess Intensity: The comment discriminates against this group by denying service.
-3. Apply Hate or Toxic Levels: This qualifies as Hate 2 (discrimination).
-4. Final Classification: Hate 2
+- Example 3: "Gen Zs don't belong here. If they don't leave, I will kill them."
+   - Sensitive Group: Yes
+   - Classification: Hate 3
+   - Reasoning: This statement targets a sensitive group (Gen Zs, based on their generational group). It incites harm and issues a direct threat, calling for violence, which makes it a Hate 3 classification.
 
-Now, classify the following comment based on this step-by-step process. Do the chain of thought for yourself and then provide the classification as output.
+- Example 4: "Aiyoh, why GST keep going up ah? Everything more expensive, but got see any improvement or not?"
+   - Sensitive Group: No
+   - Classification: Toxic 1
+   - Reasoning: This statement does not target a sensitive group. It is a general complaint about government policy (GST) without targeting any individual or group, classifying it as Toxic 1.
+
+- Example 5: "Wah, that TikTok employee damn smart ah? Come up with such a stupid idea—clap for him sia."
+   - Sensitive Group: No
+   - Classification: Toxic 2
+   - Reasoning: This statement does not target a sensitive group. It mocks and uses sarcasm towards an individual (the TikTok employee) without any direct threat or incitement of harm, making it Toxic 2.
+
+- Example 6: "No one will care if that army guy dies, he should kill himself."
+   - Sensitive Group: No
+   - Classification: Toxic 3
+   - Reasoning: This statement does not target a sensitive group. It encourages harm or violence towards an individual (the army guy), making it a severe and harmful statement, classifying it as Toxic 3.
+
+- Example 7: "Deep breathe, deep breathe, break down into smaller torturous and manageable steps. You got this."
+   - Sensitive Group: No
+   - Classification: No Hate/Toxic
+   - Reasoning: This statement does not target a sensitive group. Even though "torturous" is a negative word but it is a positive and supportive comment as a whole, classifying it as No Hate/Toxic.
+
+Output:
+Sensitive Group: (Yes/No)
+Classification: (e.g., "No Hate/Toxic", "Hate 1", etc)
+Reasoning:
 <|eot_id|><|start_header_id|>user<|end_header_id|>
 Text: "{question}"
-<|eot_id|><|start_header_id|>assistant<|end_header_id|>'''
+<|eot_id|><|start_header_id|>assistant<|end_header_id|>"""
+
 
 prompt = PromptTemplate(input_variables=["question"], template=template)
 
