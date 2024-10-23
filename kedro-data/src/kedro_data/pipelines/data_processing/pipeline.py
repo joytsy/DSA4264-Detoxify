@@ -13,8 +13,8 @@ from kedro_data.pipelines.data_processing.nodes import (
     second_removal_nan_values,
     process_timestamp_to_year,
     remove_deleted_username,
-    concatenate_texts,
-    clean_concatenated_texts,
+    clean_gt_texts,
+    # remove_stopwords_and_lowercase,
 )
 
 
@@ -77,27 +77,24 @@ def create_pipeline(**kwargs) -> Pipeline:
                     "process_timestamp_to_year_data",
                     "params:to_remove_texts",
                 ],
-                outputs=[
-                    "removed_deleted_username_data",
-                    "single_comment_data",
-                ],  # Two outputs
+                outputs="removed_deleted_username_data",
                 name="removed_deleted_username_node",
             ),
             node(
-                func=concatenate_texts,
+                func=clean_gt_texts,
                 inputs=[
                     "removed_deleted_username_data",
                 ],
-                outputs="concatenated_texts_data",
-                name="concatenate_texts_node",
+                outputs="clean_gt_texts_data",
+                name="clean_gt_texts_node",
             ),
-            node(
-                func=clean_concatenated_texts,
-                inputs=[
-                    "concatenated_texts_data",
-                ],
-                outputs="clean_concatenated_texts_data",
-                name="clean_concatenate_texts_node",
-            ),
+            # node(
+            #     func=remove_stopwords_and_lowercase,
+            #     inputs=[
+            #         "clean_gt_texts_data",
+            #     ],
+            #     outputs="remove_stopwords_and_lowercase_data",
+            #     name="remove_stopwords_and_lowercase_node",
+            # ),
         ]
     )
