@@ -309,9 +309,77 @@ def remove_stopwords_and_lowercase(clean_gt_texts_data: pd.DataFrame) -> pd.Data
     remove_stopwords_and_lowercase_data["text"] = remove_stopwords_and_lowercase_data[
         "text"
     ].apply(
-        lambda x: " ".join(
-            [word for word in x.lower().split() if word not in stop_words]
+        lambda x: (
+            " ".join(word for word in x.lower().split() if word not in stop_words)
+            if isinstance(x, str)
+            else x
         )
     )
 
     return remove_stopwords_and_lowercase_data
+
+
+singlish_dict = {
+    "lah": "",
+    "lor": "",
+    "sia": "",
+    "sian": "bored",
+    "lepak": "relax",
+    "shiok": "great",
+    "kiasu": "fear of missing out",
+    "fomo": "fear of missing out",
+    "kopi": "coffee",
+    "yaya papaya": "arrogant person",
+    "cheem": "complex",
+    "chim": "complex",
+    "aiyo": "oh no",
+    "dabao": "takeaway",
+    "paiseh": "embarrassed",
+    "koped": "stolen",
+    "gahmen": "government",
+    "gahment": "government",
+    "liao": "already",
+}
+
+
+# Function to clean Singlish text
+def clean_singlish(text):
+    if not isinstance(text, str):  # Ensure input is a string
+        return text
+
+    # Remove extra spaces and special characters
+    text = re.sub(r"[^\w\s]", "", text)
+
+    # Tokenize the sentence into words
+    words = text.split()
+
+    # Translate Singlish words to Standard English
+    cleaned_words = [singlish_dict.get(word, word) for word in words]
+
+    # Join the words back into a cleaned sentence
+    cleaned_text = " ".join(cleaned_words)
+
+    # Remove any leftover empty phrases (from particles like "lah", "lor")
+    cleaned_text = re.sub(r"\s+", " ", cleaned_text).strip()
+
+    return cleaned_text
+
+
+def convert_singlish_words(
+    remove_stopwords_and_lowercase_data: pd.DataFrame,
+) -> pd.DataFrame:
+    """
+    Converts Singlish words in the 'text' column to Standard English using `clean_singlish`.
+
+    Args:
+        data (pd.DataFrame): DataFrame with stopwords removed and text lowercased.
+
+    Returns:
+        pd.DataFrame: DataFrame with Singlish words converted.
+    """
+    data = remove_stopwords_and_lowercase_data
+
+    # Apply the clean_singlish function to the 'text' column
+    data["text"] = data["text"].apply(clean_singlish)
+
+    return data
