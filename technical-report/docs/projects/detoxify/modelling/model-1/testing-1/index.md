@@ -22,10 +22,10 @@ The high-level architecture includes:
 
 For more details, refer to:
 
-- [JSON Data Preparation](https://synapxe-dna.github.io/technical-docs/projects/genai/health-hub/data-pipeline/azure_rag/)
-- [Data Ingestion](https://synapxe-dna.github.io/technical-docs/projects/genai/conversational-assistant/services/search_index/data_ingestion/)
-- [Search Index](https://synapxe-dna.github.io/technical-docs/projects/genai/conversational-assistant/services/search_index/search_index/)
-- [Skillset](https://synapxe-dna.github.io/technical-docs/projects/genai/conversational-assistant/services/search_index/skillset/)
+- [JSON Data Preparation]
+- [Data Ingestion]
+- [Search Index]
+- [Skillset]
 
 ---
 
