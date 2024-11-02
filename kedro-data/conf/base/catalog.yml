@@ -58,21 +58,20 @@ removed_deleted_username_data:
   filepath: data/02_intermediate/removed_deleted_username_data.csv # Output path for data with deleted usernames removed
   versioned: true # Enable versioning to track changes in the username cleaning process
 
-# Data after removing rows with deleted usernames (also stored in primary)
-single_comment_data:
+# Data after removing rows with "gt" in text
+clean_gt_texts_data:
   type: pandas.CSVDataset # CSV format for the cleaned dataset
-  filepath: data/03_primary/single_comment_data.csv # Output path for data with deleted usernames removed
-  versioned: true # Enable versioning to track changes in the username cleaning process
+  filepath: data/03_primary/clean_gt_texts_data.csv # Output path for data with "gt" removed
+  versioned: true # Enable versioning to track changes in the username cleaning proces
 
-# Final dataset after concatenating texts (if applicable, e.g., comment threads)
-concatenated_texts_data:
-  type: pandas.CSVDataset # CSV format for the final cleaned dataset
-  filepath: data/02_intermediate/concatenated_texts_data.csv # Output path for the final data with concatenated texts, such as comment threads
-  versioned: true # Enable versioning to track the evolution of the concatenated dataset
+# Data after removing stopwords and converting to lowercase
+remove_stopwords_and_lowercase_data:
+  type: pandas.CSVDataset # CSV format for the cleaned dataset
+  filepath: data/03_primary/remove_stopwords_and_lowercase_data.csv # Output path for data after conversion and removal
+  versioned: true # Enable versioning to track changes in the username cleaning proces
 
-# Clean final dataset after removing "gt "
-clean_concatenated_texts_data:
-  type: pandas.CSVDataset # CSV format for the final cleaned dataset
-  filepath: data/03_primary/clean_concatenated_texts_data.csv # Output path for the final data with concatenated texts, such as comment threads
-  versioned: true # Enable versioning to track the evolution of the concatenated dataset
-
+# Data after coverting singlish words
+convert_singlish_words:
+  type: pandas.CSVDataset # CSV format for the cleaned dataset
+  filepath: data/03_primary/convert_singlish_words.csv # Output path for data after conversion of singlish words
+  versioned: true # Enable versioning to track changes in the username cleaning proces
