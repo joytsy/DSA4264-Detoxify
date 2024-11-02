@@ -1,38 +1,28 @@
 {
   "data_2020_2021": { "rows": 2949420, "columns": 9, "file_size": 1271769170 },
   "data_2022_2023": { "rows": 1983309, "columns": 9, "file_size": 991236436 },
-  "merged_raw_data": { "rows": 4932729, "columns": 9, "file_size": 192 },
+  "merged_raw_data": { "rows": 4932729, "columns": 9, "file_size": 224 },
   "removed_deleted_text_data": {
     "rows": 4504384,
     "columns": 9,
-    "file_size": 192
+    "file_size": 224
   },
-  "removed_nan_text_data": { "rows": 4504329, "columns": 9, "file_size": 192 },
-  "clean_text_column_data": { "rows": 4504329, "columns": 9, "file_size": 192 },
+  "removed_nan_text_data": { "rows": 4504329, "columns": 9, "file_size": 224 },
+  "clean_text_column_data": { "rows": 4504329, "columns": 9, "file_size": 224 },
   "second_removal_nan_text_data": {
     "rows": 4493439,
     "columns": 9,
-    "file_size": 160
+    "file_size": 192
   },
   "process_timestamp_to_year_data": {
     "rows": 4493439,
     "columns": 10,
-    "file_size": 192
+    "file_size": 224
   },
   "removed_deleted_username_data": {
     "rows": 4381725,
     "columns": 10,
-    "file_size": 160
+    "file_size": 192
   },
-  "single_comment_data": { "rows": 4381725, "columns": 10, "file_size": 128 },
-  "concatenated_texts_data": {
-    "rows": 3414958,
-    "columns": 12,
-    "file_size": 96
-  },
-  "clean_concatenated_texts_data": {
-    "rows": 3414958,
-    "columns": 12,
-    "file_size": 96
-  }
+  "clean_gt_texts_data": { "rows": 4381725, "columns": 10, "file_size": 96 }
 }

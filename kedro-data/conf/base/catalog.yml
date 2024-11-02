@@ -69,3 +69,9 @@ remove_stopwords_and_lowercase_data:
   type: pandas.CSVDataset # CSV format for the cleaned dataset
   filepath: data/03_primary/remove_stopwords_and_lowercase_data.csv # Output path for data after conversion and removal
   versioned: true # Enable versioning to track changes in the username cleaning proces
+
+# Data after coverting singlish words
+convert_singlish_words:
+  type: pandas.CSVDataset # CSV format for the cleaned dataset
+  filepath: data/03_primary/convert_singlish_words.csv # Output path for data after conversion of singlish words
+  versioned: true # Enable versioning to track changes in the username cleaning proces

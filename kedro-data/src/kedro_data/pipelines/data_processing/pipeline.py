@@ -14,7 +14,8 @@ from kedro_data.pipelines.data_processing.nodes import (
     process_timestamp_to_year,
     remove_deleted_username,
     clean_gt_texts,
-    # remove_stopwords_and_lowercase,
+    convert_singlish_words,
+    remove_stopwords_and_lowercase,
 )
 
 
@@ -88,13 +89,21 @@ def create_pipeline(**kwargs) -> Pipeline:
                 outputs="clean_gt_texts_data",
                 name="clean_gt_texts_node",
             ),
-            # node(
-            #     func=remove_stopwords_and_lowercase,
-            #     inputs=[
-            #         "clean_gt_texts_data",
-            #     ],
-            #     outputs="remove_stopwords_and_lowercase_data",
-            #     name="remove_stopwords_and_lowercase_node",
-            # ),
+            node(
+                func=remove_stopwords_and_lowercase,
+                inputs=[
+                    "clean_gt_texts_data",
+                ],
+                outputs="remove_stopwords_and_lowercase_data",
+                name="remove_stopwords_and_lowercase_node",
+            ),
+            node(
+                func=convert_singlish_words,
+                inputs=[
+                    "remove_stopwords_and_lowercase_data",
+                ],
+                outputs="convert_singlish_words",
+                name="convert_singlish_words_node",
+            ),
         ]
     )
