@@ -2,7 +2,7 @@ import torch
 from transformers import DistilBertTokenizer, DistilBertForSequenceClassification
 
 # Load the fine-tuned model and tokenizer
-model_save_path = r"C:\Users\richm\OneDrive\Desktop\DSA4264\DSA4264-Detoxify\model-1\distilbert\multilingual_distilbert_model.pth"
+model_save_path = r"C:\Users\E.Sin\Desktop\Richmond\DSA4264-Detoxify\model-1\distilbert\model\multilingual_distilbert_model_5k.pth"
 model = DistilBertForSequenceClassification.from_pretrained(
     "distilbert-base-multilingual-cased", num_labels=7
 )
@@ -16,7 +16,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model.to(device)
 
 # Custom prompt for prediction
-custom_prompt = "id said this: i love singapore"
+custom_prompt = "deport all the useless migrants back to their home, if they dont leave asap, i will destroy them"
 
 # Step 1: Preprocess the input (tokenization)
 inputs = tokenizer(
@@ -48,3 +48,14 @@ class_labels = [
 predicted_label = class_labels[predicted_class]
 
 print(f"Predicted label: {predicted_label}")
+
+# 5k
+# i love the weather today (No Hate/Toxic)
+# i will never recruit indians into my company (Hate 1)
+# you are a damn bloody useless gay, dont you step foot into my place (Hate 2)
+# deport all the useless migrants back to their home, if they dont leave asap, i will destroy them (Hate 3)
+# It's the department, want to stir shit also cannot stir properly (Toxic 1)
+# you are such a loser in life (Toxic 2)
+# you are such a loser in life, get out of this place or else i will kick you (Toxic 3)
+
+# 15k
