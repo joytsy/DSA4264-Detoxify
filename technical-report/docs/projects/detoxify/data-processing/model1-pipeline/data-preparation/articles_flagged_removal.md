@@ -28,8 +28,8 @@ This typically occurs when test articles that are submitted into the VML system 
 
 Please note that the flagging of articles in this case is ordered due to overlapping flags. We will typically ignore the articles that are already flagged as `to_remove` before flagging the remaining articles.
 
-Additionally, some articles are whitelisted as HealthHub Team wishes to perform Content Optimisation and Harmonisation using these articles. Refer to the `whitelist` key in [`parameters_data_processing.yml`](https://github.com/Synapxe-DNA/healthhub-content-optimization/blob/main/content-optimization/conf/base/parameters_data_processing.yml).
-Refer to the `flag_articles_to_remove_after_extraction` function in [`utils.py`](https://github.com/Synapxe-DNA/healthhub-content-optimization/blob/main/content-optimization/src/content_optimization/pipelines/data_processing/utils.py) for more information.
+Additionally, some articles are whitelisted as HealthHub Team wishes to perform Content Optimisation and Harmonisation using these articles. Refer to the `whitelist` key in [`parameters_data_processing.yml`](https://github.com/).
+Refer to the `flag_articles_to_remove_after_extraction` function in [`utils.py`](https://github.com/) for more information.
 
 ### No Extracted Content
 

@@ -27,8 +27,8 @@ The ingestion process begins by uploading the JSON files containing article data
   {
     "id": "1434570_content",
     "title": "National Steps Challenge™ Community Challenge",
-    "cover_image_url": "https://ch-api.healthhub.sg/api/public/content/09a981f1a280460dbca961ea71f04cba?v=fc6b51b0",
-    "full_url": "https://www.healthhub.sg/programmes/community-challenge",
+    "cover_image_url": "https://github.com/",
+    "full_url": "https://github.com/",
     "content_category": "programs",
     "category_description": "Feel good with every move as you bond with your neighbours! The National Steps Challenge™ Season 5 is back with Community Challenge!",
     "pr_name": "Health Promotion Board",

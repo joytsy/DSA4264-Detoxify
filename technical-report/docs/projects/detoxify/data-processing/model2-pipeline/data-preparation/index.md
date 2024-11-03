@@ -20,11 +20,11 @@ In this pipeline, we focus on the following:
 
 ## Setting up the Project
 
-1. Download the [`GenAI - Full Content Export.zip`](https://drive.google.com/file/d/1auKR6zHlxFz7fmkci2BUimYEjW4lotlU/view) file.
-2. Extract all the Excel files and place them in the [`content-optimization/data/01_raw`](https://github.com/Synapxe-DNA/healthhub-content-optimization/tree/main/content-optimization/data/01_raw) directory of the Kedro pipeline.
-3. Download the [`missing_contents.zip`](https://drive.google.com/file/d/1KX7Jsc9LVn6ozsT1P87kTmjVYh4be2j2/view) file.
-4. Extract and move the [`missing_contents`] directory to the [`content-optimization/data/01_raw`](https://github.com/Synapxe-DNA/healthhub-content-optimization/tree/main/content-optimization/data/01_raw) directory of the Kedro pipeline.
-5. Refer to the [`README.md`](https://github.com/Synapxe-DNA/healthhub-content-optimization/tree/main/content-optimization) to setup and run the Kedro Pipeline
+1. Download the [`GenAI - Full Content Export.zip`](https://github.com/) file.
+2. Extract all the Excel files and place them in the [`content-optimization/data/01_raw`](https://github.com/) directory of the Kedro pipeline.
+3. Download the [`missing_contents.zip`](https://github.com/) file.
+4. Extract and move the [`missing_contents`] directory to the [`content-optimization/data/01_raw`](https://github.com/) directory of the Kedro pipeline.
+5. Refer to the [`README.md`](https://github.com/) to setup and run the Kedro Pipeline
 
 !!! Note
 
@@ -39,7 +39,7 @@ In this pipeline, we focus on the following:
 
 When adding new kedro nodes, it is important to understand the key processes that accompany it. You will usually add the filepath(s) to the Data Catalog, supplement the required parameters and write your functions.
 
-### [`Data Catalog`](https://github.com/Synapxe-DNA/healthhub-content-optimization/blob/main/content-optimization/conf/base/catalog.yml)
+### [`Data Catalog`](https://github.com/)
 
 The Data Catalog is one of the most important files in the Kedro Pipeline. It indicates where your files are located in the project. Kedro handles the loading and saving of data on your behalf. You do not need to specify it in your nodes.
 
@@ -48,7 +48,7 @@ Here is an example of how to define it:
 ```yaml
 # Variable Name/Dictionary Key
 merged_data:
-  # File Type - Refer to kedro-datasets (https://docs.kedro.org/projects/kedro-datasets/en/kedro-datasets-4.1.0/api/kedro_datasets.html) for the appropriate data connector
+  # File Type - Refer to kedro-datasets (https://github.com/) for the appropriate data connector
   type: pandas.ParquetDataset
   # File Path - Indicate where to save/load the desired file
   filepath: data/03_primary/merged_data.parquet
@@ -58,7 +58,7 @@ merged_data:
 
 Once you have defined your variables, you can use them in your Kedro pipeline.
 
-### [`Parameters`](https://github.com/Synapxe-DNA/healthhub-content-optimization/blob/main/content-optimization/conf/base/parameters_data_processing.yml)
+### [`Parameters`](https://github.com/)
 
 The Parameters are used to store any static definition of variables in the Kedro Pipeline. Each Pipeline has its own set of parameters. We do not hardcode any values in the code. We retrieve it from this file.
 
@@ -104,7 +104,7 @@ columns_to_keep:
 
 After defining your data variables and the parameters required for your function, we can proceed to the writing our function.
 
-### [`Nodes`](https://github.com/Synapxe-DNA/healthhub-content-optimization/blob/main/content-optimization/src/content_optimization/pipelines/data_processing/nodes.py)
+### [`Nodes`](https://github.com/)
 
 Here is where we define our functions to transform our data. A node is merely a step within the Kedro Pipeline that performs a set of transformations. When writing your node functions, you should do the following -
 
@@ -114,7 +114,7 @@ Here is where we define our functions to transform our data. A node is merely a 
 
 Once we have created the node(s), we can now integrate them into the Kedro Pipeline.
 
-### [`Pipeline`](https://github.com/Synapxe-DNA/healthhub-content-optimization/blob/main/content-optimization/src/content_optimization/pipelines/data_processing/pipeline.py)
+### [`Pipeline`](https://github.com/)
 
 This is the easiest part of the Kedro pipeline. To integrate the new node, just add a new node function to the pipeline.
 
