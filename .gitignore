@@ -236,3 +236,11 @@ cython_debug/
 
 ## add the output folder
 hate2_comments.csv
+model-1/distilbert/final_data.csv
+model-1/distilbert/training_data.csv
+kedro-data/.viz/stats.json
+kedro-data/session_store.db
+data-generation/training_data.csv
+data-generation/final_data.csv
+test.ipynb
+.gitignore
