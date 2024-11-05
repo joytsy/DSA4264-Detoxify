@@ -4,6 +4,25 @@
 
 This project is part of DSA4264, focusing on the use of Detoxify for analyzing toxic comments. The following setup instructions will help you get started with the project. Ensure that the dependencies are properly installed, and the data pipeline is configured correctly.
 
+## Repository Structure
+
+The project repository is organized as follows:
+
+- **.github/workflows**: Contains CI/CD configuration files.
+- **data-generation**: Scripts and tools for generating data.
+- **frontend**: Frontend interface code for the project.
+- **kedro-data**: The data processing pipeline using Kedro.
+- **model-1**: The classifier model used to detect toxic comments.
+- **model-2**: The analysis model used to evaluate and analyze the results from the classifier.
+- **technical-report**: Documentation and technical reports related to the project.
+- **.gitattributes**: Configuration for cross-platform compatibility.
+- **.gitignore**: Specifies files and directories to ignore in Git.
+- **.markdownlint.jsonc**: Configuration for Markdown linting.
+- **.pre-commit-config.yaml**: Configuration for pre-commit hooks.
+- **LICENSE**: License information for the project.
+- **README.md**: This file.
+- **requirements.txt**: List of dependencies for the project.
+
 ## Rules and Guidelines
 
 - **Do not remove any lines from the `.gitignore` file** provided in the repository to prevent committing unnecessary or sensitive files.
