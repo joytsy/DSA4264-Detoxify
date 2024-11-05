@@ -25,5 +25,9 @@ jobs:
           path: .cache
           restore-keys: |
             mkdocs-material-
-      - run: pip install mkdocs-material
-      - run: mkdocs gh-deploy --force
+      - run: |
+          pip install mkdocs-material mkdocs-jupyter mkdocs-render-swagger-plugin
+      - name: Deploy to GitHub Pages
+        run: |
+          cd technical-report
+          mkdocs gh-deploy --force
