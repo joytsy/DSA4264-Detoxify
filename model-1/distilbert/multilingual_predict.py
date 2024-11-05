@@ -77,3 +77,12 @@ print(f"Predicted label: {predicted_label}")
 # It's the department, want to stir shit also cannot stir properly (Toxic 1)
 # you are such a loser in life (Toxic 2)
 # you are such a loser in life, get out of my face, or else i will destroy you (Toxic 3)
+
+# ridgeclassifier 15k
+# i love the weather today (No Hate/Toxic)
+# i will never recruit indians into my company (Toxic 1)
+# you are a damn bloody useless gay, dont you step foot into my place (Toxic 1)
+# the jews better get out of our country, or else i will kick them out (Hate 3)
+# It's the department, want to stir shit also cannot stir properly (No Hate/Toxic)
+# you are such a loser in life (Toxic 2)
+# you are such a loser in life, get out of my face, or else i will destroy you (Toxic 2)
