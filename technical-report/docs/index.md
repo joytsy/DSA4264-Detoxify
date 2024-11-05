@@ -10,6 +10,8 @@ authors:
 
 # Welcome to DSA4264 Team Detoxify Documentation
 
+Members: {insert project members}
+
 Welcome to the Team Detoxify Documentation page of DSA4264, your hub for all technical resources, guidelines, and best practices. As a pioneering health tech company, we are committed to leveraging the power of data analytics and artificial intelligence to revolutionize the healthcare industry, enhance patient outcomes, and drive innovation.
 
 ## Our Mission
