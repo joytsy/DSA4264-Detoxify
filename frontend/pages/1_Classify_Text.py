@@ -41,7 +41,7 @@ st.markdown(
     .stTextArea textarea {
         width: 100%; /* Full width */
         font-size: 16px;
-        height: 150px;
+        height: 150pxddd;
         border-radius: 10px;
         box-sizing: border-box; /* Ensure padding does not affect width */
     }
@@ -51,7 +51,7 @@ st.markdown(
 )
 
 # Load the model and tokenizer
-model_save_path = "../model-1/distilbert/model/multilingual_distilbert_model_5k.pth"
+model_save_path = "frontend/pages/model/multilingual_distilbert_model_5k.pth"
 model = DistilBertForSequenceClassification.from_pretrained(
     "distilbert-base-multilingual-cased", num_labels=7
 )
