@@ -8,7 +8,7 @@ authors:
 
 ## Overview
 
-The `standardize_columns` node helps to standardise the columns across multiple Excel files from [`GenAI - Full Content Export.zip`](https://drive.google.com/file/d/1auKR6zHlxFz7fmkci2BUimYEjW4lotlU/view).
+The `standardize_columns` node helps to standardise the columns across multiple Excel files from [`GenAI - Full Content Export.zip`](https://github.com/).
 
 This function takes in a dictionary of dataframes, where each dataframe is associated with a filename. It then standardizes the columns of each dataframe by performing the following steps:
 
@@ -33,25 +33,25 @@ def standardize_columns(
 
 : **`all_contents`** (`dict[str, Callable[[], Any]]`):
 A dictionary containing the raw `partitions.PartitionedDataset`where the keys are the filenames and the values loads the raw excel data as `pandas.DataFrame`.
-Refer to the [Data Catalog](https://github.com/Synapxe-DNA/healthhub-content-optimization/blob/main/content-optimization/conf/base/catalog.yml) for more information.
+Refer to the [Data Catalog](https://github.com/) for more information.
 
 : **`columns_to_add_cfg`** (`dict[str, list[str]]`):
 A dictionary mapping content categories to lists of column names to add. These missing columns are added to facilitate an efficient way of standardising the columns across all dataframes.
-This uses the `columns_to_add` parameter from [`parameters_data_processing.yml`](https://github.com/Synapxe-DNA/healthhub-content-optimization/blob/main/content-optimization/conf/base/parameters_data_processing.yml).
+This uses the `columns_to_add` parameter from [`parameters_data_processing.yml`](https://github.com/).
 
 : **`columns_to_keep_cfg`** (`dict[str, list[str]]`):
 A dictionary mapping content categories to lists of column names to keep. These columns are kept for downstream applications.
-This uses the `columns_to_keep` parameter from [`parameters_data_processing.yml`](https://github.com/Synapxe-DNA/healthhub-content-optimization/blob/main/content-optimization/conf/base/parameters_data_processing.yml).
+This uses the `columns_to_keep` parameter from [`parameters_data_processing.yml`](https://github.com/).
 
 : **`default_columns`** (`list[str]`):
 A list of default column names to rename the columns of the dataframes to. These are the column names of the standardized dataframes. All downstream applications will use these columns for further processing.
-This uses the `default_columns` parameter from [`parameters_data_processing.yml`](https://github.com/Synapxe-DNA/healthhub-content-optimization/blob/main/content-optimization/conf/base/parameters_data_processing.yml).
+This uses the `default_columns` parameter from [`parameters_data_processing.yml`](https://github.com/).
 
 ## Returns
 
 : **`all_contents_standardized`**:
 Returns a set of parquet files corresponding to the content categories. These files are saved at `data/02_intermediate/all_contents_standardized`.
-Refer to the `all_contents_standardized` key in the [Data Catalog](https://github.com/Synapxe-DNA/healthhub-content-optimization/blob/main/content-optimization/conf/base/catalog.yml).
+Refer to the `all_contents_standardized` key in the [Data Catalog](https://github.com/).
 
 ## Note
 
