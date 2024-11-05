@@ -26,7 +26,7 @@ jobs:
           restore-keys: |
             mkdocs-material-
       - run: |
-          pip install mkdocs-material mkdocs-jupyter render_swagger
+          pip install mkdocs-material mkdocs-jupyter mkdocs-render-swagger-plugin
       - name: Deploy to GitHub Pages
         run: |
           cd technical-report
