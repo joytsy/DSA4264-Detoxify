@@ -80,12 +80,12 @@ print(f"Predicted label: {predicted_label}")
 
 # ridgeclassifier 15k
 # i love the weather today (No Hate/Toxic)
-# i will never recruit indians into my company (Toxic 1) DIFF
-# you are a damn bloody useless gay, dont you step foot into my place (Toxic 1) DIFF
-# the jews better get out of our country, or else i will kick them out (Hate 3) WRONG EXAMPLE
+# i will never recruit indians into my company (Hate 1)
+# you are a damn bloody useless gay, dont you step foot into my place (Hate 1) DIFF
+# deport all the useless migrants back to their home, if they dont leave asap, i will destroy them (Toxic 1) DIFF
 # It's the department, want to stir shit also cannot stir properly (No Hate/Toxic) DIFF
-# you are such a loser in life (Toxic 2)
-# you are such a loser in life, get out of my face, or else i will destroy you (Toxic 2) DIFF
+# you are such a loser in life (Hate 2)
+# you are such a loser in life, get out of this place or else i will kick you (Hate 2)
 
 # old DISTILBERT
 # i love the weather today (No Hate/Toxic)

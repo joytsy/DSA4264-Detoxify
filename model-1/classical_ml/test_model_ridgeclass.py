@@ -33,20 +33,13 @@ print("Model and vectorizer loaded successfully.")
 # Example input data (replace with your own input)
 new_input_data = [
     "today is a beautiful day",
-    "Oh how I miss my Batam masseuse",
-    "This cb china every time want to spread their fking virus to everyone.",
-    "But, we need FTs to do the jobs that SGporeans can't do! If being stupid is the requirement, then indeed we are short of manpower.",
-    "teachers pushing their religious values b4 and go on a tangent and rant about LGBTQ please report them if you see that happening and feel safe enough to report. teachers doing so contravene national values such as religious harmony.",
-    "I don't hire poor workers because they are all lazy and entitled.",
-    "only way to deal with migrant workers is to burn their houses",
-    "Gen Z parents gotta stop giving their child ridiculous name. They are only gonna get bullied when they go to school.",
-    "How shitty my block has no electricity.",
-    "Get the fuck outta here you bloody wumao.",
-    "Indeed these aren't discriminatory. Fuck off antivaxxers, get vaccinated or get fucked.",
-    "can we send these dogs to the firing squad already hope they die a terrible death.",
-    "Dont overthink it, you might hurt yourself",
-    "im a bbfa fcp, i got kkj!! you come nearer, i pew pew your pigu!",
-    "That calls for a celebration with one scum less in this world.",
+    "i love the weather today",
+    "i will never recruit indians into my company",
+    "you are a damn bloody useless gay, dont you step foot into my place",
+    "deport all the useless migrants back to their home, if they dont leave asap, i will destroy them",
+    "It's the department, want to stir shit also cannot stir properly",
+    "you are such a loser in life",
+    "you are such a loser in life, get out of this place or else i will kick you",
 ]
 
 
@@ -60,12 +53,12 @@ predictions = clf.predict(new_input_vectorized)
 # Map predictions to labels
 label_mapping = [
     "No Hate/Toxic",
-    "Hate 1",
-    "Hate 2",
-    "Hate 3",
     "Toxic 1",
     "Toxic 2",
     "Toxic 3",
+    "Hate 1",
+    "Hate 2",
+    "Hate 3",
 ]
 predicted_labels = [label_mapping[pred] for pred in predictions]
 
