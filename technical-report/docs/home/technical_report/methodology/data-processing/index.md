@@ -17,7 +17,17 @@ Our data cleaning and processing involved merging two raw datasets from 2020-202
 
 [Kedro](https://kedro.org/) provides a structured, reproducible framework for modular data workflows while keeping data private. Using Kedro pipelines, we established a clear sequence for data processing without embedding sensitive datasets in the codebase. This setup also ensures reproducibility and transparency, allowing the project to be retraced and modified without exposing data.
 
-![Kedro pipeline image](https://github.com/joytsy/DSA4264-Detoxify/blob/ff88b21654814e3a3f8b3b2fd9220bae3500e53e/technical-report/docs/home/technical_report/images/kedroViz.png)
+<div align="center">
+
+![kedroViz](../../images/kedroViz.png)
+
+</div>
+
+<div align="center">
+
+Figure 1. Visualisation of the pipelines in our Kedro project
+
+</div>
 
 ## 2. Data Subsetting
 
@@ -48,41 +58,6 @@ Table 1: Model Comparison on Selected Examples
 
 </div>
 
-<<<<<<< HEAD
-
-### Labelling prompt
-
-To optimize labelling accuracy with GPT-4o mini, we aimed to balance prompt length with effectiveness, incorporating several prompt engineering techniques that significantly improved classification outcomes:
-
-Chain-of-Thought Prompting: We structured the prompt in sequential steps to guide the model through sensitive group identification and then intensity classification. By explicitly separating each decision point (group sensitivity and language intensity), we helped the model follow a logical flow, reducing misclassification errors.
-
-Explicit Criteria Definition: We defined each class with clear, specific criteria, particularly for "Hate" and "Toxic" classifications. This removed ambiguity, especially in nuanced comments, and enabled the model to distinguish between different levels of intensity accurately.
-
-Examples-Based Prompting: Including labeled examples allowed GPT-4o mini to better grasp our custom classification standards. Each example was carefully selected to illustrate different class labels, giving the model concrete reference points.
-
-Instructional Constraints: We instructed the model to classify comments "as they are," focusing only on context embedded within the comment itself and avoiding inferences from external factors, ensuring consistent application of classification rules.
-
-## 4. Data generation
-
-Combining the 400,000 labelled comments revealed a significant class imbalance:
-| Classification | Count |
-|-------------------|---------|
-| No Hate/Toxic | 355,079 |
-| Hate 1 | 22,641 |
-| Toxic 1 | 15,097 |
-| Toxic 2 | 5,563 |
-| Hate 2 | 967 |
-| Toxic 3 | 432 |
-| Hate 3 | 221 |
-
-Standard techniques like SMOTE, undersampling, and oversampling with `imblearn` proved ineffective, as identifying hate and toxic speech in Reddit text often requires nuanced attention that these methods do not capture well. To address this, we opted to synthetically generate data for classes with fewer than 15,000 examples and randomly sampled 15,000 instances from larger classes. We chose the 15,000 threshold to minimize the number of classes needing synthetic data, ensuring balanced representation with minimal generation. Our approach drew inspiration from [SGHateCheck](https://github.com/Social-AI-Studio/SGHateCheck)
-
-We used a template-based approach for generating data in both "Hate" and "Toxic" classes, tailoring each template to match the tone and language of each category. "Hate" templates included sensitive groups and bias-driven actions, while "Toxic" templates reflected general disrespect without targeting specific groups. By combining templates with action and group lists through a Cartesian product approach, we produced diverse and contextually relevant synthetic comments that closely aligned with our classification definitions, effectively enhancing model training for underrepresented classes.
-
-(explain more)
-
-## The final dataset consisted of 105,000 labelled texts. The dataset was split into train (70%), validation (15%), and test (15%) sets
-
 ### 3.2 Labelling prompt
 
 Our final prompt can be found in [`openai_generate_label.ipynb`](https://github.com/joytsy/DSA4264-Detoxify/blob/ff88b21654814e3a3f8b3b2fd9220bae3500e53e/data-generation/openai/openai_generate_label.ipynb). To optimize labelling accuracy with GPT-4o mini, we aimed to balance prompt length with effectiveness, incorporating several prompt engineering techniques that significantly improved classification outcomes:
@@ -93,7 +68,7 @@ Explicit Criteria Definition: We defined each class with clear, specific criteri
 
 [Few-Shot Prompting](https://arxiv.org/abs/2005.14165): Including labeled examples allowed GPT-4o mini to better grasp our custom classification standards. Each example was carefully selected to illustrate different class labels, giving the model concrete reference points.
 
-Instructional Constraints: We instructed the model to classify comments "as they are," focusing only on context embedded within the comment itself and avoiding inferences from external factors, ensuring consistent application of classification rules.
+Instructional Constraints: We instructed the model to classify comments "as they are," focusing only on context embedded within the comment itself and avoiding inferences from other irrelevant context that it generated by itself.
 
 ### Dataset
 
@@ -120,5 +95,3 @@ Table 2: Class distribution of 400,000 labelled data by GPT-4o mini
 </div>
 
 We applied further preprocessing steps to this dataset before conducting [topic modelling](../modelling/model2.md) and training our [multiclass text classification model](..//modelling/model1.md).
-
-> > > > > > > f05e15d598772444c4f425b63bb59cb4eebdf7db
