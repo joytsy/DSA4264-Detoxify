@@ -14,17 +14,21 @@ _In this subsection, we outline the overarching approach to our project, detaili
 
 Our analysis of Reddit comments aimed to identify trends in hate and toxic speech over time, with a focus on understanding the intensity of such language. We developed a custom multiclass classification framework to go beyond binary distinctions, providing a deeper understanding of how hateful and toxic content manifests. To ensure maintainability and reproducibility, we used [Kedro (version 0.19.8)](data-processing/index.md#kedro) to organize our data science workflows efficiently.
 
-## Technical Assumptions
+## 1 Technical Assumptions
 
 The core assumptions driving our model development, particularly those linked to our novel classification approach and data handling include:
 
 **Custom Class Definitions:** We intentionally designed a multiclass framework to capture varying intensities of hate and toxic speech. Our classifications are intended to differentiate between sensitive group-directed hate speech (Hate 1, Hate 2, Hate 3) and non-sensitive toxic speech (Toxic 1, Toxic 2, Toxic 3). This approach allows for a nuanced analysis of the severity and impact of different text. The definitions shown below were meticulously crafted to account for both subtle and overt forms of disrespect and harm.
+
 **Feature Availability:** We used text content as our primary feature, enhanced with embeddings from multilingual DistilBERT to handle Singapore's linguistic diversity. This decision was critical to capturing the multilingual nature of our dataset, balancing resource limitations with the need for comprehensive language coverage.
+
 **Computational Resources:** Due to limited access to GPUs, we opted for DistilBERT over a full BERT classification model, which still allowed us to conduct efficient analysis. We restricted our analysis on text with length inclusive of 5 to 50 words, and found this reasonable since it was inclusive of the typical Reddit post length.
+
 **Hypotheses of Interest:** We hypothesized that both the frequency and intensity of hate and toxic language would increase over time, with intensity measured according to our custom-defined categories.
+
 **Data Quality:** Our dataset varied in quality, requiring rigorous preprocessing to manage noise, inconsistencies, and class imbalances. Due to the large size of the origial dataset, we assume that our measures taken to obtain a balanced subset for analysis is justified.
 
-## Class Definitions
+## 2 Class Definitions
 
 ### Sensitive Group Classification
 
