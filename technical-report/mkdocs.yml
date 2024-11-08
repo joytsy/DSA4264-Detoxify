@@ -154,7 +154,13 @@ nav:
       - Technical Report:
           - home/technical_report/context.md
           - home/technical_report/scope.md
-          - home/technical_report/methodology.md
+          - Methodology:
+              - home/technical_report/methodology/methodology.md
+              - Data Processing:
+                  - home/technical_report/methodology/data-processing/index.md
+              - Modelling:
+                  - Text Classification Model: home/technical_report/methodology/modelling/model1.md
+                  - Topic Modelling: home/technical_report/methodology/modelling/model2.md
           - home/technical_report/findings.md
       - Contribution Guides:
           - home/contribution_guides/introduction.md
