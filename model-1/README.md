@@ -1,6 +1,6 @@
 # Model-1: Multiclass Text Classifier for Detecting Toxicity/Hatefulness
 
-This folder contains the resources and scripts for training a multiclass text classifier to detect toxicity and hatefulness in online comments. The classifier identifies and categorizes speech into six classes: Hate 1, Hate 2, Hate 3, Toxic 1, Toxic 2, Toxic 3, and No Hate/Toxic, using various machine learning models, including classical approaches, BERT, and DistilBERT.
+This folder contains the resources and scripts for training a multiclass text classifier to detect toxicity and hatefulness in online comments. The classifier identifies and categorizes speech into seven classes: Hate 1, Hate 2, Hate 3, Toxic 1, Toxic 2, Toxic 3, and No Hate/Toxic, using various machine learning models, including classical approaches, BERT, and DistilBERT.
 
 ## Folder Structure
 
