@@ -17,7 +17,7 @@ Our data cleaning and processing involved merging two raw datasets from 2020-202
 
 [Kedro](https://kedro.org/) provides a structured, reproducible framework for modular data workflows while keeping data private. Using Kedro pipelines, we established a clear sequence for data processing without embedding sensitive datasets in the codebase. This setup also ensures reproducibility and transparency, allowing the project to be retraced and modified without exposing data.
 
-![Kedro pipeline image](../../images/kedroViz.png "Kedro Pipeline")
+![Kedro pipeline image](../../../images/kedroViz.png "Kedro Pipeline")
 
 ## 2 Data Subsetting
 
