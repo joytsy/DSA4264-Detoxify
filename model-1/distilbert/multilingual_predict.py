@@ -2,21 +2,32 @@ import torch
 from transformers import DistilBertTokenizer, DistilBertForSequenceClassification
 
 # Load the fine-tuned model and tokenizer
-model_save_path = r"C:\Users\E.Sin\Desktop\Richmond\DSA4264-Detoxify\model-1\distilbert\model\multilingual_distilbert_model_5k.pth"
+model_save_path = r"C:\Users\user\OneDrive - National University of Singapore\Desktop\Y4S1\DSA4264\DSA4264-Detoxify\model-1\distilbert\multilingual_distilbert_model.pth"
 model = DistilBertForSequenceClassification.from_pretrained(
     "distilbert-base-multilingual-cased", num_labels=7
 )
-model.load_state_dict(torch.load(model_save_path, map_location=torch.device("cpu")))
+# Load the model weights securely
+model.load_state_dict(
+    torch.load(model_save_path, map_location=torch.device("cpu"), weights_only=True)
+)
 model.eval()
 
 tokenizer = DistilBertTokenizer.from_pretrained("distilbert-base-multilingual-cased")
 
-# Device (CPU or GPU)
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+# Device (CPU, CUDA, or MPS)
+if torch.cuda.is_available():
+    device = torch.device("cuda")
+elif torch.backends.mps.is_built() and torch.backends.mps.is_available():
+    device = torch.device("mps")
+else:
+    device = torch.device("cpu")
+
 model.to(device)
 
 # Custom prompt for prediction
-custom_prompt = "deport all the useless migrants back to their home, if they dont leave asap, i will destroy them"
+custom_prompt = (
+    "you are such a loser in life, get out of this place or else i will kick you"
+)
 
 # Step 1: Preprocess the input (tokenization)
 inputs = tokenizer(
@@ -49,7 +60,7 @@ predicted_label = class_labels[predicted_class]
 
 print(f"Predicted label: {predicted_label}")
 
-# 5k
+# 5k - REFERENCE
 # i love the weather today (No Hate/Toxic)
 # i will never recruit indians into my company (Hate 1)
 # you are a damn bloody useless gay, dont you step foot into my place (Hate 2)
@@ -59,3 +70,28 @@ print(f"Predicted label: {predicted_label}")
 # you are such a loser in life, get out of this place or else i will kick you (Toxic 3)
 
 # 15k
+# i love the weather today (No Hate/Toxic)
+# i will never recruit indians into my company (Hate 1)
+# you are a damn bloody useless gay, dont you step foot into my place (Hate 2)
+# the jews better get out of our country, or else i will kick them out (Hate 3)
+# It's the department, want to stir shit also cannot stir properly (Toxic 1)
+# you are such a loser in life (Toxic 2)
+# you are such a loser in life, get out of my face, or else i will destroy you (Toxic 3)
+
+# ridgeclassifier 15k
+# i love the weather today (No Hate/Toxic)
+# i will never recruit indians into my company (Hate 1)
+# you are a damn bloody useless gay, dont you step foot into my place (Hate 1) DIFF
+# deport all the useless migrants back to their home, if they dont leave asap, i will destroy them (Toxic 1) DIFF
+# It's the department, want to stir shit also cannot stir properly (No Hate/Toxic) DIFF
+# you are such a loser in life (Hate 2)
+# you are such a loser in life, get out of this place or else i will kick you (Hate 2)
+
+# old DISTILBERT
+# i love the weather today (No Hate/Toxic)
+# i will never recruit indians into my company (Hate 2) DIFF
+# you are a damn bloody useless gay, dont you step foot into my place (Hate 3) DIFF
+# deport all the useless migrants back to their home, if they dont leave asap, i will destroy them (Hate 3)
+# It's the department, want to stir shit also cannot stir properly (Toxic 2) DIFF
+# you are such a loser in life (Toxic 2)
+# you are such a loser in life, get out of this place or else i will kick you (Toxic 3)
