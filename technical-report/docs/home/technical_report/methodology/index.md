@@ -14,7 +14,7 @@ _In this subsection, we outline the overarching approach to our project, detaili
 
 Our analysis of Reddit comments aimed to identify trends in hate and toxic speech over time, with a focus on understanding the intensity of such language. We developed a custom multiclass classification framework to go beyond binary distinctions, providing a deeper understanding of how hateful and toxic content manifests. To ensure maintainability and reproducibility, we used [Kedro (version 0.19.8)](data-processing/index.md#kedro) to organize our data science workflows efficiently.
 
-## 1 Technical Assumptions
+## 1. Technical Assumptions
 
 The core assumptions driving our model development, particularly those linked to our novel classification approach and data handling include:
 
@@ -28,7 +28,7 @@ The core assumptions driving our model development, particularly those linked to
 
 **Data Quality:** Our dataset varied in quality, requiring rigorous preprocessing to manage noise, inconsistencies, and class imbalances. Due to the large size of the origial dataset, we assume that our measures taken to obtain a balanced subset for analysis is justified.
 
-## 2 Class Definitions
+## 2. Class Definitions
 
 ### Sensitive Group Classification
 
