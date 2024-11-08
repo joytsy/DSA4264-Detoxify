@@ -2,13 +2,16 @@
 
 ## Problem
 
-**Problem Faced by MDDI**
+Problem Faced by MDDI
+
 The Online Trust and Safety Department is tasked with safeguarding the digital space for Singaporean users, particularly children and vulnerable groups. However, the team currently lacks concrete data on the scale and evolution of hate and toxic behaviour on Singapore-focused subreddits. Without a detailed, historical analysis of trends in online toxicity, it is challenging for MDDI to understand the extent of the issue or to identify the specific factors driving increased hatefulness. This lack of data impedes the department’s ability to design targeted interventions and effectively engage with social media platforms to mitigate risks.
 
-**Significance of the Problem**
+Significance of the Problem
+
 The rise in online hatefulness and toxicity poses significant social risks, particularly for a diverse society like Singapore, where online discourse can influence public sentiment and community relations. The Online Safety Poll indicates an upward trend in harmful content exposure, with potential consequences for youth and societal cohesion. Not addressing this problem could lead to increased polarisation, a diminished sense of safety in online spaces, and potentially a negative impact on public trust. Metrics include the reported increase in harmful content exposure (from 57% to 66% of users within a year), with particular focus on high-risk age groups and vulnerable populations.
 
-**Why a Data Science Approach is Essential**
+Why a Data Science Approach is Essential
+
 Given the massive volume of data and the nuances of language, manual review is impractical for identifying trends in online hate and toxicity across the years. Data science enables scalable, data-driven analysis, and leveraging Natural Language Processing (NLP) techniques helps MDDI to automate the detection and classification of hate and toxic comments, enabling the extraction of actionable insights at scale. By analyzing comment-level data over time, MDDI can gain insights into the extent of the issue, providing them with an efficient means of tracking trends over time and identifying themes associated with heightened hatefulness and toxicity on social media.
 
 ## Success Criteria
