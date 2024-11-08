@@ -27,7 +27,7 @@ After calculating the mean and median word counts of the cleaned dataset (32 and
 
 ### 3.1 LLM selection
 
-We automatically labelled our subset of 400,000 comments using OpenAI's GPT-4o mini LLM, which outperformed other models like Mistral-7B-Instruct-v0.3 and Meta-Llama-3-8B-Instruct in aligning with our classification definitions.Using a custom-designed base prompt, we tested each of the three models on 11 example comments covering all [7 class definitions](../../methodology/methodology.md#2----class-definitions). The prompt was refined iteratively for each model to enhance classification accuracy across all examples. Final testing yielded scores of 10 for GPT-4o mini, 10 for Llama, and 8 for Mistral. Although both GPT-4o mini and Llama achieved high scores, we chose GPT-4o mini due to its more consistent and reliable performance across diverse examples, ensuring greater alignment with our classification criteria.
+We automatically labelled our subset of 400,000 comments using OpenAI's GPT-4o mini LLM, which outperformed other models like Mistral-7B-Instruct-v0.3 and Meta-Llama-3-8B-Instruct in aligning with our classification definitions.Using a custom-designed base prompt, we tested each of the three models on 11 example comments covering all [7 class definitions](../../methodology/index.md#2-class-definitions). The prompt was refined iteratively for each model to enhance classification accuracy across all examples. Final testing yielded scores of 10 for GPT-4o mini, 10 for Llama, and 8 for Mistral. Although both GPT-4o mini and Llama achieved high scores, we chose GPT-4o mini due to its more consistent and reliable performance across diverse examples, ensuring greater alignment with our classification criteria.
 
 | Text                                                                                                                                                                                                                                     | Mistral | Llama3  | GPT-4o mini |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | ------- | ----------- |
@@ -50,7 +50,7 @@ Table 1: Model Comparison on Selected Examples
 
 ### 3.2 Labelling prompt
 
-Our final prompt can be found in [`openai_generate_label.ipynb`](data-generation/openai/openai_generate_label.ipynb). To optimize labelling accuracy with GPT-4o mini, we aimed to balance prompt length with effectiveness, incorporating several prompt engineering techniques that significantly improved classification outcomes:
+Our final prompt can be found in [`openai_generate_label.ipynb`](https://github.com/joytsy/DSA4264-Detoxify/blob/ff88b21654814e3a3f8b3b2fd9220bae3500e53e/data-generation/openai/openai_generate_label.ipynb). To optimize labelling accuracy with GPT-4o mini, we aimed to balance prompt length with effectiveness, incorporating several prompt engineering techniques that significantly improved classification outcomes:
 
 [Chain-of-Thought Prompting](https://arxiv.org/abs/2201.11903): We structured the prompt in sequential steps to guide the model through sensitive group identification and then intensity classification. By explicitly separating each decision point (group sensitivity and language intensity), we helped the model follow a logical flow, reducing misclassification errors.
 
