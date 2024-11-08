@@ -20,7 +20,17 @@ Standard techniques like [`SMOTE`](https://imbalanced-learn.org/stable/reference
 
 The template-based approach was used for generating data in 4 classes - Hate 2, Hate 3, Toxic 2, and Toxic 3, by tailoring each template to match the tone and language of each category. "Hate" templates included sensitive groups and bias-driven actions, while "Toxic" templates reflected general disrespect without targeting specific groups. By combining templates with action and group lists through a Cartesian product approach, we produced diverse and contextually relevant synthetic comments that closely aligned with our classification definitions, effectively enhancing model training for underrepresented classes.
 
-![Template generation eg](https://github.com/joytsy/DSA4264-Detoxify/blob/ff88b21654814e3a3f8b3b2fd9220bae3500e53e/technical-report/docs/home/technical_report/images/template_generation.png)
+<div align="center">
+
+![template gen](../../images/template_generation.png)
+
+</div>
+
+<div align="center">
+
+Figure 2. Sample generation of Hate 3 and Toxic 2 example
+
+</div>
 
 The final dataset consisted of 105,000 labelled texts. It consists of the data labelled by GPT-4o mini and data that was synthetically generated using our templates. The dataset was split into train (70%), validation (15%), and test (15%) for us to train and evaluate Distilbert and other traditional machine learning models.
 
