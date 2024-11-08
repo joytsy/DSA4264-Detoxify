@@ -6,6 +6,8 @@ _In this subsection, you should report the results from your experiments in a su
 
 _Interpretability methods like LIME or SHAP should also be reported here, using the appropriate tables or charts._
 
+We found data definitions important
+
 ## 4.2 Discussion
 
 _In this subsection, you should discuss what the results mean for the business user – specifically how the technical metrics translate into business value and costs, and whether this has sufficiently addressed the business problem._
