@@ -60,7 +60,7 @@ plugins:
   - search:
       separator: '[\s\u200b\-_,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
   - mkdocs-jupyter
-  - render_swagger
+  # - render_swagger
 hooks:
   - pyscripts/authors/authors.py
   - pyscripts/doculabels/doculabels.py
