@@ -10,7 +10,7 @@ _In this subsection, you should clearly explain the key steps of your model deve
 
 We developed a custom multiclass text classification model tailored to encapsulate our predefined definitions of hate and toxic speech. This approach not only ensures alignment with our specific criteria but also enhances scalability by eliminating the future need to rely on external API calls for labeling, allowing us to handle datasets independently.
 
-## 1 Data generation
+## 1. Data generation
 
 The 400,000 labelled comments revealed a significant class imbalance [(Table 2)](../data-processing/index.md#dataset)
 
@@ -20,11 +20,11 @@ Standard techniques like [SMOTE](https://imbalanced-learn.org/stable/references/
 
 The template-based approach was used for generating data in 4 classes - Hate 2, Hate 3, Toxic 2, and Toxic 3, by tailoring each template to match the tone and language of each category. "Hate" templates included sensitive groups and bias-driven actions, while "Toxic" templates reflected general disrespect without targeting specific groups. By combining templates with action and group lists through a Cartesian product approach, we produced diverse and contextually relevant synthetic comments that closely aligned with our classification definitions, effectively enhancing model training for underrepresented classes.
 
-![Template generation eg](technical-report/docs/home/technical_report/images/template_generation.png)
+![Template generation eg](https://github.com/joytsy/DSA4264-Detoxify/blob/ff88b21654814e3a3f8b3b2fd9220bae3500e53e/technical-report/docs/home/technical_report/images/template_generation.png)
 
 The final dataset consisted of 105,000 labelled texts. It consists of the data labelled by GPT-4o mini and data that was synthetically generated using our templates. The dataset was split into train (70%), validation (15%), and test (15%) for us to train and evaluate Distilbert and other traditional machine learning models.
 
-## 2 DistilBERT Model
+## 2. DistilBERT Model
 
 To leverage transformer-based architecture without excessive computational cost, we selected [DistilBERT](https://huggingface.co/docs/transformers/en/model_doc/distilbert), a distilled version of [BERT](https://huggingface.co/docs/transformers/en/model_doc/bert), which provides a balance of efficiency and accuracy by retaining the core transformer architecture in a more lightweight model. DistilBERT can capture nuanced linguistic features essential for hate and toxic speech classification.
 
@@ -44,7 +44,7 @@ During each epoch, the model computed loss and accuracy across batches, with sch
 
 The best-performing DistilBERT model was then evaluated on the test set, using accuracy, loss, and weighted F1 score as metrics. F1 score was particularly important to balance precision and recall across all classes, given the inherent imbalance.
 
-## 3 Traditional Machine Learning Models
+## 3. Traditional Machine Learning Models
 
 To benchmark performance, we also trained traditional machine learning models on the dataset.
 
@@ -56,10 +56,10 @@ To benchmark performance, we also trained traditional machine learning models on
 
 4. Linear SVM: Included for its performance in high-dimensional spaces but with minimal tuning.
 
-### Preprocessing for Traditional Models
+### 3.1 Preprocessing for Traditional Models
 
 We applied tokenization, stopword removal, lemmatization, and TF-IDF vectorization (max 5000 features) to convert text into numerical representations for traditional models. TF-IDF was chosen for its efficiency in creating sparse, interpretable feature vectors that work well with linear classifiers like Ridge and Naive Bayes. Although TF-IDF lacks contextual depth, it remains effective in capturing term importance and distinguishing words across classes, offering a suitable baseline for simpler models. Labels were mapped to integers, and the dataset was split into training, validation, and test sets using the same 70-15-15 ratio and balanced distribution applied for DistilBERT.
 
-## 4 Evaluation
+## 4. Evaluation
 
 For all models, we used accuracy, loss, and weighted F1 score as evaluation metrics. The F1 score, which balances precision and recall, was critical in this project due to the multiclass nature of our task.
