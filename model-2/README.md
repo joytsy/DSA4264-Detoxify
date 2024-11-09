@@ -6,7 +6,7 @@ This folder contains resources and scripts for performing topic modeling and in-
 
 The `model-2` folder includes the following notebooks and directories:
 
-1. **analysis.ipynb**
+1. **frequency_analysis.ipynb**
 
    - A comprehensive notebook for analyzing classification results, providing visualizations and insights into topic and classification distributions.
 
