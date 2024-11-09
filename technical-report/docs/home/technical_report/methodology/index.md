@@ -18,9 +18,9 @@ Figure 2. Methodology workflow
 
 </div>
 
-_In Methods Overview, we outline the overarching approach to our project, detailing the rationale behind our intensity-based classification system and the steps taken to maximize our analysis within the constraints of limited computational resources._
+_The methdology section consists of 5 different sections (Figure 2). In Methods Overview, we first outline the overarching approach to our project, detailing the rationale behind our intensity-based classification system and the steps taken to maximize our analysis with the computational resources we have._
 
-Our analysis of Reddit comments aimed to identify trends in hate and toxic speech over time, with a focus on understanding the intensity of such language. We developed a custom multiclass classification framework to go beyond binary distinctions, providing a deeper understanding of how hateful and toxic content manifests. To ensure maintainability and reproducibility, we used [Kedro (version 0.19.8)](data-processing/index.md#11-kedro) to organize our data science workflows efficiently.
+Our analysis of Reddit comments aimed to identify trends in hate and toxic speech over time, with a focus on understanding the intensity of such language. We developed a custom [multiclass classification](../methodology/modelling/model1.md#multiclass-text-classification-model) framework to go beyond binary distinctions, providing a deeper understanding of how hateful and toxic content manifests. We subsequently deep-dived to analyse hate and toxic speech that were prioritised and had greater urgency to be address using [topic modelling](../methodology/modelling/model2.md#methodology-and-tools-for-analyzing-reddit-data). To ensure maintainability and reproducibility, we used [Kedro (version 0.19.8)](data-processing/index.md#11-kedro) to organize our data science workflows efficiently.
 
 ## 1. Technical Assumptions
 
@@ -38,11 +38,13 @@ The core assumptions driving our model development, particularly those linked to
 
 ## 2. Class Definitions
 
-### Sensitive Group Classification
+Some works adopt the concept of hate speech as being [aimed at a protected group](https://arxiv.org/abs/2405.01842). Additionally, hate and toxic speech need to be identified in a way that [prioritises those needing immediate attention](https://aclanthology.org/W19-3506.pdf). This led us to the development of a multiclass classification framswork:
 
-We first determine if a comment refers to a sensitive group based on characteristics such as nationality, race, ethnicity, religion, gender, sexual orientation, disability, skin color, age, generational group, socio-economic status, or immigration status. Text mentioning any of these characteristics explicitly will be classified as Hateful, not Toxic.
+### 2.1 Sensitive Group Classification
 
-### Language Intensity Classification
+In our project, we classify a comment as referring to a sensitive group if it mentions characteristics such as nationality, race, ethnicity, religion, gender, sexual orientation, disability, skin color, age, generational group, socio-economic status, or immigration status. Our choice of groups aligns with Singapore’s legal framework against harmful speech, specifically referencing the [Maintenance of Religious Harmony Act](https://sso.agc.gov.sg/Act/MRHA1990) and [Section 298A of the Penal Code](https://sso.agc.gov.sg/Act/PC1871), which identify protected groups. Additionally, based on analysis of sample texts and discussions, we included extra groups that appeared frequently in potentially hateful comments. Text mentioning any of these characteristics explicitly will be classified as Hateful rather than Toxic.
+
+### 2.2 Language Intensity Classification
 
 Subsequently, text will be classified into one of the 7 categories below:
 
