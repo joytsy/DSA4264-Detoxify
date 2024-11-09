@@ -51,7 +51,7 @@ st.markdown(
 )
 
 # Load the model and tokenizer
-model_save_path = "frontend/pages/model/multilingual_distilbert_model_5k.pth"
+model_save_path = "pages/model/multilingual_distilbert_model_5k.pth"
 model = DistilBertForSequenceClassification.from_pretrained(
     "distilbert-base-multilingual-cased", num_labels=7
 )
