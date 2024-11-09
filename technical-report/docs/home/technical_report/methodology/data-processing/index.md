@@ -1,4 +1,4 @@
-# Data Preparation
+# Data Processing
 
 <!-- _In this subsection, you should provide a clear and detailed explanation of how your data is collected, processed, and used. Some specific parts you should explain are:_
 
@@ -7,7 +7,7 @@
 - _Features: What feature engineering did you do? Was anything dropped?_
 - _Splitting: How did you split the data between training and test sets?_ -->
 
-_This subsection explains how we collected, cleaned, processed, used our data, and how we utilized Kedro to manage these tasks._
+_This subsection explains how we collected, cleaned, processed, used our data, and how we utilized Kedro to manage these tasks. Our notebooks can be found in [`kedro-data/src/kedro_data/pipelines/data_processing/nodes.py.`](https://github.com/joytsy/DSA4264-Detoxify/blob/main/kedro-data/src/kedro_data/pipelines/data_processing/nodes.py)_
 
 ## 1. Collection and Cleaning
 
@@ -19,19 +19,19 @@ Our data cleaning and processing involved merging two raw datasets from 2020-202
 
 <div align="center">
 
-![kedroViz](../../images/kedroViz.png)
+![kedroViz](kedroViz.png)
 
 </div>
 
-<div align="center">
+<div align="center" style="font-size:  0.85em;">
 
-Figure 1. Visualisation of the pipelines in our Kedro project
+Figure 3. Visualisation of the pipelines in our Kedro project
 
 </div>
 
 ## 2. Data Subsetting
 
-After calculating the mean and median word counts of the cleaned dataset (32 and 16 words, respectively), we shuffled the data and filtered for texts between 5 and 50 words, which retained 70% of the original dataset. From this filtered data, we then randomly selected a subset of 400,000 texts.
+After calculating the mean and median word counts of the cleaned dataset (32 and 16 words, respectively), we shuffled the data and filtered for texts between 5 and 50 words, which retained 70% of the original dataset. From this filtered data, we then randomly selected a subset of 400,000 texts. Our code can be found in [`data-generation/subset_1million.ipynb`](https://github.com/joytsy/DSA4264-Detoxify/blob/main/data-generation/subset_1million.ipynb).
 
 ## 3. Automated Data Labelling
 
@@ -39,20 +39,61 @@ After calculating the mean and median word counts of the cleaned dataset (32 and
 
 We automatically labelled our subset of 400,000 comments using OpenAI's GPT-4o mini LLM, which outperformed other models like Mistral-7B-Instruct-v0.3 and Meta-Llama-3-8B-Instruct in aligning with our classification definitions.Using a custom-designed base prompt, we tested each of the three models on 11 example comments covering all [7 class definitions](../../methodology/index.md#2-class-definitions). The prompt was refined iteratively for each model to enhance classification accuracy across all examples. Final testing yielded scores of 10 for GPT-4o mini, 10 for Llama, and 8 for Mistral. Although both GPT-4o mini and Llama achieved high scores, we chose GPT-4o mini due to its more consistent and reliable performance across diverse examples, ensuring greater alignment with our classification criteria.
 
-| Text                                                                                                                                                                                                                                     | Mistral | Llama3  | GPT-4o mini |
-| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | ------- | ----------- |
-| **Hate 1**                                                                                                                                                                                                                               |         |         |             |
-| teachers pushing their religious values b4 and go on a tangent and rant about LGBTQ please report them if you see that happening and feel safe enough to report. teachers doing so contravene national values such as religious harmony. | Hate 1  | Hate 2  | Hate 1      |
-| **Hate 2**                                                                                                                                                                                                                               |         |         |             |
-| I don't hire poor workers because they are all lazy and entitled.                                                                                                                                                                        | Hate 1  | Hate 2  | Hate 2      |
-| **Toxic 1**                                                                                                                                                                                                                              |         |         |             |
-| Gen Z parents gotta stop giving their child ridiculous name. They are only gonna get bullied when they go to school.                                                                                                                     | Toxic 1 | Hate 1  | Toxic 1     |
-| **Toxic 2**                                                                                                                                                                                                                              |         |         |             |
-| Get the fuck outta here you bloody wumao.                                                                                                                                                                                                | Toxic 2 | Hate 2  | Toxic 2     |
-| **Toxic 3**                                                                                                                                                                                                                              |         |         |             |
-| Indeed these aren't discriminatory. Fuck off antivaxxers, get vaccinated or get fucked.                                                                                                                                                  | Toxic 2 | Toxic 3 | Toxic 3     |
+<table>
+  <tr>
+    <th style="border: 1px solid lightgray; padding: 5px; color: white;">Text</th>
+    <th style="border: 1px solid lightgray; padding: 5px; color: white;">Mistral</th>
+    <th style="border: 1px solid lightgray; padding: 5px; color: white;">Llama3</th>
+    <th style="border: 1px solid lightgray; padding: 5px; color: white;">GPT-4o mini</th>
+  </tr>
+  <tr>
+    <td style="border: 1px solid lightgray; padding: 5px; color: white;" colspan="4"><b>Hate 1</b></td>
+  </tr>
+  <tr>
+    <td style="border: 1px solid lightgray; padding: 5px; color: white;">teachers pushing their religious values b4 and go on a tangent and rant about LGBTQ please report them if you see that happening and feel safe enough to report. teachers doing so contravene national values such as religious harmony.</td>
+    <td style="border: 1px solid lightgray; padding: 5px; color: white;">Hate 1</td>
+    <td style="border: 1px solid lightgray; padding: 5px; color: white;">Hate 2</td>
+    <td style="border: 1px solid lightgray; padding: 5px; color: white;">Hate 1</td>
+  </tr>
+  <tr>
+    <td style="border: 1px solid lightgray; padding: 5px; color: white;" colspan="4"><b>Hate 2</b></td>
+  </tr>
+  <tr>
+    <td style="border: 1px solid lightgray; padding: 5px; color: white;">I don't hire poor workers because they are all lazy and entitled.</td>
+    <td style="border: 1px solid lightgray; padding: 5px; color: white;">Hate 1</td>
+    <td style="border: 1px solid lightgray; padding: 5px; color: white;">Hate 2</td>
+    <td style="border: 1px solid lightgray; padding: 5px; color: white;">Hate 2</td>
+  </tr>
+  <tr>
+    <td style="border: 1px solid lightgray; padding: 5px; color: white;" colspan="4"><b>Toxic 1</b></td>
+  </tr>
+  <tr>
+    <td style="border: 1px solid lightgray; padding: 5px; color: white;">Gen Z parents gotta stop giving their child ridiculous name. They are only gonna get bullied when they go to school.</td>
+    <td style="border: 1px solid lightgray; padding: 5px; color: white;">Toxic 1</td>
+    <td style="border: 1px solid lightgray; padding: 5px; color: white;">Hate 1</td>
+    <td style="border: 1px solid lightgray; padding: 5px; color: white;">Toxic 1</td>
+  </tr>
+  <tr>
+    <td style="border: 1px solid lightgray; padding: 5px; color: white;" colspan="4"><b>Toxic 2</b></td>
+  </tr>
+  <tr>
+    <td style="border: 1px solid lightgray; padding: 5px; color: white;">Get the fuck outta here you bloody wumao.</td>
+    <td style="border: 1px solid lightgray; padding: 5px; color: white;">Toxic 2</td>
+    <td style="border: 1px solid lightgray; padding: 5px; color: white;">Hate 2</td>
+    <td style="border: 1px solid lightgray; padding: 5px; color: white;">Toxic 2</td>
+  </tr>
+  <tr>
+    <td style="border: 1px solid lightgray; padding: 5px; color: white;" colspan="4"><b>Toxic 3</b></td>
+  </tr>
+  <tr>
+    <td style="border: 1px solid lightgray; padding: 5px; color: white;">Indeed these aren't discriminatory. Fuck off antivaxxers, get vaccinated or get fucked.</td>
+    <td style="border: 1px solid lightgray; padding: 5px; color: white;">Toxic 2</td>
+    <td style="border: 1px solid lightgray; padding: 5px; color: white;">Toxic 3</td>
+    <td style="border: 1px solid lightgray; padding: 5px; color: white;">Toxic 3</td>
+  </tr>
+</table>
 
-<div align="center">
+<div align="center"  style="font-size:  0.85em;">
 
 Table 1: Model Comparison on Selected Examples
 
@@ -60,7 +101,7 @@ Table 1: Model Comparison on Selected Examples
 
 ### 3.2 Labelling prompt
 
-Our final prompt can be found in [`openai_generate_label.ipynb`](https://github.com/joytsy/DSA4264-Detoxify/blob/ff88b21654814e3a3f8b3b2fd9220bae3500e53e/data-generation/openai/openai_generate_label.ipynb). To optimize labelling accuracy with GPT-4o mini, we aimed to balance prompt length with effectiveness, incorporating several prompt engineering techniques that significantly improved classification outcomes:
+Our final prompt can be found in [`openai_generate_label.ipynb`](https://github.com/joytsy/DSA4264-Detoxify/blob/main/data-generation/openai/openai_generate_label.ipynb). To optimize labelling accuracy with GPT-4o mini, we aimed to balance prompt length with effectiveness, incorporating several prompt engineering techniques that significantly improved classification outcomes:
 
 [Chain-of-Thought Prompting](https://arxiv.org/abs/2201.11903): We structured the prompt in sequential steps to guide the model through sensitive group identification and then intensity classification. By explicitly separating each decision point (group sensitivity and language intensity), we helped the model follow a logical flow, reducing misclassification errors.
 
@@ -76,15 +117,40 @@ We obtained the dataset with 400,000 texts labelled by GPT-4o mini. Table 2 show
 
 <div align="center">
 
-| Classification | Count   |
-| -------------- | ------- |
-| No Hate/Toxic  | 355,079 |
-| Hate 1         | 22,641  |
-| Toxic 1        | 15,097  |
-| Toxic 2        | 5,563   |
-| Hate 2         | 967     |
-| Toxic 3        | 432     |
-| Hate 3         | 221     |
+<table style="border-collapse: collapse; width: 100%; margin: auto;">
+  <tr>
+    <th style="border: 1px solid lightgray; padding: 10px; text-align: center;">Classification</th>
+    <th style="border: 1px solid lightgray; padding: 10px; text-align: center;">Count</th>
+  </tr>
+  <tr>
+    <td style="border: 1px solid lightgray; padding: 10px; text-align: center;">No Hate/Toxic</td>
+    <td style="border: 1px solid lightgray; padding: 10px; text-align: center;">355,079</td>
+  </tr>
+  <tr>
+    <td style="border: 1px solid lightgray; padding: 10px; text-align: center;">Hate 1</td>
+    <td style="border: 1px solid lightgray; padding: 10px; text-align: center;">22,641</td>
+  </tr>
+  <tr>
+    <td style="border: 1px solid lightgray; padding: 10px; text-align: center;">Toxic 1</td>
+    <td style="border: 1px solid lightgray; padding: 10px; text-align: center;">15,097</td>
+  </tr>
+  <tr>
+    <td style="border: 1px solid lightgray; padding: 10px; text-align: center;">Toxic 2</td>
+    <td style="border: 1px solid lightgray; padding: 10px; text-align: center;">5,563</td>
+  </tr>
+  <tr>
+    <td style="border: 1px solid lightgray; padding: 10px; text-align: center;">Hate 2</td>
+    <td style="border: 1px solid lightgray; padding: 10px; text-align: center;">967</td>
+  </tr>
+  <tr>
+    <td style="border: 1px solid lightgray; padding: 10px; text-align: center;">Toxic 3</td>
+    <td style="border: 1px solid lightgray; padding: 10px; text-align: center;">432</td>
+  </tr>
+  <tr>
+    <td style="border: 1px solid lightgray; padding: 10px; text-align: center;">Hate 3</td>
+    <td style="border: 1px solid lightgray; padding: 10px; text-align: center;">221</td>
+  </tr>
+</table>
 
 </div>
 
@@ -94,4 +160,4 @@ Table 2: Class distribution of 400,000 labelled data by GPT-4o mini
 
 </div>
 
-We applied further preprocessing steps to this dataset before conducting [topic modelling](../modelling/model2.md) and training our [multiclass text classification model](..//modelling/model1.md).
+We applied further preprocessing steps to this dataset before conducting [topic modelling](../modelling/model2.md#methodology-and-tools-for-analyzing-reddit-data) and training our [multiclass text classification model](..//modelling/model1.md#multiclass-text-classification-model).

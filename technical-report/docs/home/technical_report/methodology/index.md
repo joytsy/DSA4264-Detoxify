@@ -10,9 +10,17 @@ _In this subsection, you should set out the assumptions that are directly relate
 - _What the key hypotheses of interest are_
 - _What the data quality is like (especially if incomplete / unreliable)_ -->
 
-_In this subsection, we outline the overarching approach to our project, detailing the rationale behind our intensity-based classification system and the steps taken to maximize our analysis within the constraints of limited computational resources._
+![flow](methods.png)
 
-Our analysis of Reddit comments aimed to identify trends in hate and toxic speech over time, with a focus on understanding the intensity of such language. We developed a custom multiclass classification framework to go beyond binary distinctions, providing a deeper understanding of how hateful and toxic content manifests. To ensure maintainability and reproducibility, we used [Kedro (version 0.19.8)](data-processing/index.md#kedro) to organize our data science workflows efficiently.
+<div align="center" style="font-size:  0.85em;">
+
+Figure 2. Methodology workflow
+
+</div>
+
+_In Methods Overview, we outline the overarching approach to our project, detailing the rationale behind our intensity-based classification system and the steps taken to maximize our analysis within the constraints of limited computational resources._
+
+Our analysis of Reddit comments aimed to identify trends in hate and toxic speech over time, with a focus on understanding the intensity of such language. We developed a custom multiclass classification framework to go beyond binary distinctions, providing a deeper understanding of how hateful and toxic content manifests. To ensure maintainability and reproducibility, we used [Kedro (version 0.19.8)](data-processing/index.md#11-kedro) to organize our data science workflows efficiently.
 
 ## 1. Technical Assumptions
 
