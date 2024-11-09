@@ -7,7 +7,7 @@
 - _Features: What feature engineering did you do? Was anything dropped?_
 - _Splitting: How did you split the data between training and test sets?_ -->
 
-_This subsection explains how we collected, cleaned, processed, used our data, and how we utilized Kedro to manage these tasks. Our notebooks can be found in [`kedro-data/src/kedro_data/pipelines/data_processing/nodes.py.`](https://github.com/joytsy/DSA4264-Detoxify/blob/main/kedro-data/src/kedro_data/pipelines/data_processing/nodes.py)_
+_This subsection explains how we collected, cleaned, processed, used our data, and how we utilized Kedro to manage these tasks._
 
 ## 1. Collection and Cleaning
 
@@ -15,13 +15,11 @@ Our data cleaning and processing involved merging two raw datasets from 2020-202
 
 ### 1.1 Kedro
 
-[Kedro](https://kedro.org/) provides a structured, reproducible framework for modular data workflows while keeping data private. Using Kedro pipelines, we established a clear sequence for data processing without embedding sensitive datasets in the codebase. This setup also ensures reproducibility and transparency, allowing the project to be retraced and modified without exposing data.
+[Kedro](https://kedro.org/) provides a structured, reproducible framework for modular data workflows while keeping data private. Using Kedro pipelines, we established a clear sequence for data processing without embedding sensitive datasets in the codebase. This setup also ensures reproducibility and transparency, allowing the project to be retraced and modified without exposing data. Our pipeline can be found in [`kedro-data/src/kedro_data/pipelines/data_processing/nodes.py.`](https://github.com/joytsy/DSA4264-Detoxify/blob/main/kedro-data/src/kedro_data/pipelines/data_processing/nodes.py)
 
-<div align="center">
-
-![kedroViz](kedroViz.png)
-
-</div>
+<p align="center">
+    <img src="kedroViz.png" alt="kedroViz" width="400">
+</p>
 
 <div align="center" style="font-size:  0.85em;">
 
@@ -41,55 +39,55 @@ We automatically labelled our subset of 400,000 comments using OpenAI's GPT-4o m
 
 <table>
   <tr>
-    <th style="border: 1px solid lightgray; padding: 5px; color: white;">Text</th>
-    <th style="border: 1px solid lightgray; padding: 5px; color: white;">Mistral</th>
-    <th style="border: 1px solid lightgray; padding: 5px; color: white;">Llama3</th>
-    <th style="border: 1px solid lightgray; padding: 5px; color: white;">GPT-4o mini</th>
+    <th style="border: 1px solid lightgray; padding: 5px;">Text</th>
+    <th style="border: 1px solid lightgray; padding: 5px;">Mistral</th>
+    <th style="border: 1px solid lightgray; padding: 5px;">Llama3</th>
+    <th style="border: 1px solid lightgray; padding: 5px;">GPT-4o mini</th>
   </tr>
   <tr>
-    <td style="border: 1px solid lightgray; padding: 5px; color: white;" colspan="4"><b>Hate 1</b></td>
+    <td style="border: 1px solid lightgray; padding: 5px;" colspan="4"><b>Hate 1</b></td>
   </tr>
   <tr>
-    <td style="border: 1px solid lightgray; padding: 5px; color: white;">teachers pushing their religious values b4 and go on a tangent and rant about LGBTQ please report them if you see that happening and feel safe enough to report. teachers doing so contravene national values such as religious harmony.</td>
-    <td style="border: 1px solid lightgray; padding: 5px; color: white;">Hate 1</td>
-    <td style="border: 1px solid lightgray; padding: 5px; color: white;">Hate 2</td>
-    <td style="border: 1px solid lightgray; padding: 5px; color: white;">Hate 1</td>
+    <td style="border: 1px solid lightgray; padding: 5px;">teachers pushing their religious values b4 and go on a tangent and rant about LGBTQ please report them if you see that happening and feel safe enough to report. teachers doing so contravene national values such as religious harmony.</td>
+    <td style="border: 1px solid lightgray; padding: 5px;">Hate 1</td>
+    <td style="border: 1px solid lightgray; padding: 5px;">Hate 2</td>
+    <td style="border: 1px solid lightgray; padding: 5px;">Hate 1</td>
   </tr>
   <tr>
-    <td style="border: 1px solid lightgray; padding: 5px; color: white;" colspan="4"><b>Hate 2</b></td>
+    <td style="border: 1px solid lightgray; padding: 5px;" colspan="4"><b>Hate 2</b></td>
   </tr>
   <tr>
-    <td style="border: 1px solid lightgray; padding: 5px; color: white;">I don't hire poor workers because they are all lazy and entitled.</td>
-    <td style="border: 1px solid lightgray; padding: 5px; color: white;">Hate 1</td>
-    <td style="border: 1px solid lightgray; padding: 5px; color: white;">Hate 2</td>
-    <td style="border: 1px solid lightgray; padding: 5px; color: white;">Hate 2</td>
+    <td style="border: 1px solid lightgray; padding: 5px;">I don't hire poor workers because they are all lazy and entitled.</td>
+    <td style="border: 1px solid lightgray; padding: 5px;">Hate 1</td>
+    <td style="border: 1px solid lightgray; padding: 5px;">Hate 2</td>
+    <td style="border: 1px solid lightgray; padding: 5px;">Hate 2</td>
   </tr>
   <tr>
-    <td style="border: 1px solid lightgray; padding: 5px; color: white;" colspan="4"><b>Toxic 1</b></td>
+    <td style="border: 1px solid lightgray; padding: 5px;" colspan="4"><b>Toxic 1</b></td>
   </tr>
   <tr>
-    <td style="border: 1px solid lightgray; padding: 5px; color: white;">Gen Z parents gotta stop giving their child ridiculous name. They are only gonna get bullied when they go to school.</td>
-    <td style="border: 1px solid lightgray; padding: 5px; color: white;">Toxic 1</td>
-    <td style="border: 1px solid lightgray; padding: 5px; color: white;">Hate 1</td>
-    <td style="border: 1px solid lightgray; padding: 5px; color: white;">Toxic 1</td>
+    <td style="border: 1px solid lightgray; padding: 5px;">Gen Z parents gotta stop giving their child ridiculous name. They are only gonna get bullied when they go to school.</td>
+    <td style="border: 1px solid lightgray; padding: 5px;">Toxic 1</td>
+    <td style="border: 1px solid lightgray; padding: 5px; ">Hate 1</td>
+    <td style="border: 1px solid lightgray; padding: 5px; ">Toxic 1</td>
   </tr>
   <tr>
-    <td style="border: 1px solid lightgray; padding: 5px; color: white;" colspan="4"><b>Toxic 2</b></td>
+    <td style="border: 1px solid lightgray; padding: 5px; " colspan="4"><b>Toxic 2</b></td>
   </tr>
   <tr>
-    <td style="border: 1px solid lightgray; padding: 5px; color: white;">Get the fuck outta here you bloody wumao.</td>
-    <td style="border: 1px solid lightgray; padding: 5px; color: white;">Toxic 2</td>
-    <td style="border: 1px solid lightgray; padding: 5px; color: white;">Hate 2</td>
-    <td style="border: 1px solid lightgray; padding: 5px; color: white;">Toxic 2</td>
+    <td style="border: 1px solid lightgray; padding: 5px; ">Get the fuck outta here you bloody wumao.</td>
+    <td style="border: 1px solid lightgray; padding: 5px; ">Toxic 2</td>
+    <td style="border: 1px solid lightgray; padding: 5px; ">Hate 2</td>
+    <td style="border: 1px solid lightgray; padding: 5px; ">Toxic 2</td>
   </tr>
   <tr>
-    <td style="border: 1px solid lightgray; padding: 5px; color: white;" colspan="4"><b>Toxic 3</b></td>
+    <td style="border: 1px solid lightgray; padding: 5px;" colspan="4"><b>Toxic 3</b></td>
   </tr>
   <tr>
-    <td style="border: 1px solid lightgray; padding: 5px; color: white;">Indeed these aren't discriminatory. Fuck off antivaxxers, get vaccinated or get fucked.</td>
-    <td style="border: 1px solid lightgray; padding: 5px; color: white;">Toxic 2</td>
-    <td style="border: 1px solid lightgray; padding: 5px; color: white;">Toxic 3</td>
-    <td style="border: 1px solid lightgray; padding: 5px; color: white;">Toxic 3</td>
+    <td style="border: 1px solid lightgray; padding: 5px; ">Indeed these aren't discriminatory. Fuck off antivaxxers, get vaccinated or get fucked.</td>
+    <td style="border: 1px solid lightgray; padding: 5px; ">Toxic 2</td>
+    <td style="border: 1px solid lightgray; padding: 5px; ">Toxic 3</td>
+    <td style="border: 1px solid lightgray; padding: 5px; ">Toxic 3</td>
   </tr>
 </table>
 
@@ -109,9 +107,9 @@ Explicit Criteria Definition: We defined each class with clear, specific criteri
 
 [Few-Shot Prompting](https://arxiv.org/abs/2005.14165): Including labeled examples allowed GPT-4o mini to better grasp our custom classification standards. Each example was carefully selected to illustrate different class labels, giving the model concrete reference points.
 
-Instructional Constraints: We instructed the model to classify comments "as they are," focusing only on context embedded within the comment itself and avoiding inferences from other irrelevant context that it generated by itself.
+Instructional Constraints: We instructed the model to classify comments "as they are," focusing only on context embedded within the comment itself and avoiding inferences that the model might generate independently.
 
-### Dataset
+### 3.3 Dataset
 
 We obtained the dataset with 400,000 texts labelled by GPT-4o mini. Table 2 shows the class distribution produced.
 
@@ -119,45 +117,45 @@ We obtained the dataset with 400,000 texts labelled by GPT-4o mini. Table 2 show
 
 <table style="border-collapse: collapse; width: 100%; margin: auto;">
   <tr>
-    <th style="border: 1px solid lightgray; padding: 10px; text-align: center;">Classification</th>
-    <th style="border: 1px solid lightgray; padding: 10px; text-align: center;">Count</th>
+    <th style="border: 1px solid lightgray; padding: 5px; text-align: center;">Classification</th>
+    <th style="border: 1px solid lightgray; padding: 5px; text-align: center;">Count</th>
   </tr>
   <tr>
-    <td style="border: 1px solid lightgray; padding: 10px; text-align: center;">No Hate/Toxic</td>
-    <td style="border: 1px solid lightgray; padding: 10px; text-align: center;">355,079</td>
+    <td style="border: 1px solid lightgray; padding: 5px; text-align: center;">No Hate/Toxic</td>
+    <td style="border: 1px solid lightgray; padding: 5px; text-align: center;">355,079</td>
   </tr>
   <tr>
-    <td style="border: 1px solid lightgray; padding: 10px; text-align: center;">Hate 1</td>
-    <td style="border: 1px solid lightgray; padding: 10px; text-align: center;">22,641</td>
+    <td style="border: 1px solid lightgray; padding: 5px; text-align: center;">Hate 1</td>
+    <td style="border: 1px solid lightgray; padding: 5px; text-align: center;">22,641</td>
   </tr>
   <tr>
-    <td style="border: 1px solid lightgray; padding: 10px; text-align: center;">Toxic 1</td>
-    <td style="border: 1px solid lightgray; padding: 10px; text-align: center;">15,097</td>
+    <td style="border: 1px solid lightgray; padding: 5px; text-align: center;">Toxic 1</td>
+    <td style="border: 1px solid lightgray; padding: 5px; text-align: center;">15,097</td>
   </tr>
   <tr>
-    <td style="border: 1px solid lightgray; padding: 10px; text-align: center;">Toxic 2</td>
-    <td style="border: 1px solid lightgray; padding: 10px; text-align: center;">5,563</td>
+    <td style="border: 1px solid lightgray; padding: 5px; text-align: center;">Toxic 2</td>
+    <td style="border: 1px solid lightgray; padding: 5px; text-align: center;">5,563</td>
   </tr>
   <tr>
-    <td style="border: 1px solid lightgray; padding: 10px; text-align: center;">Hate 2</td>
-    <td style="border: 1px solid lightgray; padding: 10px; text-align: center;">967</td>
+    <td style="border: 1px solid lightgray; padding: 5px; text-align: center;">Hate 2</td>
+    <td style="border: 1px solid lightgray; padding: 5px; text-align: center;">967</td>
   </tr>
   <tr>
-    <td style="border: 1px solid lightgray; padding: 10px; text-align: center;">Toxic 3</td>
-    <td style="border: 1px solid lightgray; padding: 10px; text-align: center;">432</td>
+    <td style="border: 1px solid lightgray; padding: 5px; text-align: center;">Toxic 3</td>
+    <td style="border: 1px solid lightgray; padding: 5px; text-align: center;">432</td>
   </tr>
   <tr>
-    <td style="border: 1px solid lightgray; padding: 10px; text-align: center;">Hate 3</td>
-    <td style="border: 1px solid lightgray; padding: 10px; text-align: center;">221</td>
+    <td style="border: 1px solid lightgray; padding: 5px; text-align: center;">Hate 3</td>
+    <td style="border: 1px solid lightgray; padding: 5px; text-align: center;">221</td>
   </tr>
 </table>
 
 </div>
 
-<div align="center">
+<div align="center" style="font-size:  0.85em;">
 
 Table 2: Class distribution of 400,000 labelled data by GPT-4o mini
 
 </div>
 
-We applied further preprocessing steps to this dataset before conducting [topic modelling](../modelling/model2.md#methodology-and-tools-for-analyzing-reddit-data) and training our [multiclass text classification model](..//modelling/model1.md#multiclass-text-classification-model).
+We applied further preprocessing steps to this dataset before conducting [Topic Modelling](../modelling/model2.md#methodology-and-tools-for-analyzing-reddit-data) and training our [Multiclass Text Classification Model](..//modelling/model1.md#multiclass-text-classification-model).
