@@ -1,0 +1,6 @@
+code.doculabel {
+  font-size: inherit;
+  border-radius: 0.1rem;
+  padding: 0 5px;
+  background-color: var(--md-code-bg-color);
+}
