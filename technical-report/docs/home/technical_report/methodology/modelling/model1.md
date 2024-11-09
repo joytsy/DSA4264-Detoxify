@@ -64,7 +64,7 @@ To benchmark performance, we also employed traditional machine learning algorith
 
 2. [**XGBoost:**](https://xgboost.readthedocs.io/en/stable/parameter.html) An efficient and scalable implementation of gradient-boosted decision trees. Optimized with a [`grid search`](https://scikit-learn.org/dev/modules/generated/sklearn.model_selection.GridSearchCV.html), with best parameters of learning_rate=0.1, max_depth=5, n_estimators=100, and subsample=0.5.
 
-3. [**Multinoial Naive Bayes:**](https://scikit-learn.org/dev/modules/generated/sklearn.naive_bayes.MultinomialNB.html) Used as a baseline due to computational efficiency. The algorithm is based on the Bayes theorem and is [widely used](https://doi.org/10.1109/ISMSIT.2018.8567307) for multiclass classification.
+3. [**Multinoial Naive Bayes:**](https://scikit-learn.org/dev/modules/generated/sklearn.naive_bayes.MultinomialNB.html) Used as a baseline due to computational efficiency. The algorithm is based on the Bayes theorem and is widely used for multiclass classification.
 
 4. [**Linear Support Vector Machine:**](https://scikit-learn.org/1.5/modules/sgd.html) Included for its performance in high-dimensional spaces but with minimal tuning.
 
