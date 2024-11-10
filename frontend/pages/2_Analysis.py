@@ -440,18 +440,12 @@ with tab3:
     with subtab2:
         st.write("Word Clouds for Topics.")
 
-        # Ensure session state keys for filtered comments are initialized
-        if "filtered_hate_comments_dict" not in st.session_state:
-            st.session_state["filtered_hate_comments_dict"] = {}
-        if "filtered_toxic_comments_dict" not in st.session_state:
-            st.session_state["filtered_toxic_comments_dict"] = {}
-
-        # Check if the uploaded CSV is available
+        # Ensure uploaded data and session state are available
         if (
             "classified_df" not in st.session_state
             or st.session_state["classified_df"].empty
         ):
-            st.info("Please upload a CSV file in the 'Upload CSV' tab to proceed.")
+            st.warning("Please upload a CSV file in the 'Upload CSV' tab to proceed.")
         else:
             comments_df = st.session_state["classified_df"]
             final_trend_df = st.session_state.get("final_trend_df", pd.DataFrame())
@@ -459,7 +453,17 @@ with tab3:
             if final_trend_df.empty:
                 st.error("Final trend data is not available.")
             else:
-                # Filter positive trends for hate and toxic comments
+                # Use ranked topics from Sub-tab 1
+                if "final_trend_df" in st.session_state:
+                    top_3_topics = (
+                        st.session_state["final_trend_df"]["Final Topic Name"]
+                        .iloc[:3]
+                        .tolist()
+                    )  # Get top 3 ranked topics
+                else:
+                    top_3_topics = []
+
+                # Generate positive trends for these topics
                 def filter_positive_years_separately(final_trend_df):
                     positive_trend_data = []
                     years = sorted(
@@ -472,6 +476,7 @@ with tab3:
 
                     for _, row in final_trend_df.iterrows():
                         topic = row["Final Topic Name"]
+
                         positive_hate_years = {"Final Topic Name": topic}
                         positive_toxic_years = {"Final Topic Name": topic}
 
@@ -491,54 +496,39 @@ with tab3:
 
                 positive_trend_df = filter_positive_years_separately(final_trend_df)
 
-                # Add ranking to topics based on frequency
-                ranked_topics = final_trend_df.assign(Rank=final_trend_df.index + 1)[
-                    ["Final Topic Name", "Rank"]
-                ].sort_values(by="Rank")
-                topic_options = ranked_topics.apply(
-                    lambda row: f"Rank {row['Rank']}: {row['Final Topic Name']}", axis=1
-                ).tolist()
+                def get_comments_for_positive_years(
+                    final_trend_df, comments_df, topics_of_interest
+                ):
+                    filtered_hate_comments_dict = {}
+                    filtered_toxic_comments_dict = {}
 
-                if not topic_options:
-                    st.warning("No topics available to analyze.")
-                else:
-                    # Select topic for analysis
-                    selected_topic = st.selectbox(
-                        "Select a topic to analyze:", topic_options
+                    years = sorted(
+                        set(
+                            col.split()[-1]
+                            for col in final_trend_df.columns
+                            if "Positive" in col
+                        )
                     )
 
-                    if selected_topic:
-                        selected_topic_name = selected_topic.split(": ")[1]
+                    for topic in topics_of_interest:
+                        topic_data = final_trend_df[
+                            final_trend_df["Final Topic Name"] == topic
+                        ]
 
-                        # Retrieve filtered comments dynamically
-                        def get_comments_for_positive_years(
-                            final_trend_df, comments_df, topic
-                        ):
-                            topic_data = final_trend_df[
-                                final_trend_df["Final Topic Name"] == topic
-                            ]
-                            if topic_data.empty:
-                                return pd.DataFrame(), pd.DataFrame()
+                        hate_comments = []
+                        toxic_comments = []
 
-                            years = sorted(
-                                set(
-                                    col.split()[-1]
-                                    for col in final_trend_df.columns
-                                    if "Positive" in col
-                                )
-                            )
-                            hate_comments = []
-                            toxic_comments = []
-
+                        if not topic_data.empty:
                             for year in years:
-                                if "-" in year:
-                                    start_year, end_year = map(int, year.split("-"))
-                                else:
-                                    start_year = end_year = int(year)
+                                start_year, end_year = map(int, year.split("-"))
 
-                                if topic_data[f"Positive Hate Year {year}"].iloc[0]:
+                                positive_hate_column = f"Positive Hate Year {year}"
+                                if (
+                                    positive_hate_column in topic_data.columns
+                                    and topic_data[positive_hate_column].iloc[0]
+                                ):
                                     hate_comments_in_years = comments_df[
-                                        (comments_df["year"] >= start_year)
+                                        (comments_df["year"] > start_year)
                                         & (comments_df["year"] <= end_year)
                                         & (comments_df["Final Topic Name"] == topic)
                                         & (
@@ -549,9 +539,13 @@ with tab3:
                                     ]
                                     hate_comments.append(hate_comments_in_years)
 
-                                if topic_data[f"Positive Toxic Year {year}"].iloc[0]:
+                                positive_toxic_column = f"Positive Toxic Year {year}"
+                                if (
+                                    positive_toxic_column in topic_data.columns
+                                    and topic_data[positive_toxic_column].iloc[0]
+                                ):
                                     toxic_comments_in_years = comments_df[
-                                        (comments_df["year"] >= start_year)
+                                        (comments_df["year"] > start_year)
                                         & (comments_df["year"] <= end_year)
                                         & (comments_df["Final Topic Name"] == topic)
                                         & (
@@ -562,107 +556,130 @@ with tab3:
                                     ]
                                     toxic_comments.append(toxic_comments_in_years)
 
+                            if hate_comments:
+                                filtered_hate_comments_dict[topic] = pd.concat(
+                                    hate_comments, ignore_index=True
+                                )
+                            if toxic_comments:
+                                filtered_toxic_comments_dict[topic] = pd.concat(
+                                    toxic_comments, ignore_index=True
+                                )
+
+                    return filtered_hate_comments_dict, filtered_toxic_comments_dict
+
+                filtered_hate_comments_dict, filtered_toxic_comments_dict = (
+                    get_comments_for_positive_years(
+                        positive_trend_df, comments_df, top_3_topics
+                    )
+                )
+
+                def generate_wordcloud(df, topic_name, custom_stopwords):
+                    stopwords = set(STOPWORDS).union(custom_stopwords)
+                    topic_text = " ".join(df["Topic_Words"].dropna())
+                    topic_text = topic_text.replace(topic_name, "")
+
+                    wordcloud = WordCloud(
+                        width=800,
+                        height=400,
+                        background_color="white",
+                        stopwords=stopwords,
+                        colormap="coolwarm",
+                        random_state=478,
+                    ).generate(topic_text)
+
+                    plt.figure(figsize=(10, 5))
+                    plt.imshow(wordcloud, interpolation="bilinear")
+                    plt.axis("off")
+                    plt.title(f"Word Cloud for {topic_name}")
+                    st.pyplot(plt)
+                    plt.close()
+
+                custom_stopwords = {
+                    "comment",
+                    "say",
+                    "singapore",
+                    "people",
+                    "u",
+                    "will",
+                    "one",
+                    "lol",
+                }
+
+                # Word Cloud generation and calculation process
+                for topic in top_3_topics:
+                    st.subheader(f"Analysis for {topic}")
+                    hate_df = filtered_hate_comments_dict.get(topic, pd.DataFrame())
+                    toxic_df = filtered_toxic_comments_dict.get(topic, pd.DataFrame())
+
+                    if not hate_df.empty:
+                        st.write(f"Word Cloud for {topic} (Hate)")
+                        generate_wordcloud(hate_df, topic, custom_stopwords)
+
+                    if not toxic_df.empty:
+                        st.write(f"Word Cloud for {topic} (Toxic)")
+                        generate_wordcloud(toxic_df, topic, custom_stopwords)
+
+                    def filter_and_sequence_comments(df, n=20):
+                        """
+                        Filters the DataFrame based on the most frequently occurring exact 'Topic_Words' list,
+                        extracts the title from the URL, and sequences comments by intensity level within that subset.
+                        """
+                        if "Topic_Words" not in df.columns or "link" not in df.columns:
                             return (
-                                (
-                                    pd.concat(hate_comments, ignore_index=True)
-                                    if hate_comments
-                                    else pd.DataFrame()
-                                ),
-                                (
-                                    pd.concat(toxic_comments, ignore_index=True)
-                                    if toxic_comments
-                                    else pd.DataFrame()
-                                ),
-                            )
+                                pd.DataFrame()
+                            )  # Return empty DataFrame if required columns are missing
 
-                        hate_comments, toxic_comments = get_comments_for_positive_years(
-                            positive_trend_df, comments_df, selected_topic_name
+                        # Step 1: Count occurrences of each unique list in 'Topic_Words'
+                        topic_words_counts = (
+                            df["Topic_Words"].apply(tuple).value_counts()
                         )
 
-                        selected_topic_type = st.radio(
-                            "Select type of comments", ["Hate", "Toxic"]
-                        )
-                        topic_df = (
-                            hate_comments
-                            if selected_topic_type == "Hate"
-                            else toxic_comments
-                        )
-
-                        def generate_wordcloud(df, topic_name):
-                            custom_stopwords = {
-                                "comment",
-                                "say",
-                                "singapore",
-                                "singaporean",
-                                "people",
-                                "singaporeans",
-                                "u",
-                                "even",
-                                "will",
-                                "one",
-                                "lol",
-                                "go",
-                            }
-                            stopwords = set(STOPWORDS).union(custom_stopwords)
-                            topic_text = " ".join(df["Topic_Words"].dropna())
-                            topic_text = topic_text.replace(topic_name, "")
-
-                            wordcloud = WordCloud(
-                                width=800,
-                                height=400,
-                                background_color="white",
-                                stopwords=stopwords,
-                                colormap="coolwarm",
-                                random_state=478,
-                            ).generate(topic_text)
-
-                            plt.figure(figsize=(10, 5))
-                            plt.imshow(wordcloud, interpolation="bilinear")
-                            plt.axis("off")
-                            plt.title(
-                                f"Word Cloud for {topic_name} Comments ({selected_topic_type} Classification)"
-                            )
-                            st.pyplot(plt)
-                            plt.close()
-
-                        if not topic_df.empty:
-                            st.write(
-                                f"Word Cloud for {selected_topic_name} ({selected_topic_type} Comments)"
-                            )
-                            generate_wordcloud(topic_df, selected_topic_name)
-
-                            # Check if 'link' column exists and contains data
-                            if "link" in topic_df.columns:
-                                # Ensure all entries in 'link' column are treated as strings before using .str methods
-                                topic_df["Reddit Title"] = (
-                                    topic_df["link"]
-                                    .astype(str)  # Convert all entries to string
-                                    .str.extract(
-                                        r"/comments/\w+/([^/]+)/"
-                                    )  # Extract title from the URL
-                                )
-
-                                # Replace underscores with spaces, handling NaN safely
-                                topic_df["Reddit Title"] = (
-                                    topic_df["Reddit Title"]
-                                    .fillna("")
-                                    .str.replace("_", " ")
-                                )
-
-                            else:
-                                st.warning(
-                                    "The 'link' column is missing in the data. Reddit titles cannot be extracted."
-                                )
-
-                            # Save results in session state
-                            st.session_state[
-                                f"filtered_{selected_topic_type.lower()}_comments_dict"
-                            ][selected_topic_name] = topic_df
-
+                        # Step 2: Identify the most frequent 'Topic_Words' list
+                        if not topic_words_counts.empty:
+                            top_topic_words = topic_words_counts.idxmax()
                         else:
-                            st.warning(
-                                f"No {selected_topic_type} comments found for the topic: {selected_topic_name}"
+                            return pd.DataFrame()
+
+                        # Step 3: Filter DataFrame for rows matching the most frequent 'Topic_Words'
+                        filtered_df = df[
+                            df["Topic_Words"].apply(tuple) == top_topic_words
+                        ].copy()
+
+                        # Step 4: Extract intensity levels
+                        filtered_df["Intensity"] = (
+                            filtered_df["Classification"]
+                            .str.extract(r"(\d)")
+                            .astype(float)
+                        )
+                        intensity_order = [3, 2, 1]
+                        filtered_df["Intensity"] = pd.Categorical(
+                            filtered_df["Intensity"],
+                            categories=intensity_order,
+                            ordered=True,
+                        )
+                        filtered_df = filtered_df.sort_values(by="Intensity")
+
+                        # Step 5: Extract 'Reddit Title' if 'link' column exists and is not empty
+                        if "link" in filtered_df.columns:
+                            filtered_df["Reddit Title"] = (
+                                filtered_df["link"]
+                                .astype(str)  # Ensure all entries are strings
+                                .str.extract(r"/comments/\w+/([^/]+)/")
+                                .fillna("")  # Handle NaN values
                             )
+                            filtered_df["Reddit Title"] = filtered_df[
+                                "Reddit Title"
+                            ].str.replace("_", " ")
+
+                        # Drop the temporary 'Intensity' column
+                        return filtered_df.drop(columns=["Intensity"]).head(n)
+
+                    st.session_state[f"increase_{topic.lower()}_hate_comments"] = (
+                        filter_and_sequence_comments(hate_df)
+                    )
+                    st.session_state[f"increase_{topic.lower()}_toxic_comments"] = (
+                        filter_and_sequence_comments(toxic_df)
+                    )
 
     # Sub-tab 3: Filtered Comments
     with subtab3:
@@ -675,37 +692,65 @@ with tab3:
         ):
             st.info("Please upload a CSV file in the 'Upload CSV' tab to proceed.")
         else:
-            # Mapping session state keys to display names
-            session_data_keys = {
-                "Race Hate Comments": "increase_race_hate_comments",
-                "Race Toxic Comments": "increase_race_toxic_comments",
-                "Crimes Hate Comments": "increase_crimes_hate_comments",
-                "Crimes Toxic Comments": "increase_crimes_toxic_comments",
-                "Gender Hate Comments": "increase_gender_hate_comments",
-                "Gender Toxic Comments": "increase_gender_toxic_comments",
-            }
+            final_trend_df = st.session_state.get("final_trend_df", pd.DataFrame())
 
-            selected_topic = st.selectbox(
-                "Select a topic to view sequenced comments:", session_data_keys.keys()
-            )
+            if final_trend_df.empty:
+                st.error("Final trend data is not available.")
+            else:
+                # Extract ranked topics and normalize to title case
+                ranked_topics = [
+                    topic.title()
+                    for topic in final_trend_df["Final Topic Name"].tolist()
+                ]
 
-            if selected_topic:
-                session_key = session_data_keys[selected_topic]
+                # Dynamically fetch session state keys for filtered comments
+                session_data_keys = {
+                    f"{topic.title()} {comment_type.title()} Comments": session_key
+                    for session_key in st.session_state.keys()
+                    if session_key.startswith("increase_")
+                    and session_key.endswith("_comments")
+                    for topic, comment_type in [
+                        session_key.replace("increase_", "")
+                        .replace("_comments", "")
+                        .split("_", 1)
+                    ]
+                }
 
-                try:
-                    # Access the corresponding DataFrame in session state
-                    if session_key in st.session_state:
-                        df = st.session_state[session_key]
-                        if not df.empty:
-                            st.dataframe(df)
-                        else:
-                            st.warning(f"No data available for {selected_topic}.")
-                    else:
-                        st.error(
-                            f"Data for {selected_topic} is not available in session state."
-                        )
-                except Exception as e:
-                    st.error(f"Error loading data: {e}")
+                if not session_data_keys:
+                    st.warning("No filtered comments available in session state.")
+                else:
+                    # Maintain order: Ranked topics first, Hate before Toxic within each topic
+                    sorted_keys = [
+                        f"{topic} {comment_type} Comments"
+                        for topic in ranked_topics
+                        for comment_type in ["Hate", "Toxic"]
+                        if f"{topic} {comment_type} Comments" in session_data_keys
+                    ]
+
+                    # Populate selectbox options
+                    selected_topic = st.selectbox(
+                        "Select a topic to view sequenced comments:", sorted_keys
+                    )
+
+                    if selected_topic:
+                        session_key = session_data_keys[selected_topic]
+
+                        try:
+                            # Access the corresponding DataFrame in session state
+                            if session_key in st.session_state:
+                                df = st.session_state[session_key]
+                                if not df.empty:
+                                    st.dataframe(df)
+                                else:
+                                    st.warning(
+                                        f"No data available for {selected_topic}."
+                                    )
+                            else:
+                                st.error(
+                                    f"Data for {selected_topic} is not available in session state."
+                                )
+                        except Exception as e:
+                            st.error(f"Error loading data: {e}")
 
 # Load environment variables from .env
 load_dotenv()
@@ -726,101 +771,108 @@ with tab4:
     ):
         st.info("Please upload a CSV file in the 'Upload CSV' tab to proceed.")
     else:
-        # Mapping session state keys to dataset labels
-        session_data_keys = {
-            "Crimes Hate": "increase_crimes_hate_comments",
-            "Crimes Toxic": "increase_crimes_toxic_comments",
-            "Gender Hate": "increase_gender_hate_comments",
-            "Gender Toxic": "increase_gender_toxic_comments",
-            "Race Hate": "increase_race_hate_comments",
-            "Race Toxic": "increase_race_toxic_comments",
-        }
+        final_trend_df = st.session_state.get("final_trend_df", pd.DataFrame())
 
-        # Load datasets from session state
-        datasets = {}
-        for label, session_key in session_data_keys.items():
-            try:
-                if session_key in st.session_state:
-                    df = st.session_state[session_key]
-                    if not df.empty:
-                        datasets[label] = df
-                    else:
-                        st.warning(f"Data for {label} is empty.")
-                else:
-                    st.warning(f"No data available for {label}.")
-            except Exception as e:
-                st.error(f"Error loading {label} dataset from session state: {e}")
-                st.exception(e)  # Debugging
-
-        if not datasets:
-            st.warning("No datasets available for analysis. Please check your data.")
+        if final_trend_df.empty:
+            st.error("Final trend data is not available.")
         else:
+            # Extract ranked topics and normalize to lowercase for comparison
+            ranked_topics = [
+                topic.lower() for topic in final_trend_df["Final Topic Name"].tolist()
+            ]
 
-            def analyze_toxicity_once(dfs, model_name="gpt-4o-mini"):
-                """
-                Analyzes datasets and identifies principal issues contributing to hateful or toxic comments.
-                Runs once and caches the result.
+            # Dynamically fetch session state keys for filtered comments
+            session_data_keys = {
+                f"{topic} {comment_type}": session_key
+                for session_key in st.session_state.keys()
+                if session_key.startswith("increase_")
+                and session_key.endswith("_comments")
+                for topic, comment_type in [
+                    session_key.replace("increase_", "")
+                    .replace("_comments", "")
+                    .split("_", 1)
+                ]
+                if topic in ranked_topics  # Ensure case-insensitive match
+            }
 
-                Parameters:
-                - dfs: List of tuples (dataset label, DataFrame).
-                - model_name: The model to use for OpenAI chat completion.
-
-                Returns:
-                - List of tuples (dataset label, analysis result).
-                """
-                responses = []
-                for identifier, df in dfs:
-                    if df.empty:
-                        responses.append(
-                            (identifier, "No data available for analysis.")
-                        )
-                        continue
-
-                    # Concatenate 'Reddit Title' and 'text' into 'title_text'
-                    df["title_text"] = df["Reddit Title"] + ": " + df["text"]
-                    # Join all entries into a single string
-                    prompt_content = " ".join(df["title_text"].tolist())
-
-                    # Determine if the identifier indicates "Hate" or "Toxic" and set prompt accordingly
-                    issue_type = (
-                        "increased hateful comments"
-                        if "Hate" in identifier
-                        else "increased toxic comments"
+            if not session_data_keys:
+                st.warning("No datasets available for analysis.")
+            else:
+                # Maintain order: Ranked topics first, Hate before Toxic
+                sorted_keys = [
+                    (
+                        f"{topic.title()} {comment_type.title()}",
+                        session_data_keys[f"{topic} {comment_type}"],
                     )
+                    for topic in ranked_topics
+                    for comment_type in ["hate", "toxic"]
+                    if f"{topic} {comment_type}" in session_data_keys
+                ]
 
-                    try:
-                        # Call to your client's API to analyze the concatenated content
-                        response = client.chat.completions.create(
-                            model=model_name,
-                            messages=[
-                                {
-                                    "role": "system",
-                                    "content": f"You are a skilled assistant tasked with analyzing discussions. From the provided text, identify the principal issue that has led to {issue_type}. Make it as succinct as possible.",
-                                },
-                                {"role": "user", "content": prompt_content},
-                            ],
+                # Load datasets from session state
+                datasets = {}
+                for label, session_key in sorted_keys:
+                    if session_key in st.session_state:
+                        df = st.session_state[session_key]
+                        if not df.empty:
+                            datasets[label] = df
+
+                if not datasets:
+                    st.warning("No datasets available for analysis.")
+                else:
+
+                    def analyze_toxicity_once(dfs, model_name="gpt-4o-mini"):
+                        """
+                        Analyzes datasets and identifies principal issues contributing to hateful or toxic comments.
+                        Runs once and caches the result.
+                        """
+                        responses = []
+                        for identifier, df in dfs:
+                            if df.empty:
+                                responses.append(
+                                    (identifier, "No data available for analysis.")
+                                )
+                                continue
+
+                            df["title_text"] = df["Reddit Title"] + ": " + df["text"]
+                            prompt_content = " ".join(df["title_text"].tolist())
+                            issue_type = (
+                                "increased hateful comments"
+                                if "Hate" in identifier
+                                else "increased toxic comments"
+                            )
+
+                            try:
+                                response = client.chat.completions.create(
+                                    model=model_name,
+                                    messages=[
+                                        {
+                                            "role": "system",
+                                            "content": f"You are a skilled assistant tasked with analyzing discussions. From the provided text, identify the principal issue that has led to {issue_type}. Make it as succinct as possible.",
+                                        },
+                                        {"role": "user", "content": prompt_content},
+                                    ],
+                                )
+                                responses.append(
+                                    (identifier, response.choices[0].message.content)
+                                )
+                            except Exception as e:
+                                responses.append(
+                                    (identifier, f"Error analyzing {identifier}: {e}")
+                                )
+                        return responses
+
+                    # Run analysis once and cache results in session state
+                    if "analysis_results" not in st.session_state:
+                        df_tuples = [(label, df) for label, df in datasets.items()]
+                        st.session_state["analysis_results"] = analyze_toxicity_once(
+                            df_tuples
                         )
-                        # Append the response content to the list along with the identifier
-                        responses.append(
-                            (identifier, response.choices[0].message.content)
-                        )
-                    except Exception as e:
-                        responses.append(
-                            (identifier, f"Error analyzing {identifier}: {e}")
-                        )
-                        
-                return responses
 
-            # Run analysis once and cache results in session state
-            if "analysis_results" not in st.session_state:
-                df_tuples = [(label, df) for label, df in datasets.items()]
-                st.session_state["analysis_results"] = analyze_toxicity_once(df_tuples)
-
-            # Display cached results
-            for label, result in st.session_state["analysis_results"]:
-                st.markdown(f"**Results for {label}:**")
-                st.write(result)
-
+                    # Display cached results
+                    for label, result in st.session_state["analysis_results"]:
+                        st.markdown(f"**Results for {label}:**")
+                        st.write(result)
 # Tab 5: Upload CSV
 with tab5:
     st.write("Upload a CSV file for analysis.")
