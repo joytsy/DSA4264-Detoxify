@@ -499,187 +499,9 @@ with tab3:
                     lambda row: f"Rank {row['Rank']}: {row['Final Topic Name']}", axis=1
                 ).tolist()
 
-                # Ensure topic options are available
                 if not topic_options:
                     st.warning("No topics available to analyze.")
                 else:
-                    # Generate filtered comments and save as DataFrames
-                    def get_and_save_filtered_comments(
-                        final_trend_df, comments_df, topics_of_interest
-                    ):
-                        filtered_hate_comments_dict = {}
-                        filtered_toxic_comments_dict = {}
-
-                        years = sorted(
-                            set(
-                                col.split()[-1]
-                                for col in final_trend_df.columns
-                                if "Positive" in col
-                            )
-                        )
-
-                        for topic in topics_of_interest:
-                            topic_data = final_trend_df[
-                                final_trend_df["Final Topic Name"] == topic
-                            ]
-                            hate_comments = []
-                            toxic_comments = []
-
-                            if not topic_data.empty:
-                                for year in years:
-                                    if "-" in year:
-                                        start_year, end_year = map(int, year.split("-"))
-                                    else:
-                                        start_year = end_year = int(year)
-
-                                    if topic_data[f"Positive Hate Year {year}"].iloc[0]:
-                                        hate_comments_in_years = comments_df[
-                                            (comments_df["year"] >= start_year)
-                                            & (comments_df["year"] <= end_year)
-                                            & (comments_df["Final Topic Name"] == topic)
-                                            & (
-                                                comments_df[
-                                                    "Classification"
-                                                ].str.startswith("Hate")
-                                            )
-                                        ]
-                                        hate_comments.append(hate_comments_in_years)
-
-                                    if topic_data[f"Positive Toxic Year {year}"].iloc[
-                                        0
-                                    ]:
-                                        toxic_comments_in_years = comments_df[
-                                            (comments_df["year"] >= start_year)
-                                            & (comments_df["year"] <= end_year)
-                                            & (comments_df["Final Topic Name"] == topic)
-                                            & (
-                                                comments_df[
-                                                    "Classification"
-                                                ].str.startswith("Toxic")
-                                            )
-                                        ]
-                                        toxic_comments.append(toxic_comments_in_years)
-
-                            if hate_comments:
-                                filtered_hate_comments_dict[topic] = pd.concat(
-                                    hate_comments, ignore_index=True
-                                )
-                            if toxic_comments:
-                                filtered_toxic_comments_dict[topic] = pd.concat(
-                                    toxic_comments, ignore_index=True
-                                )
-
-                        # Save filtered and sequenced DataFrames to session state
-                        def filter_and_sequence_comments(df, n=20):
-                            """
-                            Filters the DataFrame based on the most frequently occurring exact 'Topic_Words' list,
-                            extracts the title from the URL, and sequences comments by intensity level within that subset.
-
-                            Parameters:
-                            df (DataFrame): The DataFrame containing comments.
-                            n (int): The number of top comments to return after filtering and sequencing.
-
-                            Returns:
-                            DataFrame: Filtered and sequenced DataFrame based on the most frequent 'Topic_Words' list as a whole and intensity.
-                            """
-
-                            # Step 1: Count the occurrences of each unique list in 'Topic_Words'
-                            topic_words_counts = (
-                                df["Topic_Words"].apply(tuple).value_counts()
-                            )
-
-                            # Step 2: Identify the most frequently occurring 'Topic_Words' list as a whole
-                            if not topic_words_counts.empty:
-                                top_topic_words = (
-                                    topic_words_counts.idxmax()
-                                )  # The most common list (as a tuple)
-                            else:
-                                return (
-                                    pd.DataFrame()
-                                )  # Return empty DataFrame if no entries found
-
-                            # Step 3: Filter the DataFrame for rows that match the most frequent 'Topic_Words' list exactly
-                            filtered_df = df[
-                                df["Topic_Words"].apply(tuple) == top_topic_words
-                            ].copy()
-
-                            # Step 4: Extract intensity levels from 'Classification' column
-                            filtered_df["Intensity"] = (
-                                filtered_df["Classification"]
-                                .str.extract(r"(\d)")
-                                .astype(float)
-                            )
-
-                            # Step 5: Set default intensity order and sort
-                            intensity_order = [3, 2, 1]
-                            filtered_df["Intensity"] = pd.Categorical(
-                                filtered_df["Intensity"],
-                                categories=intensity_order,
-                                ordered=True,
-                            )
-                            filtered_df = filtered_df.sort_values(by="Intensity")
-
-                            # Step 6: Extract the title from the URL and add as 'Reddit Title' column
-                            # Extract the segment between '/comments/' and the following '/'
-                            filtered_df["Reddit Title"] = filtered_df[
-                                "link"
-                            ].str.extract(r"/comments/\w+/([^/]+)/")
-                            filtered_df["Reddit Title"] = filtered_df[
-                                "Reddit Title"
-                            ].str.replace(
-                                "_", " "
-                            )  # Replace underscores with spaces for readability
-
-                            # Drop the temporary 'Intensity' column
-                            filtered_df = filtered_df.drop(columns=["Intensity"])
-
-                            # Return only the top `n` rows
-                            return filtered_df.head(n)
-
-                        st.session_state["increase_race_hate_comments"] = (
-                            filter_and_sequence_comments(
-                                filtered_hate_comments_dict.get("Race", pd.DataFrame())
-                            )
-                        )
-                        st.session_state["increase_race_toxic_comments"] = (
-                            filter_and_sequence_comments(
-                                filtered_toxic_comments_dict.get("Race", pd.DataFrame())
-                            )
-                        )
-                        st.session_state["increase_crimes_hate_comments"] = (
-                            filter_and_sequence_comments(
-                                filtered_hate_comments_dict.get(
-                                    "Crimes", pd.DataFrame()
-                                )
-                            )
-                        )
-                        st.session_state["increase_crimes_toxic_comments"] = (
-                            filter_and_sequence_comments(
-                                filtered_toxic_comments_dict.get(
-                                    "Crimes", pd.DataFrame()
-                                )
-                            )
-                        )
-                        st.session_state["increase_gender_hate_comments"] = (
-                            filter_and_sequence_comments(
-                                filtered_hate_comments_dict.get(
-                                    "Gender", pd.DataFrame()
-                                )
-                            )
-                        )
-                        st.session_state["increase_gender_toxic_comments"] = (
-                            filter_and_sequence_comments(
-                                filtered_toxic_comments_dict.get(
-                                    "Gender", pd.DataFrame()
-                                )
-                            )
-                        )
-
-                    topics_of_interest = [opt.split(": ")[1] for opt in topic_options]
-                    get_and_save_filtered_comments(
-                        positive_trend_df, comments_df, topics_of_interest
-                    )
-
                     # Select topic for analysis
                     selected_topic = st.selectbox(
                         "Select a topic to analyze:", topic_options
@@ -688,13 +510,75 @@ with tab3:
                     if selected_topic:
                         selected_topic_name = selected_topic.split(": ")[1]
 
-                        # Retrieve filtered comments based on positive trends
-                        hate_comments = st.session_state["increase_race_hate_comments"]
-                        toxic_comments = st.session_state[
-                            "increase_race_toxic_comments"
-                        ]
+                        # Retrieve filtered comments dynamically
+                        def get_comments_for_positive_years(
+                            final_trend_df, comments_df, topic
+                        ):
+                            topic_data = final_trend_df[
+                                final_trend_df["Final Topic Name"] == topic
+                            ]
+                            if topic_data.empty:
+                                return pd.DataFrame(), pd.DataFrame()
 
-                        # Generate word clouds
+                            years = sorted(
+                                set(
+                                    col.split()[-1]
+                                    for col in final_trend_df.columns
+                                    if "Positive" in col
+                                )
+                            )
+                            hate_comments = []
+                            toxic_comments = []
+
+                            for year in years:
+                                if "-" in year:
+                                    start_year, end_year = map(int, year.split("-"))
+                                else:
+                                    start_year = end_year = int(year)
+
+                                if topic_data[f"Positive Hate Year {year}"].iloc[0]:
+                                    hate_comments_in_years = comments_df[
+                                        (comments_df["year"] >= start_year)
+                                        & (comments_df["year"] <= end_year)
+                                        & (comments_df["Final Topic Name"] == topic)
+                                        & (
+                                            comments_df[
+                                                "Classification"
+                                            ].str.startswith("Hate")
+                                        )
+                                    ]
+                                    hate_comments.append(hate_comments_in_years)
+
+                                if topic_data[f"Positive Toxic Year {year}"].iloc[0]:
+                                    toxic_comments_in_years = comments_df[
+                                        (comments_df["year"] >= start_year)
+                                        & (comments_df["year"] <= end_year)
+                                        & (comments_df["Final Topic Name"] == topic)
+                                        & (
+                                            comments_df[
+                                                "Classification"
+                                            ].str.startswith("Toxic")
+                                        )
+                                    ]
+                                    toxic_comments.append(toxic_comments_in_years)
+
+                            return (
+                                (
+                                    pd.concat(hate_comments, ignore_index=True)
+                                    if hate_comments
+                                    else pd.DataFrame()
+                                ),
+                                (
+                                    pd.concat(toxic_comments, ignore_index=True)
+                                    if toxic_comments
+                                    else pd.DataFrame()
+                                ),
+                            )
+
+                        hate_comments, toxic_comments = get_comments_for_positive_years(
+                            positive_trend_df, comments_df, selected_topic_name
+                        )
+
                         selected_topic_type = st.radio(
                             "Select type of comments", ["Hate", "Toxic"]
                         )
@@ -746,14 +630,39 @@ with tab3:
                                 f"Word Cloud for {selected_topic_name} ({selected_topic_type} Comments)"
                             )
                             generate_wordcloud(topic_df, selected_topic_name)
+
+                            # Check if 'link' column exists and contains data
+                            if "link" in topic_df.columns:
+                                # Ensure all entries in 'link' column are treated as strings before using .str methods
+                                topic_df["Reddit Title"] = (
+                                    topic_df["link"]
+                                    .astype(str)  # Convert all entries to string
+                                    .str.extract(
+                                        r"/comments/\w+/([^/]+)/"
+                                    )  # Extract title from the URL
+                                )
+
+                                # Replace underscores with spaces, handling NaN safely
+                                topic_df["Reddit Title"] = (
+                                    topic_df["Reddit Title"]
+                                    .fillna("")
+                                    .str.replace("_", " ")
+                                )
+
+                            else:
+                                st.warning(
+                                    "The 'link' column is missing in the data. Reddit titles cannot be extracted."
+                                )
+
+                            # Save results in session state
+                            st.session_state[
+                                f"filtered_{selected_topic_type.lower()}_comments_dict"
+                            ][selected_topic_name] = topic_df
+
                         else:
                             st.warning(
                                 f"No {selected_topic_type} comments found for the topic: {selected_topic_name}"
                             )
-                    else:
-                        st.info(
-                            "Please upload a CSV file in the 'Upload CSV' tab to proceed."
-                        )
 
     # Sub-tab 3: Filtered Comments
     with subtab3:
