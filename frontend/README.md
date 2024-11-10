@@ -17,6 +17,8 @@ The `frontend` folder is organized as follows:
 - **pages/**: Contains the primary pages for the app:
   - **1_Classify_Text.py**: A page dedicated to text classification, with options for manual input, CSV upload, and a history of past classifications.
   - **2_Analysis.py**: A comprehensive analysis section to explore trends, topics, and solutions for managing toxic and hateful comments.
+- **model/**: Contains the fine-tuned Multilingual DistilBERT model for text classification.
+  - **multilingual_distilbert_model_5k.pth**: The PyTorch model file.
 
 ## How to Run
 
@@ -31,20 +33,25 @@ The `frontend` folder is organized as follows:
    Navigate to the frontend folder and run the Streamlit app:
 
    ```bash
-   streamlit run app.py
+   streamlit run Home.py
    ```
 
 3. **Access the App**:
    Open your browser and go to the URL provided by Streamlit, typically <http://localhost:8501>.
 
-## Analysis Workflow
+## Workflow Overview
 
-1. **Navigate to the Analysis Page**:
-   Upload your CSV file containing comments for analysis.
-2. **Automated Insights**:
-   The app will classify the comments and generate insights, including frequency trends and topic modeling.
-3. **Download Results**:
-   Export the classified data for further use or reporting.
+- **Text Classification**:
+
+  - Access the **Classify Text** page.
+  - Input text manually or upload a CSV file.
+  - View classification results with explanations.
+
+- **Automated Analysis**:
+
+  - Navigate to the **Analysis** page.
+  - Upload your dataset for detailed insights.
+  - Explore trends, identify topics, and download results for reporting.
 
 ## Classification Definitions
 
@@ -55,11 +62,6 @@ The app uses a fine-tuned Multilingual DistilBERT model to classify comments int
 - **Hate 1, 2, 3**: Varying levels of hate speech, from stereotypes to calls for violence, specifically targeting sensitive groups.
 
 For more detailed definitions and explanations, refer to the "Model Information" section in the app.
-
-## Custom Design
-
-- **Gradient Scrolling Title**: The app features an eye-catching gradient scrolling effect for the title, reminiscent of a tech product launch.
-- **Interactive Sidebar**: An amber-colored glowing message enhances the user experience and guides navigation.
 
 ## Notes
 
