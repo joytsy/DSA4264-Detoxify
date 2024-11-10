@@ -7,18 +7,23 @@ import numpy as np
 import seaborn as sns
 from openai import OpenAI
 from dotenv import load_dotenv
+import io
+from streamlit_lottie import st_lottie
+import requests
 
 # Define the data folder
 DATA_FOLDER = "pages/data/"
 
-st.title("Analysis Overview")
+st.set_page_config(layout="wide")
+
+st.title("Analysis Dashboard")
 
 tab1, tab2, tab3, tab4, tab5 = st.tabs(
     [
         "Overview",
         "Frequency Analysis",
         "Intensity Analysis",
-        "Findings & Solutions",
+        "Findings",
         "Upload CSV",
     ]
 )
@@ -27,76 +32,198 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs(
 with tab1:
     st.markdown(
         """
-        ## Welcome to the Text Analysis Dashboard!
+        ## Welcome to the Analysis Dashboard!
 
         This dashboard provides insights into textual data by analyzing frequency trends,
         intensity changes over time, key findings and solutions.
 
         **Tabs Overview:**
         - **Frequency Analysis**: View the proportion of each topic across all years.
-        - **Intensity Analysis**: Analyze intensity trends and generate word clouds for insights.
-        - **Findings & Solutions**: Explore in-depth findings and potential solutions.
-        - **Filtered Comments**: View comments filtered by specific topics.
+        - **Intensity Analysis**: Analyze intensity trends, generate word clouds for insights and view the comments from the analyzed topics.
+        - **Findings**: Explore in-depth findings and potential solutions.
         - **Upload CSV**: Upload your dataset.
         """
     )
 
 # Tab 2: Frequency Analysis
 with tab2:
-    # Centralize the title
-    st.markdown(
-        "<h3 style='text-align: center;'>Proportion of Each Topic Across All Years</h3>",
-        unsafe_allow_html=True,
-    )
-
     if (
         "classified_df" in st.session_state
         and not st.session_state["classified_df"].empty
     ):
-        df = st.session_state["classified_df"]
+        # Centralize the title
+        st.markdown(
+            "<h3 style='text-align: center;'>Proportion of Each Topic Across Selected Years</h3>",
+            unsafe_allow_html=True,
+        )
 
-        # Ensure required columns exist
-        if "Final Topic Name" in df.columns:
+        # Create a local copy of the DataFrame for Tab 2
+        df_tab2 = st.session_state["classified_df"].copy()
+
+        if "Final Topic Name" in df_tab2.columns and "year" in df_tab2.columns:
             # Filter rows with non-null 'Final Topic Name'
-            df_filtered = df[df["Final Topic Name"].notnull()]
+            df_tab2 = df_tab2[df_tab2["Final Topic Name"].notnull()]
 
-            def plot_topic_proportions(df_filtered, topic_column="Final Topic Name"):
-                """
-                Plots the proportions of each topic in the DataFrame.
+            # Create layout: big graph on the left, configurations on the right
+            col_graph, col_config = st.columns([5, 1])
 
-                Parameters:
-                - df_filtered: The DataFrame containing the data.
-                - topic_column: The column name for the topics. Default is "Final Topic Name".
-                """
-                # Step 1: Count the occurrences of each topic
-                topic_counts = (
-                    df_filtered.groupby(topic_column).size().reset_index(name="Count")
+            with col_config:
+                st.markdown("### Configuration")
+
+                # Year Filter
+                years_tab2 = sorted(df_tab2["year"].unique())
+                all_years_selected_tab2 = st.checkbox(
+                    "All Years", value=True, key="all_years_selected_tab2"
                 )
 
-                # Step 2: Calculate the total count and the percentage for each topic
-                total_count = topic_counts["Count"].sum()
-                topic_counts["Percentage"] = (topic_counts["Count"] / total_count) * 100
-
-                # Step 3: Plotting the proportions
-                fig, ax = plt.subplots(figsize=(10, 6))
-                sns.barplot(
-                    data=topic_counts,
-                    x=topic_column,
-                    y="Percentage",
-                    palette="viridis",
-                    ax=ax,
+                selected_years_tab2 = st.multiselect(
+                    "Select Years",
+                    options=years_tab2,
+                    default=years_tab2 if all_years_selected_tab2 else [],
+                    disabled=all_years_selected_tab2,
+                    key="selected_years_tab2",
                 )
 
-                ax.set_xlabel("Topic")
-                ax.set_ylabel("Percentage (%)")
-                ax.set_xticklabels(ax.get_xticklabels(), rotation=45)
+                # **Removed 'or not selected_years_tab2' condition**
+                if all_years_selected_tab2:
+                    selected_years_tab2 = years_tab2
+
+                # Topic Filter
+                topics_tab2 = sorted(df_tab2["Final Topic Name"].unique())
+                all_topics_selected_tab2 = st.checkbox(
+                    "All Topics", value=True, key="all_topics_selected_tab2"
+                )
+
+                selected_topics_tab2 = st.multiselect(
+                    "Select Topics",
+                    options=topics_tab2,
+                    default=topics_tab2 if all_topics_selected_tab2 else [],
+                    disabled=all_topics_selected_tab2,
+                    key="selected_topics_tab2",
+                )
+
+                # **Removed 'or not selected_topics_tab2' condition**
+                if all_topics_selected_tab2:
+                    selected_topics_tab2 = topics_tab2
+
+                # Color Palette Selector
+                color_palettes = {
+                    "Viridis": "viridis",
+                    "Plasma": "plasma",
+                    "Coolwarm": "coolwarm",
+                    "Magma": "magma",
+                }
+                selected_palette_tab2 = st.selectbox(
+                    "Choose a Color Palette",
+                    list(color_palettes.keys()),
+                    index=0,
+                    key="selected_palette_tab2",
+                )
+
+            # Filter data based on selections (use local variables)
+            df_tab2_filtered = df_tab2[
+                (df_tab2["year"].isin(selected_years_tab2))
+                & (df_tab2["Final Topic Name"].isin(selected_topics_tab2))
+            ]
+
+            with col_graph:
+
+                def plot_topic_proportions(
+                    df_filtered, topic_column="Final Topic Name"
+                ):
+                    """
+                    Plots the proportions of each topic in the DataFrame.
+
+                    Parameters:
+                    - df_filtered: The DataFrame containing the data.
+                    - topic_column: The column name for the topics.
+                    """
+                    # Initialize the plot
+                    fig, ax = plt.subplots(figsize=(12, 8))
+
+                    if df_filtered.empty:
+                        # Create an empty plot with grids and axis
+                        ax.set_xlim(-0.5, 0.5)  # Placeholder limits
+                        ax.set_ylim(0, 100)  # Y-axis range for percentages
+                        ax.set_xlabel("Topic")
+                        ax.set_ylabel("Percentage (%)")
+                        ax.set_xticks([])  # Remove x-ticks for empty plot
+                        ax.grid(
+                            True, which="both", linestyle="--", linewidth=0.7
+                        )  # Add gridlines
+
+                        # Optionally, you can add a placeholder text
+                        ax.text(
+                            0,
+                            50,
+                            "No data to display",
+                            horizontalalignment="center",
+                            verticalalignment="center",
+                            fontsize=14,
+                            color="gray",
+                            alpha=0.6,
+                        )
+                    else:
+                        # Count occurrences of each topic
+                        topic_counts = (
+                            df_filtered.groupby(topic_column)
+                            .size()
+                            .reset_index(name="Count")
+                        )
+                        total_count = topic_counts["Count"].sum()
+                        topic_counts["Percentage"] = (
+                            topic_counts["Count"] / total_count
+                        ) * 100
+
+                        # Plotting
+                        sns.barplot(
+                            data=topic_counts,
+                            x=topic_column,
+                            y="Percentage",
+                            palette=color_palettes[selected_palette_tab2],
+                            ax=ax,
+                        )
+
+                        ax.set_xlabel("Topic")
+                        ax.set_ylabel("Percentage (%)")
+                        ax.set_xticklabels(ax.get_xticklabels(), rotation=45)
+
+                        # Add percentage labels on bars
+                        for p in ax.patches:
+                            ax.annotate(
+                                f"{p.get_height():.2f}%",
+                                (p.get_x() + p.get_width() / 2.0, p.get_height()),
+                                ha="center",
+                                va="center",
+                                fontsize=10,
+                                color="black",
+                                xytext=(0, 5),
+                                textcoords="offset points",
+                            )
+
+                    plt.tight_layout()
+                    return fig
+
+                # Generate and display the plot
+                fig = plot_topic_proportions(df_tab2_filtered)
                 st.pyplot(fig)
 
-            # Call the function to plot proportions
-            plot_topic_proportions(df_filtered)
+                # Enable download of the plot
+                buffer = io.BytesIO()
+                fig.savefig(buffer, format="png", bbox_inches="tight")
+                buffer.seek(0)
+
+                st.download_button(
+                    label="Download Graph as PNG",
+                    data=buffer,
+                    file_name="topic_proportions.png",
+                    mime="image/png",
+                )
 
         else:
-            st.error("The dataset must contain the 'Final Topic Name' column.")
+            st.error(
+                "The dataset must contain the 'Final Topic Name' and 'year' columns."
+            )
     else:
         st.info("Please upload a CSV file in the 'Upload CSV' tab to proceed.")
 
@@ -108,7 +235,6 @@ with tab3:
 
     # Sub-tab 1: Net Trend Visualization
     with subtab1:
-        st.write("Net Trend Visualization for Hate and Toxic topics.")
 
         # Check if the uploaded CSV is available in session state
         if (
@@ -320,6 +446,8 @@ with tab3:
                             border-radius: 10px;
                             overflow: hidden;
                             box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+                            margin: 0 auto;  /* Center the table */
+                            width: 80%;      /* Optional: Control table width */
                         }
                         .dataframe-container table {
                             border-collapse: collapse;
@@ -384,12 +512,14 @@ with tab3:
 
                         # Plot Net Hate and Toxic Trends
                         fig, ax = plt.subplots(
-                            figsize=(12, 10)
-                        )  # Increased height for better vertical spacing
+                            figsize=(6, 4)  # Reduced width and height for smaller plot
+                        )
                         x = np.arange(len(years))
-                        width = 0.35
+                        width = (
+                            0.3  # Reduced bar width for better spacing in smaller plots
+                        )
 
-                        ax.bar(
+                        bars_hate = ax.bar(
                             x - width / 2,
                             hate_trends,
                             width,
@@ -397,7 +527,7 @@ with tab3:
                             color="#D32F2F",
                             alpha=0.8,
                         )
-                        ax.bar(
+                        bars_toxic = ax.bar(
                             x + width / 2,
                             toxic_trends,
                             width,
@@ -407,16 +537,52 @@ with tab3:
                         )
 
                         ax.set_title(
-                            f"Net Trends for Topic: {topic}", fontsize=16, weight="bold"
+                            f"Net Trends for Topic: {topic}", fontsize=8, weight="bold"
                         )
-                        ax.set_xlabel("Year", fontsize=14)
-                        ax.set_ylabel("Net Trend", fontsize=14)
+                        ax.set_xlabel("Year", fontsize=6)
+                        ax.set_ylabel("Net Trend", fontsize=6)
                         ax.set_xticks(x)
-                        ax.set_xticklabels(years, rotation=45, ha="right", fontsize=12)
-                        ax.legend(loc="upper right", fontsize=12)
+                        ax.set_xticklabels(years, rotation=45, ha="right", fontsize=6)
+
+                        # Set y-axis tick font size
+                        ax.tick_params(axis="y", labelsize=6)
 
                         # Set consistent y-axis limits with padding
                         ax.set_ylim(global_min, global_max)
+
+                        # Add numbers on bars
+                        for bar in bars_hate:
+                            ax.annotate(
+                                f"{bar.get_height():.2f}",  # Display height as a number
+                                xy=(
+                                    bar.get_x() + bar.get_width() / 2,
+                                    bar.get_height(),
+                                ),
+                                xytext=(
+                                    0,
+                                    3,
+                                ),  # Offset the text position slightly above the bar
+                                textcoords="offset points",
+                                ha="center",
+                                va="center",
+                                fontsize=6,
+                                color="black",
+                            )
+
+                        for bar in bars_toxic:
+                            ax.annotate(
+                                f"{bar.get_height():.2f}",
+                                xy=(
+                                    bar.get_x() + bar.get_width() / 2,
+                                    bar.get_height(),
+                                ),
+                                xytext=(0, 3),
+                                textcoords="offset points",
+                                ha="center",
+                                va="center",
+                                fontsize=6,
+                                color="black",
+                            )
 
                         # Add gridlines
                         ax.grid(
@@ -429,6 +595,21 @@ with tab3:
                         # Show the plot in Streamlit
                         st.pyplot(fig)
 
+                        # Save the plot to a BytesIO buffer
+                        buffer = io.BytesIO()
+                        fig.savefig(buffer, format="png", bbox_inches="tight")
+                        buffer.seek(0)
+
+                        # Provide a download button
+                        st.download_button(
+                            label="Download Graph as PNG",
+                            data=buffer,
+                            file_name=f"net_trends_{topic.replace(' ', '_')}.png",
+                            mime="image/png",
+                        )
+
+                        plt.close(fig)  # Close the plot to free memory
+
                 plot_net_trends(final_trend_df)
 
             except Exception as e:
@@ -438,14 +619,13 @@ with tab3:
 
     # Sub-tab 2: Word Cloud
     with subtab2:
-        st.write("Word Clouds for Topics.")
 
         # Ensure uploaded data and session state are available
         if (
             "classified_df" not in st.session_state
             or st.session_state["classified_df"].empty
         ):
-            st.warning("Please upload a CSV file in the 'Upload CSV' tab to proceed.")
+            st.info("Please upload a CSV file in the 'Upload CSV' tab to proceed.")
         else:
             comments_df = st.session_state["classified_df"]
             final_trend_df = st.session_state.get("final_trend_df", pd.DataFrame())
@@ -683,8 +863,6 @@ with tab3:
 
     # Sub-tab 3: Filtered Comments
     with subtab3:
-        st.write("Filtered comments.")
-
         # Ensure the uploaded CSV is available
         if (
             "classified_df" not in st.session_state
@@ -740,7 +918,21 @@ with tab3:
                             if session_key in st.session_state:
                                 df = st.session_state[session_key]
                                 if not df.empty:
-                                    st.dataframe(df)
+                                    # Select only the desired columns
+                                    columns_to_display = [
+                                        "text",
+                                        "timestamp",
+                                        "username",
+                                        "link",
+                                        "Sensitive Group",
+                                        "Classification",
+                                        "Topic_Words",
+                                        "Final Topic Name",
+                                        "Reddit Title",
+                                    ]
+                                    # Filter DataFrame to show only the specified columns
+                                    filtered_df = df[columns_to_display]
+                                    st.dataframe(filtered_df)
                                 else:
                                     st.warning(
                                         f"No data available for {selected_topic}."
@@ -758,32 +950,78 @@ load_dotenv()
 # Initialize OpenAI client
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-# Tab 4: Findings + Solutions
-with tab4:
-    st.markdown("### Findings and Solutions")
-    st.write(
-        "Analyze datasets to identify the main issues causing increased hateful or toxic comments."
-    )
 
+# Function to load Lottie animations
+def load_lottie_url(url: str):
+    try:
+        response = requests.get(url)
+        if response.status_code != 200:
+            st.warning("⚠️ Failed to load animation. Using default fallback.")
+            return None
+        return response.json()
+    except Exception as e:
+        st.error(f"Error loading Lottie animation: {e}")
+        return None
+
+
+# Replace this with a valid Lottie animation URL
+lottie_analysis_url = (
+    "https://assets2.lottiefiles.com/packages/lf20_jcikwtux.json"  # Example URL
+)
+lottie_analysis = load_lottie_url(lottie_analysis_url)
+
+# Tab 4: Findings
+with tab4:
     if (
         "classified_df" not in st.session_state
         or st.session_state["classified_df"].empty
     ):
         st.info("Please upload a CSV file in the 'Upload CSV' tab to proceed.")
     else:
+        st.markdown(
+            "<h3 style='text-align: left; color: #2E86C1;'>🔍 Findings</h3>",
+            unsafe_allow_html=True,
+        )
+
+        # Extract analyzed topics dynamically
         final_trend_df = st.session_state.get("final_trend_df", pd.DataFrame())
+        topics_analyzed = (
+            final_trend_df["Final Topic Name"].tolist()
+            if not final_trend_df.empty
+            else []
+        )
+
+        col1, col2 = st.columns([1, 3])
+        with col1:
+            if lottie_analysis:
+                st_lottie(lottie_analysis, height=150, key="analysis_animation")
+            else:
+                st.markdown("⚙️ *(Animation unavailable, proceeding...)*")
+        with col2:
+            topics_html = ", ".join(
+                [f"<strong>{topic}</strong>" for topic in topics_analyzed[:5]]
+            )  # Show first 5 topics
+            st.markdown(
+                f"""
+                <div style='display: flex; align-items: flex-start; height: 100%; margin-top: 40px;'>
+                    <p style='font-size: 16px; color: #BFC9CA;'>
+                    The following topics have been analyzed and identified as problematic: {topics_html}.
+                    These insights highlight areas of increased hateful or toxic behavior.
+                    </p>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
 
         if final_trend_df.empty:
             st.error("Final trend data is not available.")
         else:
-            # Extract ranked topics and normalize to lowercase for comparison
+            # Extract and organize datasets
             ranked_topics = [
                 topic.lower() for topic in final_trend_df["Final Topic Name"].tolist()
             ]
-
-            # Dynamically fetch session state keys for filtered comments
             session_data_keys = {
-                f"{topic} {comment_type}": session_key
+                f"{topic.lower()} {comment_type}": session_key
                 for session_key in st.session_state.keys()
                 if session_key.startswith("increase_")
                 and session_key.endswith("_comments")
@@ -792,87 +1030,157 @@ with tab4:
                     .replace("_comments", "")
                     .split("_", 1)
                 ]
-                if topic in ranked_topics  # Ensure case-insensitive match
+                if topic.lower() in ranked_topics
             }
 
             if not session_data_keys:
                 st.warning("No datasets available for analysis.")
             else:
-                # Maintain order: Ranked topics first, Hate before Toxic
                 sorted_keys = [
                     (
                         f"{topic.title()} {comment_type.title()}",
-                        session_data_keys[f"{topic} {comment_type}"],
+                        session_data_keys[f"{topic.lower()} {comment_type}"],
                     )
                     for topic in ranked_topics
                     for comment_type in ["hate", "toxic"]
-                    if f"{topic} {comment_type}" in session_data_keys
+                    if f"{topic.lower()} {comment_type}" in session_data_keys
                 ]
 
-                # Load datasets from session state
-                datasets = {}
-                for label, session_key in sorted_keys:
-                    if session_key in st.session_state:
-                        df = st.session_state[session_key]
-                        if not df.empty:
-                            datasets[label] = df
+                datasets = {
+                    label: st.session_state[session_key]
+                    for label, session_key in sorted_keys
+                    if session_key in st.session_state
+                }
 
                 if not datasets:
                     st.warning("No datasets available for analysis.")
                 else:
+                    # Filter and Insights in the Same Row
+                    filter_col, insights_col = st.columns([1, 3])
 
-                    def analyze_toxicity_once(dfs, model_name="gpt-4o-mini"):
-                        """
-                        Analyzes datasets and identifies principal issues contributing to hateful or toxic comments.
-                        Runs once and caches the result.
-                        """
-                        responses = []
-                        for identifier, df in dfs:
-                            if df.empty:
-                                responses.append(
-                                    (identifier, "No data available for analysis.")
-                                )
-                                continue
-
-                            df["title_text"] = df["Reddit Title"] + ": " + df["text"]
-                            prompt_content = " ".join(df["title_text"].tolist())
-                            issue_type = (
-                                "increased hateful comments"
-                                if "Hate" in identifier
-                                else "increased toxic comments"
-                            )
-
-                            try:
-                                response = client.chat.completions.create(
-                                    model=model_name,
-                                    messages=[
-                                        {
-                                            "role": "system",
-                                            "content": f"You are a skilled assistant tasked with analyzing discussions. From the provided text, identify the principal issue that has led to {issue_type}. Make it as succinct as possible.",
-                                        },
-                                        {"role": "user", "content": prompt_content},
-                                    ],
-                                )
-                                responses.append(
-                                    (identifier, response.choices[0].message.content)
-                                )
-                            except Exception as e:
-                                responses.append(
-                                    (identifier, f"Error analyzing {identifier}: {e}")
-                                )
-                        return responses
-
-                    # Run analysis once and cache results in session state
-                    if "analysis_results" not in st.session_state:
-                        df_tuples = [(label, df) for label, df in datasets.items()]
-                        st.session_state["analysis_results"] = analyze_toxicity_once(
-                            df_tuples
+                    with filter_col:
+                        # Align Filters heading with Key Insights and update emoji
+                        st.markdown(
+                            "<h4 style='color: #117A65;'>🛠️ Filters</h4>",
+                            unsafe_allow_html=True,
                         )
 
-                    # Display cached results
-                    for label, result in st.session_state["analysis_results"]:
-                        st.markdown(f"**Results for {label}:**")
-                        st.write(result)
+                        # Dropdown for filtering by type
+                        filter_by_type = st.selectbox(
+                            "Filter by Comment Type",
+                            options=["All", "Hate", "Toxic"],
+                            help="Choose whether to view findings for Hate or Toxic comments only.",
+                        )
+
+                        # Search box for filtering by keyword
+                        search_term = st.text_input(
+                            "Search within findings",
+                            help="Enter keywords to search within the findings.",
+                        )
+
+                    with insights_col:
+                        st.markdown(
+                            "<h4 style='color: #117A65;'>💡 Key Insights</h4>",
+                            unsafe_allow_html=True,
+                        )
+
+                        # Analyze data if not already cached
+                        if "analysis_results" not in st.session_state:
+                            with st.spinner("Analyzing data..."):
+
+                                def analyze_toxicity_once(dfs, model_name="gpt-4"):
+                                    responses = []
+                                    for identifier, df in dfs:
+                                        if df.empty:
+                                            responses.append(
+                                                (
+                                                    identifier,
+                                                    "No data available for analysis.",
+                                                )
+                                            )
+                                            continue
+                                        df["title_text"] = (
+                                            df["Reddit Title"] + ": " + df["text"]
+                                        )
+                                        prompt_content = " ".join(
+                                            df["title_text"].tolist()
+                                        )
+                                        prompt_content = prompt_content[
+                                            :2048
+                                        ]  # Limit token size
+                                        issue_type = (
+                                            "increased hateful comments"
+                                            if "Hate" in identifier
+                                            else "increased toxic comments"
+                                        )
+                                        try:
+                                            response = client.chat.completions.create(
+                                                model=model_name,
+                                                messages=[
+                                                    {
+                                                        "role": "system",
+                                                        "content": (
+                                                            "You are a skilled assistant tasked with analyzing discussions. "
+                                                            f"From the provided text, identify the principal issue that has led to {issue_type}. "
+                                                            "Make it as succinct as possible."
+                                                        ),
+                                                    },
+                                                    {
+                                                        "role": "user",
+                                                        "content": prompt_content,
+                                                    },
+                                                ],
+                                            )
+                                            responses.append(
+                                                (
+                                                    identifier,
+                                                    response.choices[0].message.content,
+                                                )
+                                            )
+                                        except Exception as e:
+                                            responses.append(
+                                                (
+                                                    identifier,
+                                                    f"Error analyzing {identifier}: {e}",
+                                                )
+                                            )
+                                    return responses
+
+                                df_tuples = [
+                                    (label, df) for label, df in datasets.items()
+                                ]
+                                st.session_state["analysis_results"] = (
+                                    analyze_toxicity_once(df_tuples)
+                                )
+
+                        # Display filtered results
+                        filtered_results = [
+                            (label, result)
+                            for label, result in st.session_state["analysis_results"]
+                            if (
+                                filter_by_type == "All"
+                                or filter_by_type.lower() in label.lower()
+                            )
+                            and (
+                                search_term.lower() in result.lower()
+                                or search_term.lower() in label.lower()
+                            )
+                        ]
+
+                        if filtered_results:
+                            for label, result in filtered_results:
+                                with st.expander(f"📋 {label}", expanded=False):
+                                    st.markdown(
+                                        f"""
+                                        <div style='border: 1px solid #D5DBDB; border-radius: 8px; padding: 10px; background-color: #FDFEFE;'>
+                                            <p style='color: #515A5A; font-size: 14px;'>{result}</p>
+                                        </div>
+                                        """,
+                                        unsafe_allow_html=True,
+                                    )
+                        else:
+                            st.warning("No matching findings based on your filters.")
+
 # Tab 5: Upload CSV
 with tab5:
     st.write("Upload a CSV file for analysis.")
