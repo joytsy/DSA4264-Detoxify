@@ -1,5 +1,5 @@
 ---
-updated: 4 October 2024
+updated: 11 November 2024
 authors:
   - Joy Tan
   - Kylie Tan
@@ -12,20 +12,47 @@ authors:
 
 Members: Joy Tan, Kylie Tan, Koh Yi Jing, Richmond Sin, Sarah Goh
 
-Welcome to the Team Detoxify Documentation page of DSA4264, your hub for all technical resources, guidelines, and best practices. As a pioneering health tech company, we are committed to leveraging the power of data analytics and artificial intelligence to revolutionize the healthcare industry, enhance patient outcomes, and drive innovation.
+Welcome to the documentation for **Team Detoxify** in **DSA4264**, where we focus on analyzing and mitigating toxic and hateful online comments. Our project leverages advanced machine learning models to classify harmful content and uncover underlying themes, enabling safer and more constructive digital interactions.
 
-## Our Mission
+## Report Overview
 
-At [Your Company Name], our mission is to harness cutting-edge technology to provide innovative solutions that improve health and wellbeing. We believe in the transformative potential of data and AI to deliver personalized, efficient, and effective healthcare services.
+Our technical report is structured as follows:
 
-## What You'll Find Here
+### **1. Context**
 
-- **Comprehensive Guides:** Step-by-step tutorials and detailed guides to help you navigate our data analytics and AI platforms.
-- **API Documentation:** In-depth documentation for our APIs, enabling seamless integration and utilization of our tools.
-- **Best Practices:** Recommendations and best practices for implementing data analytics and AI in healthcare settings.
-- **Case Studies:** Real-world examples of how our technology is being used to make a difference in healthcare.
-- **Technical Support:** Resources and contact information for technical assistance and support.
+- Overview of the problem: the prevalence and impact of toxic and hateful online content.
+- Motivation for the project and its significance in creating safer digital environments.
 
-## Why Team Detoxify?
+### **2. Scope**
 
-The integration of data analytics and AI in healthcare offers immense opportunities to enhance patient care, streamline operations, and enable predictive insights. From personalized treatment plans to early disease detection, our technology empowers healthcare providers to make data-driven decisions that can save lives and improve health outcomes.
+- Defines the boundaries of our project, including key objectives and deliverables.
+- Highlights the specific focus areas within toxicity and hate speech classification.
+
+### **3. Methodology**
+
+#### **3.1 Data Processing**
+
+- Data collection and cleaning processes.
+- Description of the datasets used, including their sources, size, and preprocessing steps.
+
+#### **3.2 Modelling > Text Classification Model**
+
+- Development and fine-tuning of our **Multilingual DistilBERT** model.
+- Explanation of the classification categories and metrics used to evaluate model performance.
+
+#### **3.3 Modelling > Topic Modelling**
+
+- Application of **BERTopic** to identify and analyze key themes in toxic comments.
+- Explanation of how BERTopic extracts topics and provides deeper insights into the nature of harmful content.
+
+#### **3.4 Application**
+
+- Implementation of the model in a real-world setting through our **Streamlit** application.
+- User workflows for classifying and analyzing comments, including manual input and bulk analysis via CSV uploads.
+
+### **4. Findings**
+
+- Key insights and trends derived from the analysis.
+- Visualizations and interpretations of the results, highlighting the effectiveness of our models in detecting and categorizing toxic content.
+
+This documentation provides a comprehensive guide to our methodologies, findings, and applications, serving as a reference for understanding and extending our work.
