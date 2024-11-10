@@ -1,5 +1,3 @@
-# DSA4264---Detoxify
-
 # DSA4264-Detoxify
 
 ## Overview
