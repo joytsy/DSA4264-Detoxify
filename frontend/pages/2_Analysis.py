@@ -948,7 +948,7 @@ with tab3:
 load_dotenv()
 
 # Initialize OpenAI client
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+client = OpenAI(api_key=os.getenv("OPENAI_API"))
 
 
 # Function to load Lottie animations
@@ -1120,9 +1120,7 @@ with tab4:
                                                     {
                                                         "role": "system",
                                                         "content": (
-                                                            "You are a skilled assistant tasked with analyzing discussions. "
-                                                            f"From the provided text, identify the principal issue that has led to {issue_type}. "
-                                                            "Make it as succinct as possible."
+                                                            f"""You are a skilled assistant tasked with analyzing discussions. From the provided text, identify the principal issue that has led to {issue_type}. Make it as succinct as possible."""
                                                         ),
                                                     },
                                                     {
