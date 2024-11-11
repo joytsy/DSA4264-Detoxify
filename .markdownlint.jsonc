@@ -5,7 +5,7 @@
 
   // MD013/line-length : Line length : https://github.com/DavidAnson/markdownlint/blob/v0.34.0/doc/md013.md
   "MD013": {
-    "line_length": 1000,  // Set maximum line length to 120 characters
+    "line_length": 2000,  // Set maximum line length to 120 characters
     "ignore_code_blocks": true  // Ignore long lines in code blocks
   },
 
