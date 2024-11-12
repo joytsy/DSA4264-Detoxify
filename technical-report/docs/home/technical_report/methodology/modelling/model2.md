@@ -1,14 +1,14 @@
-## Methodology and Tools for Analyzing Reddit Data
+# Analyzing Reddit Data
 
-### Overview
+## Overview
 
 The objective of this analysis is to determine if, and why, the topics and comments on Reddit have become more hateful and toxic over recent years. To conduct this investigation, we employed a two-pronged analytical approach focusing on the frequency and intensity of toxic and hateful comments.
 
-### Data Processing and Topic Modeling
+## Data Processing and Topic Modeling
 
 The primary dataset utilized consisted of comments extracted from Reddit, with text data located in the `text` column of our DataFrame. We initiated our analysis by applying topic modeling technique using berTopic to categorize the comments into various topics.
 
-#### Text Preprocessing and Normalization
+### Text Preprocessing and Normalization
 
 To address the linguistic characteristics of the Reddit dataset, which includes colloquial and region-specific language known as Singlish, we implemented a preprocessing routine tailored to convert Singlish terms into standard English. This preprocessing step involved the following actions:
 
@@ -20,7 +20,7 @@ To address the linguistic characteristics of the Reddit dataset, which includes 
 
 4. **Text Cleaning Function**: A text cleaning function was developed to automate the normalization process, which involved tokenization, dictionary-based term replacement, and stop word removal. This function was applied to each text entry in the dataset.
 
-#### Setting Up BERTopic for Topic Modeling
+### Setting Up BERTopic for Topic Modeling
 
 After preprocessing, we utilized BERTopic, an advanced topic modeling technique that leverages state-of-the-art language models and machine learning algorithms to discover topics within text data. The BERTopic setup involved several components designed to optimize topic extraction:
 
@@ -33,7 +33,7 @@ During the topic modelling process, we identified a significant number of commen
 
 Upon further investigation of these outlier comments, we observed a that these comments were not assigned appropriate topics during the initial topic modeling phase even though the comments were relavant. To rectify this, we opted to reassess the `-1` labeled comments by extracting the Reddit thread topic from the `linkid` column rather than relying solely on the text content. This approach allowed us to understand the context surrounding the comments, which may lack explicit thematic elements yet still contribute to the overall discourse.
 
-### Refinement of Topic Modeling
+## Refinement of Topic Modeling
 
 After re-evaluating the outlier comments, we integrated these findings with the previously identified topics into a unified dataframe. This integration process involved combining the refined `-1` topics with the existing topic classifications to ensure comprehensive coverage of the dataset.
 
@@ -54,11 +54,11 @@ Subsequently, we categorized these topics into twelve main themes for detailed a
 
 Utilizing the merging functionality provided by BERTopic, we consolidated related sub-topics into these main categories.
 
-### Analysis of Topic Frequency and Intensity
+## Analysis of Topic Frequency and Intensity
 
 Following the thematic categorization, we quantified the frequency of comments per topic to identify the most prevalent discussions. The frequency analysis aimed to pinpoint the topics that dominate the platform and assess their evolution over time in terms of both volume and intensity.
 
-### Summary
+## Summary
 
 This methodological approach, utilizing advanced topic modeling techniques and thematic analysis, serves to reveal insights into the shifting landscapes of discourse on Reddit. By examining the frequency and context of topics associated with toxic and hateful sentiments, we aim to uncover the underlying trends and catalysts contributing to the increase in such content on social media platforms.
 
