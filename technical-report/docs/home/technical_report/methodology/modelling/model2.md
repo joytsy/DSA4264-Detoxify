@@ -2,7 +2,7 @@
 
 ## 1. Overview
 
-This analysis aims to determine if and why the topics and comments on Reddit have become more hateful and toxic over recent years. To conduct this investigation, we employed a two-pronged analytical approach focusing on the frequency and intensity of toxic and hateful comments.
+This analysis aims to determine if and why the topics and comments on Reddit have become more hateful and toxic over recent years. To conduct this investigation, we employed a two-pronged analytical approach focusing on the frequency and intensity of toxic and hateful comments. The codes used to derive our analysis can be found [here](https://github.com/joytsy/DSA4264-Detoxify/blob/main/model-2/).
 
 ## 2. Data Processing and Topic Modeling
 
@@ -37,29 +37,78 @@ After preprocessing, we utilized BERTopic, an advanced topic modeling technique 
 3. **Clustering**: HDBSCAN was used to perform density-based clustering on the reduced embeddings, identifying groups of text with similar content without requiring a predetermined number of clusters.
 4. **Representation Model**: A `KeyBERTInspired` representation model was implemented to select the most representative words for each topic based on their relevance and frequency, providing an interpretable summary of each topic.
 
-During the topic modelling process, we identified a significant number of comments labeled with the topic identifier `-1`, indicating classification as outliers.
+During the topic modeling process, we identified a significant number of comments labeled with the topic identifier `-1`, indicating classification as outliers.
 
-Upon further investigation of these outlier comments, we observed a that these comments were not assigned appropriate topics during the initial topic modeling phase even though the comments were relavant. To rectify this, we opted to reassess the `-1` labeled comments by extracting the Reddit thread topic from the `linkid` column rather than relying solely on the text content. This approach allowed us to understand the context surrounding the comments, which may lack explicit thematic elements yet still contribute to the overall discourse.
+Upon further investigation of these outlier comments, we observed that these comments were not assigned appropriate topics during the initial topic modeling phase even though the comments were relevant. To rectify this, we opted to reassess the `-1` labeled comments by extracting the Reddit thread topic from the `linkid` column rather than relying solely on the text content. This approach allowed us to understand the context and nuances surrounding the comments, which may lack explicit thematic elements yet still contribute to the overall discourse.
 
 ## 3. Refinement of Topic Modeling
 
-After re-evaluating the outlier comments, we integrated these findings with the previously identified topics into a unified dataframe. This integration process involved combining the refined `-1` topics with the existing topic classifications to ensure comprehensive coverage of the dataset.
+After re-evaluating the outlier comments, we conducted a secondary BERTopic modeling on the reddit thread topic. The refined topics were then merged with the previously generated topics, forming a unified dataframe that ensured comprehensive coverage and minimized information loss.
 
 Subsequently, we categorized these topics into twelve main themes for detailed analysis:
 
-1. Body Image
-2. COVID-19
-3. Crimes
-4. Education
-5. Gender
-6. Generational
-7. Government
-8. Housing
-9. LGBTQ+
-10. Religion
-11. Transportation
-12. Work
-13. Race
+<div style="text-align: center;">
+
+<table>
+  <tr>
+    <th>#</th>
+    <th>Topic</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>Body Image</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>COVID-19</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>Crimes</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>Education</td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>Gender</td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td>Generational</td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td>Government</td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td>Housing</td>
+  </tr>
+  <tr>
+    <td>9</td>
+    <td>LGBTQ+</td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td>Religion</td>
+  </tr>
+  <tr>
+    <td>11</td>
+    <td>Transportation</td>
+  </tr>
+  <tr>
+    <td>12</td>
+    <td>Work</td>
+  </tr>
+  <tr>
+    <td>13</td>
+    <td>Race</td>
+  </tr>
+</table>
+
+</div>
 
 We leveraged BERTopic’s merging capabilities to consolidate related sub-topics under these main themes. Topics that did not align with these categories were classified as null, maintaining clarity and focus in thematic analysis.
 
@@ -67,7 +116,7 @@ We leveraged BERTopic’s merging capabilities to consolidate related sub-topics
 
 Following the thematic categorization, we quantified the frequency of comments per topic to identify the most prevalent discussions. The frequency analysis aimed to pinpoint the top 3 topics that dominate the platform with regard to hate and toxicity and assess their evolution over time.
 
-![image](Frquency_Analysis_Graph_1.png)
+![image](Frequency_Analysis_Graph_1.png)
 
 <div align="center" style="font-size: 0.85em;">
 
@@ -75,7 +124,7 @@ Figure 6. Frequency of hate and toxic for each topic for all years
 
 </div>
 
-![image](Frquency_Analysis_Graph_2.png)
+![image](Frequency_Analysis_Graph_2.png)
 
 <div align="center" style="font-size: 0.85em;">
 
@@ -87,68 +136,54 @@ Figure 7. Frequency of hate and toxic for each topic across each years
 
 Thereafter, we dived into the respective hate and toxicity intensity trends for these 3 dominant topics from 2020 to 2023. This analysis examines hate and toxicity intensity trends across key topics by calculating trends, visualizing changes, filtering significant years, and generating insights through word clouds and problem statements.
 
-<p align="center">
-    <img src="Intensity_Analysis_Pipeline.png" alt="Intensity Analysis Pipeline" width="400">
-</p>
+![image](Intensity_Analysis_Pipeline.png)
 
 <div align="center" style="font-size: 0.85em;">
-    Figure 8. Methodology for Intensity Analysis for a Topic
+
+Figure 8. Methodology for Analysis for a Topic
+
 </div>
 
 Our methodology involves several components to generate insights:
 
 ### 5.1. Trend Calculation
 
-Trend calculation consists of multiple functions that work together to create a cumulative view of hate and toxicity trends over time.
+By examining the trends, we aim to provide a comprehensive view of hate and toxicity shifts over time.
 
-1. **`calculate_indices`**
+1. **Calculate Indices for each Intensity Level**
 
-   - **Purpose**: This function establishes baseline indices for hate and toxicity by analyzing the proportion of each intensity level of comments (e.g., Hate 1, Hate 2, Hate 3, Toxic 1, Toxic 2, Toxic 3) for each topic on a yearly basis.
-   - **Process**: The hate and toxic indices are calculated by determining the proportion of comments at each intensity level for hate or toxic categories within a specific year. This is done by dividing the number of comments at a given intensity level for that year by the total number of hate or toxic comments for all years within the topic. This calculation provides a relative measure of intensity distribution for each year.
-   - **Formula**:
+   Firstly, we calculate the indices for hate and toxicity levels based on Reddit comment data. The indices are determined by analyzing the proportion of comments at each intensity level (e.g., Hate 1, Hate 2, Hate 3, Toxic 1, Toxic 2, Toxic 3) for each topic on a yearly basis. This provides a relative measure of the distribution of intensity levels over time.
 
-   \[
-   \text{Index for a specific level} = \frac{\text{Number of comments at that intensity level for the year}}{\text{Total number of hate or toxic comments for all years in the topic}}
-   \]
-   Example for **Hate 3 Index in 2021**:
+- **Formula**:
 
-   \[
-   \text{Hate 3 Index (2021)} = \frac{\text{Hate 3 comments in 2021}}{\text{Total hate comments (2020–2023)}}
-   \]
+![image](Hate_Index_Formula.png)
 
-1. **`calculate_trend_data`**
+<div align="center" style="font-size: 0.85em;">
+</div>
 
-   - **Purpose**: This function processes the DataFrame of indices generated by the `calculate_indices` function to create a time series that reflects the changes in hate and toxicity levels from one year to the next.
-   - **Process**: It calculates the yearly change in the hate and toxicity indices, tracking how the proportion of comments at different intensity levels evolves over time. The function helps identify trends, such as whether hate or toxicity has increased or decreased from one year to the next for each intensity level.
-   - **Formula**:
+1. **Find Yearly Change of Index at each Intensity Level**
 
-   \[
-   \text{Percentage Change in Hate 3 Index} = \frac{\text{Hate 3 Index (Current Year)} - \text{Hate 3 Index (Previous Year)}}{\text{Hate 3 Index (Previous Year)}} \times 100
-   \]
+   We then find out if the proportion of these indices have decreased or increased from the previous year by calculating the proportion change of indices at each intensity level.
 
-   Example for Hate 3 Change from 2020 to 2021:
+- **Formula**:
 
-   \[
-   \text{Percentage Change in Hate 3 Index} = \frac{\text{Hate 3 Index (2021)} - \text{Hate 3 Index (2020)}}{\text{Hate 3 Index (2020)}} \times 100
-   \]
+![image](Percentage_Change_Index.png)
 
-1. **`calculate_net_trends`**
+<div align="center" style="font-size: 0.85em;">
+</div>
 
-   - **Purpose**: This function aggregates the trend data calculated in `calculate_trend_data` to determine the cumulative net change in hate and toxicity intensity levels. It creates a single metric that summarizes whether hate or toxic levels have increased or decreased from one year to the next.
-   - **Process**: The function sums the individual changes in the indices for different intensity levels to calculate an overall net change for each year. The output is `final_trend_df`.
-   - **Formula**:
+1. **Aggregating Yearly Change in Hate and Toxic Intensities**
 
-   \[
-   \text{Net Hate Index} = (\text{Change in Hate 3 Index} \times 3) + (\text{Change in Hate 2 Index} \times 2) + (\text{Change in Hate 1 Index} \times 1)
-   \]
+   For a cumulative view of whether total hate and toxicity levels have increased or decreased over time, a weighted sum formula is used. This formula sums the yearly changes in hate and toxicity indices, with higher weights given to more severe levels. This helps us determine if overall hate or toxicity levels increase in that year.
 
-   Example for **Net Change in Hate from 2020 to 2021**:
+- **Formula**:
 
-   \[
-   \text{Net Hate Index 2020-2021} = (\text{Change in Hate 3 Index 2020-2021} \times 3) + (\text{Change in Hate 2 Index 2020-2021} \times 2) + (\text{Change in Hate 1 Index 2020-2021} \times 1)
-   \]
+![image](Net_Hate_Trend.png)
 
-Net trends can also be visualized using the function `plot_net_trends(final_trend_df)`.
+<div align="center" style="font-size: 0.85em;">
+</div>
+
+Net trends can also be visualized to track changes more easily.
 
 ![image](Net_Hate_Trend_Race.png)
 
@@ -160,44 +195,28 @@ Figure 9. Example of Net Hate Trend Visualisation
 
 ### 5.2. Positive Trend Filtering and Comment Extraction
 
-This section serves to focus our analysis on the years with positive trends in intensity.
+Next, we focus the analysis on years that show a positive increase in the net trend for hate and toxic comments, helping to isolate periods of growing concern.
 
-1. **`filter_positive_years`**:
+### 5.3. Subtopic Examination, Filtering and Sequencing of Comments
 
-   - **Purpose**: Identifies years where there has been a positive increase in the net trend for hate or toxic comments.
+1. **Visualize Common Subtopics**: Generate word clouds to highlight the most frequent subtopics within each main topic, using comments from years with positive trend increases (Figure 10).
 
-2. **`get_comments_for_positive_years`**:
-   - **Purpose**: Filters and extracts comments from the `positive_trend_df`, focusing on years where hate or toxic intensity has significantly increased.
+1. **Filter Comments by Top Subtopic**: Filter comments to focus on the top subtopic within each main topic, providing a more granular view of trending issues.
 
-### 5.3. WordCloud Generation and Filtering and Sequencing of Comments
+1. **Enhance Comments with Contextual Titles**: Append relevant Reddit titles to each comment to add context to comments.
 
-This step refines the focus to narrower subtopics within the broader topics, aiming to uncover specific insights related to increasing intensity trends.
+1. **Rank and Sequence High-Intensity Comments**: Rank comments by intensity and select the top 20 for each subtopic, enabling an in-depth examination of high-intensity sentiments within the subtopic.
 
-1. **`generate_wordcloud`**:
+![Word Cloud for Hate in Race Topic](Word_Cloud.png)
 
-   - **Purpose**: Creates a visual word cloud for a specified topic using the filtered comments from `get_comments_for_positive_years`, enabling visualization of the most common subtopics within the broader topics.
+<div align="center" style="font-size: 0.85em;">
 
-   ![image](Word_Cloud.png)
+Figure 10. Word Cloud for Hate in Race Topic, highlighting subtopics such as 'china' and 'foreigner'.
 
-   <div align="center" style="font-size: 0.85em;">
-
-   Figure 10. Word Cloud for Hate in Race Topic, highlighting subtopics such as ‘china’ and ‘foreigner’
-
-   </div>
-
-1. **`filter_and_sequence_comments`**:
-   - **Purpose**: Identifies and analyzes the most common subtopics within larger topics, providing targeted insights into specific areas. This function focuses on high-intensity comments, laying the groundwork for problem statement generation.
-   - **Process**:
-     - The function begins by identifying the most frequent subtopic within each topic based on the initial BERTopic classification, using the `Topic_Words` column to determine relevance.
-     - It filters the DataFrame for the identified subtopic and sorts comments by intensity level, prioritizing those with the highest levels of hate or toxicity
-     - The function also extracts the Reddit title from the `link` column and appends it to each comment to offer additional context during problem statement generation.
-     - Finally, it ranks and selects the top 20 most intense comments, facilitating an in-depth examination of high-intensity sentiments within the specific subtopic.
+</div>
 
 ### 5.4. Problem Statement Generation
 
-- **`solutions.ipynb`**:
-  - **Purpose**: This Jupyter notebook processes the filtered and sequenced comments to formulate problem statements that encapsulate the main issues within each topic.
-  - **Process**: Utilizes an OpenAI API call to generate problem statements, drawing from the top comments, subtopics, and contextual data derived from the `filter_and_sequence_comments` function.
-  - **Output**: Contextualized problem statements that highlight the key issues for each topic
+Finally, we formulated problem statements that encapsulate the main issues within each topic with the filtered comments of highest intensity levels.
 
-We then further went on to examine the problem statements and did literature reviews on them to uncover greater insights and explore possible solutions.
+To uncover greater insights of the issues, we did literature reviews and explored possible solutions upon further examination of the problem statements. Our findings can be found [here](https://github.com/joytsy/DSA4264-Detoxify/blob/main/technical-report/docs/home/technical_report/findings.md).
