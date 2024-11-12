@@ -23,30 +23,30 @@ Here are some highlights from our project journey.
 
 ### Our Last Meeting at SMU
 
-![image](5.jpg)
+![image](5.jpeg)
 _Caption: Our last physical meeting before the last stretch (we concluded that SMU students dressed better than us). 31st Oct 2024_
 
 ### First consultation with Prof Khoo
 
-![image](4.jpg)
+![image](4.jpeg)
 _Caption: Changing some of our plans, but unfazed by the challenges. 24th Oct 2024_
 
 ### Data Labelling
 
-![image](3.jpg)
+![image](3.jpeg)
 _Caption: Visualizing the impact of our classification model on test data. 22nd Oct 2024_
 
 ### Starbucks Sessions
 
-![image](2.jpg)
+![image](2.jpeg)
 _Caption: Exploring a different starbucks every week (Novena is the best). 17th Oct 2024_
 
 ### Excited for the Project
 
-![image](1.jpg)
+![image](1.jpeg)
 _Caption: Our first virtual meeting, ironing out our plans. 5th Oct 2024_
 
 ### Project Kick-Off
 
-![image](0.jpg)
+![image](0.jpeg)
 _Caption: Our first meeting after choosing the project topic. 2nd Oct 2024_
