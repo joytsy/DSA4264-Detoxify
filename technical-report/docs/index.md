@@ -35,12 +35,12 @@ Our technical report is structured as follows:
 - Data collection and cleaning processes.
 - Description of the datasets used, including their sources, size, and preprocessing steps.
 
-#### **3.2 Modelling > Text Classification Model**
+#### **3.2 Modelling/Multiclass Text Classification**
 
 - Development and fine-tuning of our **Multilingual DistilBERT** model.
 - Explanation of the classification categories and metrics used to evaluate model performance.
 
-#### **3.3 Modelling > Topic Modelling**
+#### **3.3 Modelling/Topic Modelling**
 
 - Application of **BERTopic** to identify and analyze key themes in toxic comments.
 - Explanation of how BERTopic extracts topics and provides deeper insights into the nature of harmful content.
