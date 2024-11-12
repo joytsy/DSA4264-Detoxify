@@ -108,7 +108,7 @@ DistilBERT achieved the highest F1-score (0.84), making it the top-performing mo
 
 ### 1.2 Topic Modelling Results
 
-Topic modeling identified rising themes in hate and toxicity across key topics: race, crime, and gender. More in-depth analysis can be found [here](../technical_report\appendix.md).
+Topic modeling identified rising themes in hate and toxicity across key topics: race, crime, and gender. More in-depth analysis can be found [here](https://joytsy.github.io/DSA4264-Detoxify/home/technical_report/appendix/).
 
 Race has emerged as the most pressing issue among the three categories analyzed, with the highest increase in both [Net Hate and Net Toxicity Scores](../technical_report/methodology/modelling/model2.md#51-trend-calculation), reflecting a significant rise in intensity levels up to 2024. This issue has proven to be both recurring and deeply rooted in society. Given that many of the problems identified are ongoing, policymakers must prioritize addressing them. Additionally, a large portion of high-intensity comments stems from this topic, underscoring the need for targeted interventions to tackle the growing hate and toxicity in this area.
 Graph showing Net Hate and Toxicity trends of the 3 Topics from 2020-2023.
