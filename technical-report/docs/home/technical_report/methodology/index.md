@@ -18,7 +18,7 @@ Figure 2. Methodology workflow
 
 </div>
 
-_The methdology section consists of 5 different sections (Figure 2). In Methods Overview, we first outline the overarching approach to our project, detailing the rationale behind our intensity-based classification system and the steps taken to maximize our analysis with the computational resources we have._
+_The methodology section consists of 5 different sections (Figure 2). In Methods Overview, we first outline the overarching approach to our project, detailing the rationale behind our intensity-based classification system and the steps taken to maximize our analysis with the computational resources we have._
 
 Our analysis of Reddit comments aimed to identify trends in hate and toxic speech over time, with a focus on understanding the intensity of such language. We developed a custom [multiclass classification](../methodology/modelling/model1.md#multiclass-text-classification-model) framework to go beyond binary distinctions, providing a deeper understanding of how hateful and toxic content manifests. We subsequently deep-dived to analyse hate and toxic speech that were prioritised and had greater urgency to be address using [topic modelling](../methodology/modelling/model2.md#methodology-and-tools-for-analyzing-reddit-data). To ensure maintainability and reproducibility, we used [Kedro (version 0.19.8)](data-processing/index.md#11-kedro) to organize our data science workflows efficiently.
 

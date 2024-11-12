@@ -15,7 +15,7 @@ Our data cleaning and processing involved merging two raw datasets from 2020-202
 
 ### 1.1 Kedro
 
-[Kedro](https://kedro.org/) provides a structured, reproducible framework for modular data workflows while keeping data private. Using Kedro pipelines, we established a clear sequence for data processing without embedding sensitive datasets in the codebase. This setup also ensures reproducibility and transparency, allowing the project to be retraced and modified without exposing data. Our pipeline can be found in [`kedro-data/src/kedro_data/pipelines/data_processing/nodes.py.`](https://github.com/joytsy/DSA4264-Detoxify/blob/main/kedro-data/src/kedro_data/pipelines/data_processing/nodes.py)
+[Kedro](https://kedro.org/) provides a structured, reproducible framework for modular data workflows while keeping data private. Using Kedro pipelines, we established a clear sequence for data processing without embedding sensitive datasets in the codebase. This setup also ensures reproducibility and transparency, allowing the project to be retraced and modified without exposing data. The code of our pipeline can be found in [here](https://github.com/joytsy/DSA4264-Detoxify/blob/main/kedro-data/src/kedro_data/pipelines/data_processing/nodes.py)
 
 <p align="center">
     <img src="kedroViz.png" alt="kedroViz" width="400">
@@ -29,7 +29,7 @@ Figure 3. Visualisation of the pipelines in our Kedro project
 
 ## 2. Data Subsetting
 
-After calculating the mean and median word counts of the cleaned dataset (32 and 16 words, respectively), we shuffled the data and filtered for texts between 5 and 50 words, which retained 70% of the original dataset. From this filtered data, we then randomly selected a subset of 400,000 texts. Our code can be found in [`data-generation/subset_1million.ipynb`](https://github.com/joytsy/DSA4264-Detoxify/blob/main/data-generation/subset_1million.ipynb).
+After calculating the mean and median word counts of the cleaned dataset (32 and 16 words, respectively), we shuffled the data and filtered for texts between 5 and 50 words, which retained 70% of the original dataset. From this filtered data, we then randomly selected a subset of 400,000 texts. Our code can be found [here](https://github.com/joytsy/DSA4264-Detoxify/blob/main/data-generation/subset_1million.ipynb).
 
 ## 3. Automated Data Labelling
 
@@ -99,7 +99,7 @@ Table 1: Model Comparison on Selected Examples
 
 ### 3.2 Labelling prompt
 
-Our final prompt can be found in [`openai_generate_label.ipynb`](https://github.com/joytsy/DSA4264-Detoxify/blob/main/data-generation/openai/openai_generate_label.ipynb). To optimize labelling accuracy with GPT-4o mini, we aimed to balance prompt length with effectiveness, incorporating several prompt engineering techniques that significantly improved classification outcomes:
+Our final prompt can be found [here](https://github.com/joytsy/DSA4264-Detoxify/blob/main/data-generation/openai/openai_generate_label.ipynb). To optimize labelling accuracy with GPT-4o mini, we aimed to balance prompt length with effectiveness, incorporating several prompt engineering techniques that significantly improved classification outcomes:
 
 [Chain-of-Thought Prompting](https://arxiv.org/abs/2201.11903): We structured the prompt in sequential steps to guide the model through sensitive group identification and then intensity classification. By explicitly separating each decision point (group sensitivity and language intensity), we helped the model follow a logical flow, reducing misclassification errors.
 
