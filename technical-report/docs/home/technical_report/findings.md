@@ -127,7 +127,7 @@ This methodological approach, utilizing advanced topic modeling techniques and t
 
 ## 2. Discussion
 
-### 2.1 Modelling Insights
+### 2.1 Classtification Modelling Insights
 
 The results provide valuable insights for safeguarding digital safety, with the multiclass text classifier effectively classifying hate and toxicity based on intensity. Topic modeling further contextualizes the classifier’s findings, highlighting specific social issues that drive hate and toxicity—information that can guide targeted intervention and more nuanced policy solutions.
 
@@ -157,7 +157,7 @@ In terms of gender issues, the toxicity surrounding gender discussions had been 
 
 ## 3. Recommendations
 
-### 3.1 Improvements for modelling
+### 3.1 Improvements for Classification Modelling
 
 To enhance and expand our solution for MDDI's Online Trust and Safety initiatives, we propose several future directions that address current limitations and broaden the utility of the model:
 
