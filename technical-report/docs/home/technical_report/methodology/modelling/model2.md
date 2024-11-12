@@ -199,21 +199,13 @@ Next, we focus the analysis on years that show a positive increase in the net tr
 
 ### 5.3. Subtopic Examination, Filtering and Sequencing of Comments
 
-1. **Visualize Common Subtopics**:
+1. **Visualize Common Subtopics**: Generate word clouds to highlight the most frequent subtopics within each main topic, using comments from years with positive trend increases (Figure 10).
 
-   - Generate word clouds to highlight the most frequent subtopics within each main topic, using comments from years with positive trend increases (Figure 10).
+1. **Filter Comments by Top Subtopic**: Filter comments to focus on the top subtopic within each main topic, providing a more granular view of trending issues.
 
-1. **Filter Comments by Top Subtopic**:
+1. **Enhance Comments with Contextual Titles**: Append relevant Reddit titles to each comment to add context to comments.
 
-   - Filter comments to focus on the top subtopic within each main topic, providing a more granular view of trending issues.
-
-1. **Enhance Comments with Contextual Titles**:
-
-   - Append relevant Reddit titles to each comment to add context to comments.
-
-1. **Rank and Sequence High-Intensity Comments**:
-
-   - Rank comments by intensity and select the top 20 for each subtopic, enabling an in-depth examination of high-intensity sentiments within the subtopic.
+1. **Rank and Sequence High-Intensity Comments**: Rank comments by intensity and select the top 20 for each subtopic, enabling an in-depth examination of high-intensity sentiments within the subtopic.
 
 ![Word Cloud for Hate in Race Topic](Word_Cloud.png)
 
