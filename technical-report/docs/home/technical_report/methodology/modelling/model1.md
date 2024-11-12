@@ -24,7 +24,7 @@ The final dataset consisted of 105,000 labelled texts, with a balanced distribut
 
 ## 2. DistilBERT Model
 
-To leverage transformer-based architecture without excessive computational cost, we selected [DistilBERT](https://huggingface.co/docs/transformers/en/model_doc/distilbert), a distilled version of [BERT](https://huggingface.co/docs/transformers/en/model_doc/bert), which provides a balance of efficiency and accuracy by retaining the core transformer architecture in a more lightweight model. DistilBERT can capture nuanced linguistic features essential for hate and toxic speech classification. The codes can be found at [`model-1/distilbert/model_1_distilbert.ipynb`](<(https://github.com/joytsy/DSA4264-Detoxify/blob/main/model-1/distilbert/model_1_distilbert.ipynb)>)
+To leverage transformer-based architecture without excessive computational cost, we selected [DistilBERT](https://huggingface.co/docs/transformers/en/model_doc/distilbert), a distilled version of [BERT](https://huggingface.co/docs/transformers/en/model_doc/bert), which provides a balance of efficiency and accuracy by retaining the core transformer architecture in a more lightweight model. DistilBERT can capture nuanced linguistic features essential for hate and toxic speech classification. The codes can be found [here.](<(https://github.com/joytsy/DSA4264-Detoxify/blob/main/model-1/distilbert/model_1_distilbert.ipynb)>)
 
 ### 2.1 Data Preparation
 
@@ -44,7 +44,7 @@ The best-performing DistilBERT model was then evaluated on the test set, using a
 
 ## 3. Traditional Machine Learning Models
 
-To benchmark performance, we also employed traditional machine learning algorithms on the dataset. The codes can be found at [`model-1/classical_ml/classic_model1_15k.ipynb`](https://github.com/joytsy/DSA4264-Detoxify/blob/main/model-1/classical_ml/classic_model1_15k.ipynb)
+To benchmark performance, we also employed traditional machine learning algorithms on the dataset. The codes can be found [here.](https://github.com/joytsy/DSA4264-Detoxify/blob/main/model-1/classical_ml/classic_model1_15k.ipynb)
 
 1. [**Ridge Regression:**](https://scikit-learn.org/dev/modules/generated/sklearn.linear_model.RidgeClassifierCV.html#sklearn.linear_model.RidgeClassifierCV) Tuned with 5-fold cross-validation using [`KFold`](https://scikit-learn.org/dev/modules/generated/sklearn.model_selection.KFold.html), achieving a best alpha of 4.0.
 
