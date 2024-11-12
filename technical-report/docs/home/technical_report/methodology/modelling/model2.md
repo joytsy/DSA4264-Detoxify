@@ -156,15 +156,10 @@ By examining the trends, we aim to provide a comprehensive view of hate and toxi
 
 - **Formula**:
 
-    $$
-    \text{Percentage Change in Hate 3 Index} = \frac{\text{Hate 3 Index (Current Year)} - \text{Hate 3 Index (Previous Year)}}{\text{Hate 3 Index (Previous Year)}} \times 100
-    $$
+![image](Hate_Index_Formula.png)
 
-  - Example for **Hate 3 Change from 2020 to 2021**:
-
-    $$
-    \text{Percentage Change in Hate 3 Index} = \frac{\text{Hate 3 Index (2021)} - \text{Hate 3 Index (2020)}}{\text{Hate 3 Index (2020)}} \times 100
-    $$
+<div align="center" style="font-size: 0.85em;">
+</div>
 
 1. **Find Yearly Change of Index at each Intensity Level**
 
@@ -172,16 +167,10 @@ By examining the trends, we aim to provide a comprehensive view of hate and toxi
 
 - **Formula**:
 
-    $$
-    \text{Percentage Change in Hate 3 Index} = \frac{\text{Hate 3 Index (Current Year)} - \text{Hate 3 Index (Previous Year)}}{\text{Hate 3 Index (Previous Year)}}\times    
-  100
-    $$
+![image](Percentage_Change_Index.png)
 
-- Example for **Hate 3 Change from 2020 to 2021**:
-
-    $$
-    \text{Percentage Change in Hate 3 Index} = \frac{\text{Hate 3 Index (2021)} - \text{Hate 3 Index (2020)}}{\text{Hate 3 Index (2020)}} \times 100
-    $$
+<div align="center" style="font-size: 0.85em;">
+</div>
 
 1. **Aggregating Yearly Change in Hate and Toxic Intensities**
 
@@ -189,15 +178,10 @@ By examining the trends, we aim to provide a comprehensive view of hate and toxi
 
 - **Formula**:
 
-    \[
-    \text{Net Hate Index} = (\text{Change in Hate 3 Index} \times 3) + (\text{Change in Hate 2 Index} \times 2) + (\text{Change in Hate 1 Index} \times 1)
-    \]
+![image](Net_Hate_Trend.png)
 
-- Example for **Net Change in Hate from 2020 to 2021**:
-
-    \[
-    \text{Net Hate Index 2020-2021} = (\text{Change in Hate 3 Index 2020-2021} \times 3) + (\text{Change in Hate 2 Index 2020-2021} \times 2) + (\text{Change in Hate 1 Index 2020-2021} \times 1)
-    \]
+<div align="center" style="font-size: 0.85em;">
+</div>
 
 Net trends can also be visualized to track changes more easily.
 
@@ -217,25 +201,27 @@ Next, we focus the analysis on years that show a positive increase in the net tr
 
 1. **Visualize Common Subtopics**:
 
-    - Generate word clouds to highlight the most frequent subtopics within each main topic, using comments from years with positive trend increases.
-
-    ![Word Cloud for Hate in Race Topic](Word_Cloud.png)
-
-    <div align="center" style="font-size: 0.85em;">
-    Figure 10. Word Cloud for Hate in Race Topic, highlighting subtopics such as 'china' and 'foreigner'.
-    </div>
+   - Generate word clouds to highlight the most frequent subtopics within each main topic, using comments from years with positive trend increases (Figure 10).
 
 1. **Filter Comments by Top Subtopic**:
 
-    - Filter comments to focus on the top subtopic within each main topic, providing a more granular view of trending issues.
+   - Filter comments to focus on the top subtopic within each main topic, providing a more granular view of trending issues.
 
 1. **Enhance Comments with Contextual Titles**:
 
-    - Append relevant Reddit titles to each comment to add context to comments.
+   - Append relevant Reddit titles to each comment to add context to comments.
 
 1. **Rank and Sequence High-Intensity Comments**:
 
-    - Rank comments by intensity and select the top 20 for each subtopic, enabling an in-depth examination of high-intensity sentiments within the subtopic.
+   - Rank comments by intensity and select the top 20 for each subtopic, enabling an in-depth examination of high-intensity sentiments within the subtopic.
+
+![Word Cloud for Hate in Race Topic](Word_Cloud.png)
+
+<div align="center" style="font-size: 0.85em;">
+
+Figure 10. Word Cloud for Hate in Race Topic, highlighting subtopics such as 'china' and 'foreigner'.
+
+</div>
 
 ### 5.4. Problem Statement Generation
 
