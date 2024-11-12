@@ -1,14 +1,8 @@
 # Analyzing Reddit Data
 
-# Analyzing Reddit Data
-
-## 1. Overview
-
 ## 1. Overview
 
 This analysis aims to determine if and why the topics and comments on Reddit have become more hateful and toxic over recent years. To conduct this investigation, we employed a two-pronged analytical approach focusing on the frequency and intensity of toxic and hateful comments.
-
-## 2. Data Processing and Topic Modeling
 
 ## 2. Data Processing and Topic Modeling
 
