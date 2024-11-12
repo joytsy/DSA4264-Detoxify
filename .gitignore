@@ -244,3 +244,13 @@ data-generation/training_data.csv
 data-generation/final_data.csv
 test.ipynb
 .gitignore
+data-generation/training_data_5k.csv
+data-generation/training_data_15k.csv
+data-generation/notebooks/hate_3_comments.csv
+data-generation/notebooks/hate_2_comments.csv
+data-generation/notebooks/toxic_2_comments.csv
+data-generation/notebooks/toxic_3_comments.csv
+model-1/distilbert/test.csv
+model-1/distilbert/model/multilingual_distilbert_model_5k.pth
+model-1/distilbert/model/multilingual_distilbert_model_15k.pth
+model-1/distilbert/model/multilingual_distilbert_model.pth
