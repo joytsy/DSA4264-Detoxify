@@ -254,3 +254,4 @@ model-1/distilbert/test.csv
 model-1/distilbert/model/multilingual_distilbert_model_5k.pth
 model-1/distilbert/model/multilingual_distilbert_model_15k.pth
 model-1/distilbert/model/multilingual_distilbert_model.pth
+frontend/pages/model/multilingual_distilbert_model_5k.pth
