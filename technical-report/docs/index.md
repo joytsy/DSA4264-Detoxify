@@ -1,13 +1,3 @@
----
-updated: 11 November 2024
-authors:
-  - Joy Tan
-  - Kylie Tan
-  - Koh Yi Jing
-  - Richmond Sin
-  - Sarah Goh
----
-
 # Welcome to DSA4264 Team Detoxify Documentation
 
 Members: Joy Tan, Kylie Tan, Koh Yi Jing, Richmond Sin, Sarah Goh

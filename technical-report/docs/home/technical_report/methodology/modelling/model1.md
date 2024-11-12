@@ -6,7 +6,7 @@ We developed a custom multiclass text classification model tailored to encapsula
 
 ## 1. Data generation
 
-The 400,000 labelled comments revealed a significant class imbalance [(Table 2)](../data-processing/index.md#dataset) with Hate 2, Hate 3, Toxic 2, and Toxic 3 having siginificantly lower counts. Initially, we addressed class imbalance by applying calculated class weights to [`CrossEntropyLoss`](https://pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html) and using a stratified split for balanced training, validation, and test sets. However, DistilBERT still struggled with minority classes, so we generated synthetic data to create a fully balanced dataset, eliminating the need for class weights and significantly improving model performance.
+The 400,000 labeled comments revealed a significant class imbalance [(Table 2)](../data-processing/index.md#dataset) with Hate 2, Hate 3, Toxic 2, and Toxic 3 having significantly lower counts. Initially, we addressed class imbalance by applying calculated class weights to [`CrossEntropyLoss`](https://pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html) and using a stratified split for balanced training, validation, and test sets. However, DistilBERT still struggled with minority classes, so we generated synthetic data to create a fully balanced dataset, eliminating the need for class weights and significantly improving model performance.
 
 Standard techniques like Synthetic Minority Over-sampling TEchnique [`(SMOTE)`](https://imbalanced-learn.org/stable/references/generated/imblearn.over_sampling.SMOTE.html), undersampling, and oversampling with [`imblearn`](https://imbalanced-learn.org/stable/combine.html) were applied but ineffective, as identifying hate and toxic speech in Reddit text often requires nuanced attention that these methods do not capture well. To address this, we opted to synthetically generate data for classes with fewer than 15,000 examples and randomly sampled 15,000 instances from larger classes. When we tried with a lower threshold of 5000 per class, we observed that across all models, performance was lower. We chose the 15,000 threshold ultimately to minimize the number of classes needing synthetic data, ensuring balanced representation with minimal generation. Our template-based data generation approach drew inspiration from [SGHateCheck](https://github.com/Social-AI-Studio/SGHateCheck).
 
@@ -20,7 +20,7 @@ Figure 4. Sample generation of Hate 3 and Toxic 2 example
 
 </div>
 
-The final dataset consisted of 105,000 labelled texts, with a balanced distribution of 15,000 texts for each of the [7 classes](../../methodology/index.md#2-class-definitions). It consists of the data labelled by GPT-4o mini and data that was synthetically generated using our templates. The dataset was split into train (70%), validation (15%), and test (15%) for us to train and evaluate Distilbert and other traditional machine learning models.
+The final dataset consisted of 105,000 labeled texts, with a balanced distribution of 15,000 texts for each of the [7 classes](../../methodology/index.md#2-class-definitions). It consists of the data labeled by GPT-4o mini and data that was synthetically generated using our templates. The dataset was split into train (70%), validation (15%), and test (15%) for us to train and evaluate Distilbert and other traditional machine learning models.
 
 ## 2. DistilBERT Model
 
@@ -50,7 +50,7 @@ To benchmark performance, we also employed traditional machine learning algorith
 
 2. [**XGBoost:**](https://xgboost.readthedocs.io/en/stable/parameter.html) An efficient and scalable implementation of gradient-boosted decision trees. Optimized with a [`grid search`](https://scikit-learn.org/dev/modules/generated/sklearn.model_selection.GridSearchCV.html), with best parameters of learning_rate=0.1, max_depth=5, n_estimators=100, and subsample=0.5.
 
-3. [**Multinoial Naive Bayes:**](https://scikit-learn.org/dev/modules/generated/sklearn.naive_bayes.MultinomialNB.html) Used as a baseline due to computational efficiency. The algorithm is based on the Bayes theorem and is widely used for multiclass classification.
+3. [**Multinomial Naive Bayes:**](https://scikit-learn.org/dev/modules/generated/sklearn.naive_bayes.MultinomialNB.html) Used as a baseline due to computational efficiency. The algorithm is based on the Bayes theorem and is widely used for multiclass classification.
 
 4. [**Linear Support Vector Machine:**](https://scikit-learn.org/1.5/modules/sgd.html) Included for its performance in high-dimensional spaces but with minimal tuning.
 

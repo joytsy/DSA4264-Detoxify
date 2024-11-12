@@ -165,3 +165,4 @@ nav:
                   - home/technical_report/methodology/application/index.md
           - home/technical_report/findings.md
           - home/technical_report/appendix.md
+      - home/acknowledgements.md

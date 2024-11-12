@@ -34,15 +34,15 @@ The core assumptions driving our model development, particularly those linked to
 
 **Hypotheses of Interest:** We hypothesized that both the frequency and intensity of hate and toxic language would increase over time, with intensity measured according to our custom-defined categories.
 
-**Data Quality:** Our dataset varied in quality, requiring rigorous preprocessing to manage noise, inconsistencies, and class imbalances. Due to the large size of the origial dataset, we assume that our measures taken to obtain a balanced subset for analysis is justified.
+**Data Quality:** Our dataset varied in quality, requiring rigorous preprocessing to manage noise, inconsistencies, and class imbalances. Due to the large size of the original dataset, we assume that our measures taken to obtain a balanced subset for analysis is justified.
 
 ## 2. Class Definitions
 
-Some works adopt the concept of hate speech as being [aimed at a protected group](https://arxiv.org/abs/2405.01842). Additionally, hate and toxic speech need to be identified in a way that [prioritises those needing immediate attention](https://aclanthology.org/W19-3506.pdf). This led us to the development of a multiclass classification framswork:
+Some works adopt the concept of hate speech as being [aimed at a protected group](https://arxiv.org/abs/2405.01842). Additionally, hate and toxic speech need to be identified in a way that [prioritizes those needing immediate attention](https://aclanthology.org/W19-3506.pdf). This led us to the development of a multiclass classification framework:
 
 ### 2.1 Sensitive Group Classification
 
-In our project, we classify a comment as referring to a sensitive group if it mentions characteristics such as nationality, race, ethnicity, religion, gender, sexual orientation, disability, skin color, age, generational group, socio-economic status, or immigration status. Our choice of groups aligns with Singapore’s legal framework against harmful speech, specifically referencing the Maintenance of [Religious Harmony Act](https://www.mha.gov.sg/what-we-do/managing-security-threats/maintaining-racial-and-religious-harmony) and Section 298A of the Penal Code, which identify protected groups. Additionally, based on analysis of sample texts and discussions, we included extra groups that appeared frequently in potentially hateful comments. Text mentioning any of these characteristics explicitly will be classified as Hateful rather than Toxic.
+In our project, we classify a comment as referring to a sensitive group if it mentions characteristics such as nationality, race, ethnicity, religion, gender, sexual orientation, disability, skin color, age, generational group, socioeconomic status, or immigration status. Our choice of groups aligns with Singapore’s legal framework against harmful speech, specifically referencing the Maintenance of [Religious Harmony Act](https://www.mha.gov.sg/what-we-do/managing-security-threats/maintaining-racial-and-religious-harmony) and Section 298A of the Penal Code, which identify protected groups. Additionally, based on analysis of sample texts and discussions, we included extra groups that appeared frequently in potentially hateful comments. Text mentioning any of these characteristics explicitly will be classified as Hateful rather than Toxic.
 
 ### 2.2 Language Intensity Classification
 
