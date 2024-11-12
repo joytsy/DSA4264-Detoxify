@@ -1,12 +1,4 @@
-# Multiclass Text Classification Model
-
-<!-- ## 3.3 Experimental Design
-
-_In this subsection, you should clearly explain the key steps of your model development process, such as:_
-
-- _Algorithms: Which ML algorithms did you choose to experiment with, and why?_
-- _Evaluation: Which evaluation metric did you optimise and assess the model on? Why is this the most appropriate?_
-- _Training: How did you arrive at the final set of hyperparameters? How did you manage imbalanced data or regularisation?_  -->
+# Multiclass Text Classification
 
 ## Overview
 
@@ -20,9 +12,7 @@ Standard techniques like Synthetic Minority Over-sampling TEchnique [`(SMOTE)`](
 
 We used a template-based approach to generate data for four classes—Hate 2, Hate 3, Toxic 2, and Toxic 3—tailoring each template to fit the tone and language of each class. "Hate" templates included sensitive groups and biased actions, while "Toxic" templates reflected general disrespect without targeting sensitive groups. Combining templates with action and group lists through a [Cartesian product](https://www.geeksforgeeks.org/cartesian-product-of-sets/), we created diverse, contextually relevant synthetic comments aligned with our classification definitions, enhancing model training for underrepresented classes. Although fixed templates limit flexibility, generating examples for multiclass definitions allow us to capture various forms and intensities of hate effectively.
 
-<p align="center">
-    <img src="template_generation.png" alt="template">
-</p>
+![template](../../methodology/modelling/template_generation.png)
 
 <div align="center" style="font-size:  0.85em;">
 

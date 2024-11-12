@@ -60,7 +60,7 @@ plugins:
   - search:
       separator: '[\s\u200b\-_,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
   - mkdocs-jupyter
-  # - render_swagger
+  - render_swagger
 hooks:
   - pyscripts/authors/authors.py
   - pyscripts/doculabels/doculabels.py
@@ -70,18 +70,18 @@ extra:
     - Joy Tan:
         alias: joy
         role: Contributor
-        avatar: https://avatars.githubusercontent.com/u/156385027?v=4
-        url: https://github.com/joytsy
+        avatar: https://avatars.githubusercontent.com/u/<your-id>?v=4
+        url: https://github.com/<your-username>
     - Kylie Tan:
         alias: kylie
         role: Contributor
-        avatar: https://avatars.githubusercontent.com/u/157715357?v=4
-        url: https://github.com/kyliextan
+        avatar: https://avatars.githubusercontent.com/u/<your-id>?v=4
+        url: https://github.com/<your-username>
     - Koh Yi Jing:
         alias: yijing
         role: Contributor
-        avatar: https://avatars.githubusercontent.com/u/134367210?v=4
-        url: https://github.com/yijingkoh
+        avatar: https://avatars.githubusercontent.com/u/<your-id>?v=4
+        url: https://github.com/<your-username>
     - Richmond Sin:
         alias: richmond
         role: Contributor
@@ -90,8 +90,8 @@ extra:
     - Sarah Goh:
         alias: sarah
         role: Contributor
-        avatar: https://avatars.githubusercontent.com/u/130122483?v=4
-        url: https://github.com/sarahlahlah
+        avatar: https://avatars.githubusercontent.com/u/<your-id>?v=4
+        url: https://github.com/<your-username>
 
 # Extensions
 markdown_extensions:
@@ -159,8 +159,10 @@ nav:
               - Data Processing:
                   - home/technical_report/methodology/data-processing/index.md
               - Modelling:
-                  - Text Classification Model: home/technical_report/methodology/modelling/model1.md
-                  - Topic Modelling: home/technical_report/methodology/modelling/model2.md
+                  - Text Classification Model:
+                      - home/technical_report/methodology/modelling/model1.md
+                  - Topic Modelling:
+                      - home/technical_report/methodology/modelling/model2.md
               - Application:
                   - home/technical_report/methodology/application/index.md
           - home/technical_report/findings.md

@@ -1,10 +1,14 @@
 # Analyzing Reddit Data
+# Analyzing Reddit Data
 
+## 1. Overview
 ## 1. Overview
 
 This analysis aims to determine if and why the topics and comments on Reddit have become more hateful and toxic over recent years. To conduct this investigation, we employed a two-pronged analytical approach focusing on the frequency and intensity of toxic and hateful comments.
 
 ## 2. Data Processing and Topic Modeling
+## 2. Data Processing and Topic Modeling
+
 The primary dataset utilized consisted of comments extracted from Reddit, with text data located in the `text` column of our DataFrame. We initiated our analysis by applying a topic modeling technique using BERTopic to categorize the comments into various topics.
 
 ![image](Topic_Modelling_Overview.png)
@@ -15,6 +19,7 @@ Figure 5. Topic Modelling Pipeline
 
 </div>
 
+### 2.1. Text Preprocessing and Normalization
 ### 2.1. Text Preprocessing and Normalization
 
 To address the linguistic characteristics of the Reddit dataset, which includes colloquial and region-specific language known as Singlish, we implemented a preprocessing routine tailored to convert Singlish terms into standard English. This preprocessing step involved the following actions:
