@@ -24,8 +24,6 @@ Figure 5. Topic Modelling Pipeline
 
 ### 2.1. Text Preprocessing and Normalization
 
-### 2.1. Text Preprocessing and Normalization
-
 To address the linguistic characteristics of the Reddit dataset, which includes colloquial and region-specific language known as Singlish, we implemented a preprocessing routine tailored to convert Singlish terms into standard English. This preprocessing step involved the following actions:
 
 1. **Dictionary Mapping**: A custom dictionary was developed to translate commonly used Singlish expressions to their English equivalents, which included removing expletives and colloquialisms that could skew the analysis. This dictionary also helped standardize different spellings of similar terms (e.g., “gahmen” and “gahment” both mapped to “government”).
