@@ -159,7 +159,7 @@ nav:
               - Data Processing:
                   - home/technical_report/methodology/data-processing/index.md
               - Modelling:
-                  - Classify Text Model:
+                  - Text Classification Model:
                       - home/technical_report/methodology/modelling/model1.md
                   - Topic Modelling:
                       - home/technical_report/methodology/modelling/model2.md
