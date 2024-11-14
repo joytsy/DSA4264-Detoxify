@@ -19,6 +19,7 @@ The project repository is organized as follows:
 - **.gitignore**: Specifies files and directories to ignore in Git.
 - **.markdownlint.jsonc**: Configuration for Markdown linting.
 - **.pre-commit-config.yaml**: Configuration for pre-commit hooks.
+- **DSA4264 Presentation.pptx**: Presentation slides for the project.
 - **LICENSE**: License information for the project.
 - **README.md**: This file.
 - **requirements.txt**: List of dependencies for the project.
