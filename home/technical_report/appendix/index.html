@@ -1,0 +1,1649 @@
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../findings/">
+      
+      
+        <link rel="next" href="../../acknowledgements/">
+      
+      
+      <link rel="icon" href="../../../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.44">
+    
+    
+      
+        <title>Appendix - DSA4264 Team Detoxify Technical Report</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
+    
+      <link rel="stylesheet" href="../../../styles/mermaid.css">
+    
+      <link rel="stylesheet" href="../../../styles/author.css">
+    
+      <link rel="stylesheet" href="../../../styles/doculabels.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#appendix" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="DSA4264 Team Detoxify Technical Report" class="md-header__button md-logo" aria-label="DSA4264 Team Detoxify Technical Report" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 89 89">
+  <path d="M3.136,17.387l0,42.932l42.932,21.467l-42.932,-64.399Z" />
+  <path d="M21.91,8l42.933,64.398l-18.775,9.388l-42.932,-64.399l18.774,-9.387Z" style="fill-opacity: 0.5" />
+  <path d="M67.535,17.387l-27.262,18.156l21.878,32.818l5.384,2.691l0,-53.665Z" />
+  <path d="M67.535,17.387l0,53.666l18.774,-9.388l0,-53.665l-18.774,9.387Z" style="fill-opacity: 0.25" />
+</svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            DSA4264 Team Detoxify Technical Report
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Appendix
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="indigo"  aria-label="Switch to automatic mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to automatic mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../.." class="md-tabs__link">
+          
+  
+    
+  
+  Home
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="DSA4264 Team Detoxify Technical Report" class="md-nav__button md-logo" aria-label="DSA4264 Team Detoxify Technical Report" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 89 89">
+  <path d="M3.136,17.387l0,42.932l42.932,21.467l-42.932,-64.399Z" />
+  <path d="M21.91,8l42.933,64.398l-18.775,9.388l-42.932,-64.399l18.774,-9.387Z" style="fill-opacity: 0.5" />
+  <path d="M67.535,17.387l-27.262,18.156l21.878,32.818l5.384,2.691l0,-53.665Z" />
+  <path d="M67.535,17.387l0,53.666l18.774,-9.388l0,-53.665l-18.774,9.387Z" style="fill-opacity: 0.25" />
+</svg>
+
+    </a>
+    DSA4264 Team Detoxify Technical Report
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../.." class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_1" id="__nav_1_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            Home
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1_2" id="__nav_1_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Technical Report
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            Technical Report
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../context/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Context
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../scope/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Scope
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_2_3" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../methodology/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Methodology
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_1_2_3" id="__nav_1_2_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_1_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            Methodology
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_2_3_2" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../methodology/data-processing/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Data Processing
+  </span>
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_2_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_2_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            Data Processing
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_2_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_2_3_3" id="__nav_1_2_3_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Modelling
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_2_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_2_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            Modelling
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../methodology/modelling/model1/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Multiclass Text Classification
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../methodology/modelling/model2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Topic Modelling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_2_3_4" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../methodology/application/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Application
+  </span>
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_2_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_2_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            Application
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../findings/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Findings
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Appendix
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Appendix
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-topic-race" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Topic: Race
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Topic: Race">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-increase-in-toxicity-in-year-2021-and-2022" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1. Increase in Toxicity in year 2021 and 2022
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.1. Increase in Toxicity in year 2021 and 2022">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#111-insights" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1.1. Insights
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112-solutions" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1.2. Solutions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-increase-in-hate-from-2021-to-2023" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2. Increase in Hate from 2021 to 2023
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.2. Increase in Hate from 2021 to 2023">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#121-insights" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2.1. Insights
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#122-solutions" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2.2. Solutions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-topic-crimes" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Topic: Crimes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Topic: Crimes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-increase-in-toxicity-in-year-2023" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1. Increase in Toxicity in year 2023
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1. Increase in Toxicity in year 2023">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#211-insights" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1.1. Insights
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#212-solutions" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1.2. Solutions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-increase-in-hate-from-2020-to-2023" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2. Increase in Hate from 2020 to 2023
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2. Increase in Hate from 2020 to 2023">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#221-youth-vaping" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2.1. Youth Vaping
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2.1. Youth Vaping">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2211-insights" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2.1.1. Insights
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2212-solutions" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2.1.2. Solutions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#222-crimes-by-youths" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2.2. Crimes by Youths
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2.2. Crimes by Youths">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2221-insights" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2.2.1. Insights
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2222-solutions-for-crimes-by-youths" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2.2.2. Solutions for "Crimes by Youths"
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-topic-gender" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Topic: Gender
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Topic: Gender">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-increase-in-toxic-gender-in-year-2022" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1. Increase in Toxic Gender in year 2022
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.1. Increase in Toxic Gender in year 2022">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#311-insights" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1.1. Insights
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#312-solutions" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1.2. Solutions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-increase-in-hate-gender-in-year-2022" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2. Increase in Hate Gender in year 2022
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.2. Increase in Hate Gender in year 2022">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#321-insights" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2.1. Insights
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#322-solutions" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2.2. Solutions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../acknowledgements/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Acknowledgements
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-topic-race" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Topic: Race
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Topic: Race">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-increase-in-toxicity-in-year-2021-and-2022" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1. Increase in Toxicity in year 2021 and 2022
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.1. Increase in Toxicity in year 2021 and 2022">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#111-insights" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1.1. Insights
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112-solutions" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1.2. Solutions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-increase-in-hate-from-2021-to-2023" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2. Increase in Hate from 2021 to 2023
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.2. Increase in Hate from 2021 to 2023">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#121-insights" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2.1. Insights
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#122-solutions" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2.2. Solutions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-topic-crimes" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Topic: Crimes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Topic: Crimes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-increase-in-toxicity-in-year-2023" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1. Increase in Toxicity in year 2023
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1. Increase in Toxicity in year 2023">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#211-insights" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1.1. Insights
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#212-solutions" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1.2. Solutions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-increase-in-hate-from-2020-to-2023" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2. Increase in Hate from 2020 to 2023
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2. Increase in Hate from 2020 to 2023">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#221-youth-vaping" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2.1. Youth Vaping
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2.1. Youth Vaping">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2211-insights" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2.1.1. Insights
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2212-solutions" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2.1.2. Solutions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#222-crimes-by-youths" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2.2. Crimes by Youths
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2.2. Crimes by Youths">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2221-insights" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2.2.1. Insights
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2222-solutions-for-crimes-by-youths" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2.2.2. Solutions for "Crimes by Youths"
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-topic-gender" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Topic: Gender
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Topic: Gender">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-increase-in-toxic-gender-in-year-2022" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1. Increase in Toxic Gender in year 2022
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.1. Increase in Toxic Gender in year 2022">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#311-insights" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1.1. Insights
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#312-solutions" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1.2. Solutions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-increase-in-hate-gender-in-year-2022" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2. Increase in Hate Gender in year 2022
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.2. Increase in Hate Gender in year 2022">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#321-insights" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2.1. Insights
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#322-solutions" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2.2. Solutions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+  
+                  
+
+
+<h1 id="appendix">Appendix<a class="headerlink" href="#appendix" title="Permanent link">&para;</a></h1>
+<p>Detailed Analytical Insights and Findings from Topic Modelling:</p>
+<h2 id="1-topic-race">1. Topic: Race<a class="headerlink" href="#1-topic-race" title="Permanent link">&para;</a></h2>
+<h3 id="11-increase-in-toxicity-in-year-2021-and-2022">1.1. Increase in Toxicity in year 2021 and 2022<a class="headerlink" href="#11-increase-in-toxicity-in-year-2021-and-2022" title="Permanent link">&para;</a></h3>
+<h4 id="111-insights">1.1.1. Insights<a class="headerlink" href="#111-insights" title="Permanent link">&para;</a></h4>
+<p>The discourse surrounding "Chinese privilege" in the context of racial privilege in Singapore was a key factor behind the spike in toxicity in Reddit comments in 2021. Many toxic comments criticized racial policies, such as: “We have multiple policies like the HDB quota, but this does not benefit minorities.” This statement suggests that while policies like the quota aim to promote racial integration, they may unintentionally disadvantage minorities. Other comments, such as those criticizing an immigration policy that “aims to maintain majority privilege,” highlight deeper societal issues and hidden systemic biases that disproportionately affect minority groups. Examples of these challenges include the prevalence of "SAP schools" and difficulties in securing jobs due to language barriers, such as the inability to speak Mandarin.</p>
+<p>Former Prime Minister Lee Hsien Loong also acknowledged the ongoing challenges faced by ethnic minorities in his 2021 National Day Rally, noting that they continue to struggle with issues like renting homes and finding employment.</p>
+<p>Comments like “Singapore's racial harmony was never real, it was always racial tolerance” raise important questions about the state of community relations, suggesting that true racial integration may still be far from achieved.</p>
+<p>One key policy under scrutiny is the Ethnic Integration Policy (EIP), which ensures a quota for minority racial groups in housing estates to promote integration. While the policy aims to foster interaction between racial groups, it has inadvertently disadvantaged certain communities, particularly affecting their ability to resell flats. In 2023, Minister K. Shanmugam addressed these concerns, explaining that rather than abolishing the policy, the government would exercise flexibility and respond to the appeals of affected groups. This adjustment contributed to a decrease in toxicity levels in 2023.</p>
+<p>While targeted policy changes are underway, the persistent online discourse reveals broader societal challenges in addressing invisible racism and fostering true multicultural integration. Former Prime Minister Lee also noted that “non-Chinese Singaporeans have shared that some Chinese Singaporeans may be unaware of how ethnic minorities feel.” This highlights a critical disconnect in understanding that fuels divisions and perpetuates misunderstandings.</p>
+<h4 id="112-solutions">1.1.2. Solutions<a class="headerlink" href="#112-solutions" title="Permanent link">&para;</a></h4>
+<p>The lack of awareness among some members of the majority about the lived experiences of minority groups underscores the need for initiatives aimed at building empathy and cross-cultural understanding.To reduce toxicity surrounding racial privilege, policymakers should consider the following approaches:</p>
+<p>Policy teams should develop community engagement initiatives that promote interactions across different racial groups. This could potentially enhance understanding and dismantle stereotypes as they develop empathy with people outside of their own race. Alongside this, continuous refinement of policies affecting racial dynamics is crucial. Policy teams should ensure these policies are fair and equitable, supported by constant evaluations and refinements to minimize negative impacts based on citizen’s feedbacks.</p>
+<p>By fostering empathy and refining policies, Singapore can continue to strengthen its multicultural fabric and build a more inclusive society where all racial groups feel respected and valued.</p>
+<h3 id="12-increase-in-hate-from-2021-to-2023">1.2. Increase in Hate from 2021 to 2023<a class="headerlink" href="#12-increase-in-hate-from-2021-to-2023" title="Permanent link">&para;</a></h3>
+<h4 id="121-insights">1.2.1. Insights<a class="headerlink" href="#121-insights" title="Permanent link">&para;</a></h4>
+<p>Hate speech targeting Chinese nationals has noticeably increased, influenced by specific incidents as well as scams involving individuals of this nationality. This discourse not only deepens societal divisions but also reinforces negative stereotypes, triggering widespread backlash against Chinese nationals. A notable instance of such speech occurred in response to an altercation involving a Chinese woman at a hospital, where comments such as “Go back to China, you parasitical fuck” were recorded. Further exacerbating the issue, media portrayals often cast Chinese nationals in a negative light, such as the influx of Chinese tourists into NUS compounds and a series of housebreakings attributed to Chinese nationals just recently.</p>
+<p>Scams of this nationality is also prevalent, in a case where a cleaner lost $330,000 to fraudsters impersonating Chinese police. In response to this, a comment said, “Anything remotely related to Chinese officials and cops should be blocked and hung up immediately. Remind your elderly family members.” The frequency of such scam cases has escalated, with phone-based scams rising to 7,196 incidents in 2023 from 3,602 in 2022. The persistence of these issues into 2024, with victims losing nearly $1 million to con artists claiming to represent Chinese firms and an additional $16.3 million to scammers posing as ICA and Chinese government officials, further tarnishes the public image of Chinese nationals.</p>
+<h4 id="122-solutions">1.2.2. Solutions<a class="headerlink" href="#122-solutions" title="Permanent link">&para;</a></h4>
+<p>To address the rise in hate speech against Chinese nationals and spread of unfounded stereotypes, policy teams can partner with media outlets to foster fair and positive representation of all nationalities. This collaboration can include guidelines that emphasize the importance of balanced reporting and the repercussions of racial stereotyping. Media campaigns can also be initiated to highlight the positive contributions of the Chinese community to Singaporean society, counteracting negative portrayals.</p>
+<p>To combat scam prevention, educating the vulnerable groups, especially the elderly who are more likely to fall prey to such scams is very important. These programs should inform them on the nature of scams, particularly those involving impersonation of officials, which disproportionately stigmatize certain nationalities. Education can include information on how to recognize and report scams as well as the importance of skepticism in dealing with unsolicited communications.</p>
+<p>Stronger law enforcement responses and legal frameworks also needs to be established to tackle the issue of scams more robustly. This should include the development of international cooperation in law enforcement to tackle cross-border criminal activities, which often involve scams. Additionally, financial institutions should be mandated to implement robust security measures and transaction monitoring systems that can detect and prevent fraudulent activities. Regular audits and updates to these systems should be enforced to adapt to new scamming techniques. By identifying trends and potential threats early, law enforcement and financial institutions can act swiftly to prevent scams before they affect large numbers of people.</p>
+<h2 id="2-topic-crimes">2. Topic: Crimes<a class="headerlink" href="#2-topic-crimes" title="Permanent link">&para;</a></h2>
+<h3 id="21-increase-in-toxicity-in-year-2023">2.1. Increase in Toxicity in year 2023<a class="headerlink" href="#21-increase-in-toxicity-in-year-2023" title="Permanent link">&para;</a></h3>
+<h4 id="211-insights">2.1.1. Insights<a class="headerlink" href="#211-insights" title="Permanent link">&para;</a></h4>
+<p>The analysis of toxic comments related to criminal cases on social media reveals a prevailing trend of extreme anger and demands for severe punishment, particularly in response to sexual crimes, resulting in high number of toxic 3 comments. This pattern is evident in reactions to several high-profile incidents that have captured public and media attention.</p>
+<p>In one notable case, public outrage was sparked by an incident where four husbands conspired to drug and rape each other’s wives, a crime so heinous that it garnered international media coverage. Comments such as “Imagine making children with someone who ends up arranging for u to b raped... with your kids in the other room I need to see caning!!” exemplify the intense emotional responses and calls for harsh punitive measures from the community.</p>
+<p>Similarly, another distressing case involved a man who sexually abused his daughter for over a decade, beginning when she was only eight years old. The severity of this betrayal elicited comments like “His own daughter…Humans should all be fucking wiped out. I'm sorely disappointed in Covid,” reflecting a profound disillusionment with humanity. The discussion threads for this case were filled with vehement language, including demands to “Hang him”, highlighting a collective sentiment focused on retribution rather than addressing underlying cause of crime.</p>
+<p>Overall, the discourse surrounding these criminal activities is characterized by a punitive tone that emphasizes severe penalties. This response pattern indicates a societal tendency to prioritize retribution, thus there is a critical need for a balanced approach to criminal justice that includes effective punishment and preventive measures.</p>
+<h4 id="212-solutions">2.1.2. Solutions<a class="headerlink" href="#212-solutions" title="Permanent link">&para;</a></h4>
+<p>Policy teams can have campaigns aimed at raising awareness about the causes and consequences of sexual crimes. These campaigns should aim to shift public perception towards a more nuanced understanding of factors driving criminal behavior. Educating the public on the benefits of rehabilitation and the potential for recidivism reduction through appropriate therapeutic interventions could help balance the discourse.</p>
+<p>Policy team can also ensure that sentencing guidelines for sexual crimes and other severe offenses are appropriately stringent but also allow for judicial discretion based on the specifics of each case. Sentencing reforms should be publicly communicated to assure the community that justice is being served while also emphasizing the role of rehabilitation.</p>
+<h3 id="22-increase-in-hate-from-2020-to-2023">2.2. Increase in Hate from 2020 to 2023<a class="headerlink" href="#22-increase-in-hate-from-2020-to-2023" title="Permanent link">&para;</a></h3>
+<h4 id="221-youth-vaping">2.2.1. Youth Vaping<a class="headerlink" href="#221-youth-vaping" title="Permanent link">&para;</a></h4>
+<h5 id="2211-insights">2.2.1.1. Insights<a class="headerlink" href="#2211-insights" title="Permanent link">&para;</a></h5>
+<p>Firstly, there is a substantial number of hateful comments directed at youths that vapes. Vaping among the youth in Singapore has seen a significant rise, as indicated by the stringent enforcement actions and extensive media coverage dedicated to this issue. In the first half of 2024, approximately 5,480 individuals were apprehended for using or possessing vapes, with about 20 percent of these individuals being students. The Ministry of Health and Health Sciences Authority have reported a 52 percent increase in fines for e-vaporizer offenses compared to the previous quarter, underscoring the growing concern over youth vaping.
+The public’s reaction to youth vaping often adopts a punitive tone, with many community members calling for severe enforcement measures. Comments such as “Ya, don’t ruin it for others. Once Singapore Police Force think there’s too many this kind of people implying not enough enforcement they’re gonna come down hard, which applies to not just vapes but most stupid laws in Singapore,” reflect a broader societal frustration with behaviors perceived as flouting laws, exacerbating the stigmatization of young individuals engaged in vaping. This sentiment suggests that if vaping is done discreetly, it might escape legal scrutiny, thus avoiding drawing further attention from law enforcement which could lead to more severe crackdowns on this behavior across the board.</p>
+<p>This perspective indicates an understanding among some segments of the public that while the activity remains illegal, the visibility of the offense significantly influences the severity of police response. The comment underscores a pragmatic approach to the reality of ongoing vaping among youths—suggesting that while they might continue to engage in this behavior, doing so less conspicuously could mitigate the risks of harsh penalties. Such an attitude can complicate efforts to enforce anti-vaping laws and highlights the challenge authorities face in ensuring compliance not through fear of increased enforcement alone but through broader cultural shifts and understanding of the laws’ purposes. Several factors drive the prevalence of vaping among youth, including peer pressure and the desire for social acceptance, stress and personal issues, and curiosity about new experiences. However, current measures to curb youth vaping have primarily focused on punitive actions rather than addressing these underlying causes.</p>
+<h5 id="2212-solutions">2.2.1.2. Solutions<a class="headerlink" href="#2212-solutions" title="Permanent link">&para;</a></h5>
+<p>The policy team can launch educational initiatives that extend beyond the risks of vaping to address the psychological and social reasons why youths may start vaping. These campaigns should aim to equip youths with better stress management techniques, enhance their ability to resist peer pressure, and provide them with healthier alternatives to cope with personal issues.</p>
+<p>Additionally, adjusting legal penalties to incorporate rehabilitative measures rather than solely punitive responses can significantly change the enforcement landscape. This approach should focus on integrating educational penalties that require young offenders to attend programs that highlight the dangers of vaping, coupled with support for cessation efforts, such as counseling or therapy. By emphasizing rehabilitation and education within the legal framework, policy can shift from a punitive to a corrective model that better addresses the needs of youths and encourages long-term behavioral change. This balanced approach not only serves to deter vaping but also supports the overall well-being and development of young individuals, steering them away from future offenses.</p>
+<h4 id="222-crimes-by-youths">2.2.2. Crimes by Youths<a class="headerlink" href="#222-crimes-by-youths" title="Permanent link">&para;</a></h4>
+<h5 id="2221-insights">2.2.2.1. Insights<a class="headerlink" href="#2221-insights" title="Permanent link">&para;</a></h5>
+<p>The public discourse surrounding hate crimes committed by youths, especially in cases of sexual offenses, reflects a complex mix of concern, outrage and a demand for harsher penalties. For instance, in a notable legal adjustment, the High Court increased the jail time for sex offenders from Nanyang Technological University (NTU) after an uproar over the initial light sentencing, and controversial defense tactics that blamed the young victim. Such judicial actions are often a response to public sentiment, as evidenced by comments like “Very light sentence for a predatory pedophile.”, reflecting a collective dissatisfaction and a call for justice that aligns more closely with the gravity of offenses committed. Furthermore, the increase in youth arrests for sexual crimes, with a noted 30% jump in 2023 alone. For example, the case where a youth was charged for molesting his niece was attributed to his addiction to hentai, as reported. This incident sparked comments such as “He wasn’t diagnosed with a mental illness, just offered this bullshit excuse for molesting a 6 year old girl,”, highlighting public frustration over perceived inadequacy of reasons provided for such behaviour. Compounding the issue is the perception of insufficient legal consequences for young offenders, as seen in cases like the group assault led by a minor on a victim with low IQ, where the sentence was deemed too light by public commentators. This perception often leads to heightened frustrations and calls for more severe legal actions, reflecting a broader societal struggle to balance the rehabilitation needs of young offenders with the community’s desire for justice.</p>
+<h5 id="2222-solutions-for-crimes-by-youths">2.2.2.2. Solutions for "Crimes by Youths"<a class="headerlink" href="#2222-solutions-for-crimes-by-youths" title="Permanent link">&para;</a></h5>
+<p>The policy team can look at enhancing the judicial response to youth-related sexual offenses. This could involve revisiting sentencing guidelines to ensure they reflect both the severity of the crimes and the potential for rehabilitation. To adequately address the community’s demand for justice, the policy team could recommend the implementation of mandatory minimum sentences for certain types of severe sexual offenses committed by youth. Alongside this, the introduction of enhanced victim support services during court proceedings could help alleviate some of the community concerns about the treatment of victims during trials. These services would ensure that victims are not only protected but also respectfully heard, helping to restore public faith in the justice system. Enhancing rehabilitation programs for youth offenders is essential to reduce recidivism and integrate these individuals back into society successfully. The policy team should advocate for specialized rehabilitation facilities that provide psychological counseling, educational support, and vocational training tailored to the needs of young offenders. These facilities should operate under the principle that early intervention can significantly alter the life paths of these youths. Furthermore, community-based programs that allow for supervised integration of offenders, coupled with continuous monitoring and support, can help these individuals rebuild their lives and mend the social fabric disrupted by their actions. These initiatives must be accompanied by public awareness campaigns that educate the community about the benefits of rehabilitation, aiming to shift the narrative from one of retribution to one of restoration and prevention.</p>
+<h2 id="3-topic-gender">3. Topic: Gender<a class="headerlink" href="#3-topic-gender" title="Permanent link">&para;</a></h2>
+<p>There has generally been a decrease in toxicity and hate levels surrounding the issue of gender in Singapore. This shows a shift away from the traditional patriarchal mindset, and progress towards gender equality in Singapore, with Singapore ranked 7<sup>th</sup> in the Gender Equality Index in 2020 and 8<sup>th</sup> in 2024 out of 166 countries. This signifies that Singapore has made further progress in areas such as equal opportunities in the workplace, providing greater caregiver support and strengthening protection against violence and online harms.</p>
+<p>However, there was an anomaly in 2022, where toxic and hate levels saw an unexpected spike. This deviation highlights that while overall trends are improving, certain periods or specific events can still exacerbate negative sentiment, requiring ongoing attention and intervention.</p>
+<h3 id="31-increase-in-toxic-gender-in-year-2022">3.1. Increase in Toxic Gender in year 2022<a class="headerlink" href="#31-increase-in-toxic-gender-in-year-2022" title="Permanent link">&para;</a></h3>
+<h4 id="311-insights">3.1.1. Insights<a class="headerlink" href="#311-insights" title="Permanent link">&para;</a></h4>
+<p>One of the key reasons for the anomaly in 2022 was the heated discussions surrounding the potential inclusion of females in National Service (NS). This debate stirred significant controversy, especially among male counterparts who expressed unhappiness over having to serve for two years, while women were not required to do so. The discourse reflected deep-seated views on gender equality, particularly around civic duties and fairness. Toxic comments in this realm often revolved around perceived inequalities, with many arguing that the imposition of NS on women would somehow alleviate the burden on men, despite the existing pressures they face. For example, one comment read, "Definitely agree with your view about females serving NS. Doesn't mean that I served so I want to drag in females to do the same shit I did for 2 years. I'd rather they not and go live life." Another comment expressed frustration, stating, "The Minister of Defence stated that making NS compulsory for women outweighs the benefits," implying that the Ministry of Defence (MINDEF) takes away men’s benefits for the collective good, further fueling discontent.</p>
+<p>This was with regards to the statement made by Mr Ng Eng Hen, the Defence Minister, who had mentioned in parliament that ‘The “societal cost” of enlisting women into National Service (NS) now will “far outweigh” the benefits’. There had been suggestions to enlist women for reasons of gender equality, in roles like nurses or teachers.</p>
+<p>Such sentiments are often rooted in perceptions that the current system disproportionately favors women, sparking feelings of resentment and envy, particularly among those who feel that their sacrifice during National Service is undervalued. This discourse reflects broader societal debates on gender roles and expectations, with some arguing that the lack of female participation in NS exacerbates gender inequality in terms of shared societal responsibilities.</p>
+<p>The toxic speech surrounding this issue is further compounded by prevailing gender stereotypes. For example, the idea that "many people, especially men, do not have a good emotional support system because society conditions men to 'deal with it' or 'forget it,'" contributes to the narrative of toxic masculinity, where men are expected to suppress their emotions, which in turn perpetuates unhealthy standards of emotional resilience.</p>
+<h4 id="312-solutions">3.1.2. Solutions<a class="headerlink" href="#312-solutions" title="Permanent link">&para;</a></h4>
+<p>Currently, Singapore has made strides in including women in defense roles, such as through positions in the Singapore Armed Forces (SAF), police, and civil defense. Initiatives like the SAF Volunteer Corps allow women to contribute to national defense, fostering inclusivity in areas once primarily male-dominated. However, a broader public understanding of these contributions and the shared responsibilities of citizenship is essential. By educating citizens on the varied roles both men and women play in national defense and other sectors, policy makers can promote a balanced view of civic duty and recognize the value of diverse contributions.</p>
+<p>Additionally, increased public dialogue on gender roles could be beneficial, especially in regard to National Service (NS). Public forums, community discussions, or online platforms where both men and women can express their perspectives on NS and broader societal expectations would help bridge understanding. For instance, some feel that NS policies currently place an unequal burden on men, while others emphasize the importance of gender-inclusive policies across all sectors. Creating spaces for open, empathetic dialogue on these topics would foster understanding, address perceived policy imbalances, and highlight how both genders contribute uniquely to Singapore’s growth.</p>
+<p>There could also be initiatives to support emotional well-being for men. Expanding mental health support and advocating for emotional resilience for men can help break the stigma around vulnerability. Addressing toxic masculinity by promoting healthier emotional expression would reduce the frustration and discontent that contributes to negative discourse.</p>
+<h3 id="32-increase-in-hate-gender-in-year-2022">3.2. Increase in Hate Gender in year 2022<a class="headerlink" href="#32-increase-in-hate-gender-in-year-2022" title="Permanent link">&para;</a></h3>
+<h4 id="321-insights">3.2.1. Insights<a class="headerlink" href="#321-insights" title="Permanent link">&para;</a></h4>
+<p>The discourse surrounding gender in Singapore reveals a complex interplay between the advancement of feminist movements and the simultaneous rise in misogynistic attitudes. As feminism gains momentum, advocating for women’s rights and equality, there is a notable backlash from certain segments of society who perceive these efforts as promoting female privilege over gender equality. Comments like “tell me, can women build, clean, maintain and lead things without men? Doubt so as they have less physical strength and rely more on emotions than facts” exemplify this resistance. Such sentiments are exacerbated by the perception that while organizations like the Association of Women for Action and Research (AWARE) actively support women’s rights, there is no equivalent advocacy for men’s rights, leading to feelings of neglect and frustration among some men. Additionally, criticisms like “For all the equality that women want, everything they do something that is traditionally done by men, they want a standing ovation for it. What kind of equality is that” and “Enough about women’s rights, time to talk women’s wrongs” further highlight the cynicism and hostility towards the perceived preferential treatment of women. This gender discourse often intersects with national issues such as the debate over national service, where the question of women’s roles intensifies the gender-related grievances, fueling the ongoing tension between advancing gender equality and addressing perceived imbalances in gender advocacy.</p>
+<h4 id="322-solutions">3.2.2. Solutions<a class="headerlink" href="#322-solutions" title="Permanent link">&para;</a></h4>
+<p>In order to combat this hate speech, establishing forums for open dialogue about gender issues can help bridge the divide and address misconceptions directly. These forums could be community-driven events, workshops, or online platforms where individuals from different backgrounds can discuss their views, experiences, and concerns about gender roles and rights. By facilitating these discussions in a structured and respectful environment, the community can move towards a more empathetic understanding of the challenges faced by all genders. It is crucial that these platforms include voices from diverse gender perspectives, ensuring that men’s issues and concerns are also heard and addressed, thus preventing feelings of exclusion or opposition to women’s rights advancements.</p>
+<p>Additionally, enhancing support for gender advocacy organizations that represent all genders can help balance the perceived focus of existing movements. While organizations like AWARE provide critical support for women, creating or funding similar bodies that can advocate for men’s issues—focusing on mental health, legal rights, or societal roles—could alleviate the sentiment that men’s challenges are overlooked. Policy initiatives could also encourage existing gender-focused organizations to broaden their advocacy to encompass all gender-related issues, promoting a holistic approach to gender equality that recognizes and addresses the unique challenges faced by each gender.</p>
+<p>In totality, policy teams should collaborate with social media platforms like reddit to develop and implement technologies that can detect and mitigate hate speech and toxic speech in real-time.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+
+  
+  
+
+
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../findings/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Findings">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Findings
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../acknowledgements/" class="md-footer__link md-footer__link--next" aria-label="Next: Acknowledgements">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Acknowledgements
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["announce.dismiss", "content.code.annotate", "content.code.copy", "content.action.edit", "content.action.view", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

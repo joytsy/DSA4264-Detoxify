@@ -1,0 +1,1347 @@
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../methodology/application/">
+      
+      
+        <link rel="next" href="../appendix/">
+      
+      
+      <link rel="icon" href="../../../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.44">
+    
+    
+      
+        <title>Findings - DSA4264 Team Detoxify Technical Report</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
+    
+      <link rel="stylesheet" href="../../../styles/mermaid.css">
+    
+      <link rel="stylesheet" href="../../../styles/author.css">
+    
+      <link rel="stylesheet" href="../../../styles/doculabels.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#findings" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="DSA4264 Team Detoxify Technical Report" class="md-header__button md-logo" aria-label="DSA4264 Team Detoxify Technical Report" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 89 89">
+  <path d="M3.136,17.387l0,42.932l42.932,21.467l-42.932,-64.399Z" />
+  <path d="M21.91,8l42.933,64.398l-18.775,9.388l-42.932,-64.399l18.774,-9.387Z" style="fill-opacity: 0.5" />
+  <path d="M67.535,17.387l-27.262,18.156l21.878,32.818l5.384,2.691l0,-53.665Z" />
+  <path d="M67.535,17.387l0,53.666l18.774,-9.388l0,-53.665l-18.774,9.387Z" style="fill-opacity: 0.25" />
+</svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            DSA4264 Team Detoxify Technical Report
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Findings
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="indigo"  aria-label="Switch to automatic mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to automatic mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../.." class="md-tabs__link">
+          
+  
+    
+  
+  Home
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="DSA4264 Team Detoxify Technical Report" class="md-nav__button md-logo" aria-label="DSA4264 Team Detoxify Technical Report" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 89 89">
+  <path d="M3.136,17.387l0,42.932l42.932,21.467l-42.932,-64.399Z" />
+  <path d="M21.91,8l42.933,64.398l-18.775,9.388l-42.932,-64.399l18.774,-9.387Z" style="fill-opacity: 0.5" />
+  <path d="M67.535,17.387l-27.262,18.156l21.878,32.818l5.384,2.691l0,-53.665Z" />
+  <path d="M67.535,17.387l0,53.666l18.774,-9.388l0,-53.665l-18.774,9.387Z" style="fill-opacity: 0.25" />
+</svg>
+
+    </a>
+    DSA4264 Team Detoxify Technical Report
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../.." class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_1" id="__nav_1_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            Home
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1_2" id="__nav_1_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Technical Report
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            Technical Report
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../context/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Context
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../scope/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Scope
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_2_3" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../methodology/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Methodology
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_1_2_3" id="__nav_1_2_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_1_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            Methodology
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_2_3_2" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../methodology/data-processing/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Data Processing
+  </span>
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_2_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_2_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            Data Processing
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_2_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_2_3_3" id="__nav_1_2_3_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Modelling
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_2_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_2_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            Modelling
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../methodology/modelling/model1/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Multiclass Text Classification
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../methodology/modelling/model2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Topic Modelling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_2_3_4" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../methodology/application/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Application
+  </span>
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_2_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_2_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            Application
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Findings
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Findings
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Results
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Results">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-classification-model-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1 Classification Model Results
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-topic-modelling-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2 Topic Modelling Results
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-discussion" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Discussion
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Discussion">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-classtification-modelling-insights" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1 Classtification Modelling Insights
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-topic-modelling-insights" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2 Topic Modelling Insights
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-recommendations" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Recommendations
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Recommendations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-improvements-for-classification-modelling" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1 Improvements for Classification Modelling
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-recommendations-based-on-topic-modelling" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2 Recommendations based on Topic Modelling
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../appendix/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Appendix
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../acknowledgements/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Acknowledgements
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Results
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Results">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-classification-model-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1 Classification Model Results
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-topic-modelling-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2 Topic Modelling Results
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-discussion" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Discussion
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Discussion">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-classtification-modelling-insights" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1 Classtification Modelling Insights
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-topic-modelling-insights" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2 Topic Modelling Insights
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-recommendations" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Recommendations
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Recommendations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-improvements-for-classification-modelling" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1 Improvements for Classification Modelling
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-recommendations-based-on-topic-modelling" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2 Recommendations based on Topic Modelling
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+  
+                  
+
+
+<h1 id="findings">Findings<a class="headerlink" href="#findings" title="Permanent link">&para;</a></h1>
+<h2 id="1-results">1. Results<a class="headerlink" href="#1-results" title="Permanent link">&para;</a></h2>
+<!-- _In this subsection, you should report the results from your experiments in a summary table, keeping only the most relevant results for your experiment (ie your best model, and two or three other options which you explored). You should also briefly explain the summary table and highlight key results._ -->
+
+<h3 id="11-classification-model-results">1.1 Classification Model Results<a class="headerlink" href="#11-classification-model-results" title="Permanent link">&para;</a></h3>
+<div align="center">
+
+<table style="border-collapse: collapse; width: 100%;">
+    <thead>
+        <tr>
+            <th style="border: 1px solid lightgrey; padding: 8px;"></th>
+            <th style="border: 1px solid lightgrey; padding: 8px;">Ridge</th>
+            <th style="border: 1px solid lightgrey; padding: 8px;">Ridge 5k</th>
+            <th style="border: 1px solid lightgrey; padding: 8px;">XGBoost</th>
+            <th style="border: 1px solid lightgrey; padding: 8px;">DistilBERT old</th>
+            <th style="border: 1px solid lightgrey; padding: 8px;">DistilBERT 5k</th>
+            <th style="border: 1px solid lightgrey; padding: 8px;">DistilBERT</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td style="border: 1px solid lightgrey; padding: 8px;">No Hate/Toxic</td>
+            <td style="border: 1px solid lightgrey; padding: 8px;">0.67</td>
+            <td style="border: 1px solid lightgrey; padding: 8px;">0.61</td>
+            <td style="border: 1px solid lightgrey; padding: 8px;">0.65</td>
+            <td style="border: 1px solid lightgrey; padding: 8px;">0.45</td>
+            <td style="border: 1px solid lightgrey; padding: 8px;">0.63</td>
+            <td style="border: 1px solid lightgrey; padding: 8px;">0.72</td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid lightgrey; padding: 8px;">Toxic 1</td>
+            <td style="border: 1px solid lightgrey; padding: 8px;">0.57</td>
+            <td style="border: 1px solid lightgrey; padding: 8px;">0.54</td>
+            <td style="border: 1px solid lightgrey; padding: 8px;">0.52</td>
+            <td style="border: 1px solid lightgrey; padding: 8px;">0.21</td>
+            <td style="border: 1px solid lightgrey; padding: 8px;">0.36</td>
+            <td style="border: 1px solid lightgrey; padding: 8px;">0.61</td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid lightgrey; padding: 8px;">Toxic 2</td>
+            <td style="border: 1px solid lightgrey; padding: 8px;">0.78</td>
+            <td style="border: 1px solid lightgrey; padding: 8px;">0.40</td>
+            <td style="border: 1px solid lightgrey; padding: 8px;">0.42</td>
+            <td style="border: 1px solid lightgrey; padding: 8px;">0.34</td>
+            <td style="border: 1px solid lightgrey; padding: 8px;">0.39</td>
+            <td style="border: 1px solid lightgrey; padding: 8px;">0.79</td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid lightgrey; padding: 8px;">Toxic 3</td>
+            <td style="border: 1px solid lightgrey; padding: 8px;">0.99</td>
+            <td style="border: 1px solid lightgrey; padding: 8px;">0.60</td>
+            <td style="border: 1px solid lightgrey; padding: 8px;">0.68</td>
+            <td style="border: 1px solid lightgrey; padding: 8px;">0.08</td>
+            <td style="border: 1px solid lightgrey; padding: 8px;">0.98</td>
+            <td style="border: 1px solid lightgrey; padding: 8px;">0.98</td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid lightgrey; padding: 8px;">Hate 1</td>
+            <td style="border: 1px solid lightgrey; padding: 8px;">0.74</td>
+            <td style="border: 1px solid lightgrey; padding: 8px;">0.70</td>
+            <td style="border: 1px solid lightgrey; padding: 8px;">0.73</td>
+            <td style="border: 1px solid lightgrey; padding: 8px;">0.40</td>
+            <td style="border: 1px solid lightgrey; padding: 8px;">0.77</td>
+            <td style="border: 1px solid lightgrey; padding: 8px;">0.79</td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid lightgrey; padding: 8px;">Hate 2</td>
+            <td style="border: 1px solid lightgrey; padding: 8px;">0.97</td>
+            <td style="border: 1px solid lightgrey; padding: 8px;">0.87</td>
+            <td style="border: 1px solid lightgrey; padding: 8px;">0.91</td>
+            <td style="border: 1px solid lightgrey; padding: 8px;">0.60</td>
+            <td style="border: 1px solid lightgrey; padding: 8px;">0.94</td>
+            <td style="border: 1px solid lightgrey; padding: 8px;">0.97</td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid lightgrey; padding: 8px;">Hate 3</td>
+            <td style="border: 1px solid lightgrey; padding: 8px;">0.99</td>
+            <td style="border: 1px solid lightgrey; padding: 8px;">0.99</td>
+            <td style="border: 1px solid lightgrey; padding: 8px;">0.94</td>
+            <td style="border: 1px solid lightgrey; padding: 8px;">0.57</td>
+            <td style="border: 1px solid lightgrey; padding: 8px;">0.99</td>
+            <td style="border: 1px solid lightgrey; padding: 8px;">0.99</td>
+        </tr>
+        <tr>
+            <td style="border: 1px solid lightgrey; padding: 8px;"><b>Macro Avg F1-score</b></td>
+            <td style="border: 1px solid lightgrey; padding: 8px;"><b>0.81</b></td>
+            <td style="border: 1px solid lightgrey; padding: 8px;"><b>0.72</b></td>
+            <td style="border: 1px solid lightgrey; padding: 8px;"><b>0.81</b></td>
+            <td style="border: 1px solid lightgrey; padding: 8px;"><b>0.39</b></td>
+            <td style="border: 1px solid lightgrey; padding: 8px;"><b>0.72</b></td>
+            <td style="border: 1px solid lightgrey; padding: 8px;"><b>0.84</b></td>
+        </tr>
+    </tbody>
+</table>
+
+</div>
+
+<div align="center" style="font-size:  0.85em;">
+
+Table 3: Model Experimentation Results comparing macro-average F1-scores between different classifier models. Model names with "5k" indicate that the model was trained on a smaller dataset containing less synthetic data that we generated to balance the classes. DistilBERT old was trained on data labelled with a previous version of class defintions that made classes less distinct from each other.
+
+</div>
+
+<p>DistilBERT achieved the highest F1-score (0.84), making it the top-performing model. Models trained on the smaller 5k dataset (a mix of <a href="../methodology/modelling/model1/#1-data-generation">synthetic</a> and actual labeled data), and in certain synthetically generated classes showed lower F1-scores, indicating that the reduced dataset may lack the nuanced variations found in real-world text, which are crucial for effective hate and toxic speech detection. DistilBERT old, trained with a less precise set of class definitions, had the lowest macro-average F1-score (0.39), underscoring the importance of the updated, distinct class definitions in improving the training performance of our classifier.</p>
+<h3 id="12-topic-modelling-results">1.2 Topic Modelling Results<a class="headerlink" href="#12-topic-modelling-results" title="Permanent link">&para;</a></h3>
+<p>Topic modeling identified rising themes in hate and toxicity across key topics: race, crime, and gender. More in-depth analysis can be found <a href="https://joytsy.github.io/DSA4264-Detoxify/home/technical_report/appendix/">here</a>.</p>
+<p>Race has emerged as the most pressing issue among the three categories analyzed, with the highest increase in both <a href="../methodology/modelling/model2/#51-trend-calculation">Net Hate and Net Toxicity Scores</a>, reflecting a significant rise in intensity levels up to 2024. This issue has proven to be both recurring and deeply rooted in society. Given that many of the problems identified are ongoing, policymakers must prioritize addressing them. Additionally, a large portion of high-intensity comments stems from this topic, underscoring the need for targeted interventions to tackle the growing hate and toxicity in this area.
+Graph showing Net Hate and Toxicity trends of the 3 Topics from 2020-2023.</p>
+<p>This methodological approach, utilizing advanced topic modeling techniques and thematic analysis, serves to reveal insights into the shifting landscapes of discourse on Reddit. By examining the frequency and context of topics associated with toxic and hateful sentiments, we aim to use our methodology to uncover the underlying trends and catalysts contributing to the increase in toxicity and hate in social media on a larger scale in future.</p>
+<p><img alt="race trend" src="../Race_Trend.png" /></p>
+<div align="center" style="font-size:  0.85em;">
+
+Graph showing Net Hate and Toxicity trends of the 3 Topics from 2020-2023
+
+</div>
+
+<p>This methodological approach, utilizing advanced topic modeling techniques and thematic analysis, serves to reveal insights into the shifting landscapes of discourse on Reddit. By examining the frequency and context of topics associated with toxic and hateful sentiments, we aim to use our methodology to uncover the underlying trends and catalysts contributing to the increase in toxicity n hate in social media on a larger scale in future.</p>
+<h2 id="2-discussion">2. Discussion<a class="headerlink" href="#2-discussion" title="Permanent link">&para;</a></h2>
+<h3 id="21-classtification-modelling-insights">2.1 Classtification Modelling Insights<a class="headerlink" href="#21-classtification-modelling-insights" title="Permanent link">&para;</a></h3>
+<p>The results provide valuable insights for safeguarding digital safety, with the multiclass text classifier effectively classifying hate and toxicity based on intensity. Topic modeling further contextualizes the classifier’s findings, highlighting specific social issues that drive hate and toxicity—information that can guide targeted intervention and more nuanced policy solutions.</p>
+<p>For <a href="../scope/#11-problem-faced-by-mddi">MDDI’s Online Trust and Safety department</a>, these insights enable actionable responses to the key themes and comments identified as severe, directly from our data science solutions. The results from our methods go beyond <a href="../methodology/modelling/model2/#4-analysis-of-hate--toxic-frequency-for-topics">capturing increased frequency of hateful and toxic topics</a>, to further prioritize topics based on <a href="../methodology/modelling/model2/#5-analysis-of-hate-and-toxic-intensity-for-topics">intensity metrics that capture heightened hate and toxicity</a> using our <a href="../methodology/modelling/model2/#51-trend-calculation">measures to calculate intensity</a>.</p>
+<p>However, certain limitations remain that influence the model’s real-world effectiveness and should be considered when deploying the solution:</p>
+<p><strong>Class Imbalance</strong>: Despite efforts to address class imbalance through oversampling, SMOTE, and class weighting, categories such as Hate 3 (threats and violence) and Toxic 3 (harassment) remained underrepresented. This imbalance affects the model’s ability to accurately classify these minority classes, leading to lower performance metrics in critical areas of concern. For MDDI, this translates to potential risks in effectively capturing the most severe forms of online harm, where a single undetected instance of hate or harassment may have significant negative impact. Hence, we approached the problem with <a href="../methodology/modelling/model1/#1-data-generation">synthetic data generation</a>.</p>
+<p><strong>Singlish and Language Nuances</strong>: The diverse linguistic patterns in Singlish posed unique challenges. Non-standard grammar and culturally-specific terms were often misclassified. However, we tried to mitigate this issue by using <a href="../methodology/modelling/model1/#2-distilbert-model">multilingual distilBERT</a> that works well on the individual languages. This challenge limits the model’s interpretability and accuracy for multilingual communities and highlights the importance of adapting language models to language and cultural nuances, which could value-add by improving precision in such contexts.</p>
+<p><strong>Complexity of Analysis</strong>: Comments that may fall into more than one topic category were only put them into one through BERTopic. This could cause relevant comments to be left out, limiting the precision of our intervention. Through the items we showcase in our frontend application, <a href="../methodology/application/#343-filtered-comments">LionGuard Pro Max</a>, we aim to enable clarity to users by displaying actual comments within each cluster.</p>
+<p><strong>Granularity of Analysis</strong>: The model, while effective in broadly classifying hate and toxic content, lacks the capacity to provide subgroup-level insights. This limitation restricts MDDI's ability to drill down into specific user subgroups, such as frequent offenders or communities where harmful content is concentrated, reducing the precision of targeted interventions. An enhancement that segments comments by user or community could support more customized approaches to harm reduction, enhancing digital safety.</p>
+<p>Enhanced interpretability would allow MDDI to better understand model outcomes, while addressing class imbalance and cultural language nuances would improve fairness in content moderation. A continued focus on addressing these areas could lead to more reliable and equitable digital safety solutions in future iterations.</p>
+<h3 id="22-topic-modelling-insights">2.2 Topic Modelling Insights<a class="headerlink" href="#22-topic-modelling-insights" title="Permanent link">&para;</a></h3>
+<p>Following our analysis of hate and toxic trends, we identified three pressing issues: gender biases, racial tensions, and youth-involved crimes. These concerns reflect broader societal challenges tied to deeply embedded perceptions.</p>
+<p>The rise of “racial privilege” highlights systemic advantages for the Chinese majority, sparking debates about inclusivity and causing increased toxicity trends. There has also been a rise in xenophobia, particularly towards Chinese nationals, further exacerbating racial tensions. Calls for greater inclusivity and equal representation have been growing, as many feel that minority voices and needs are not adequately addressed.</p>
+<p>Similarly, the issue of sexual and youth-related hate crimes has become a heated topic, with the public criticizing perceived leniency in sentencing. Instances of youth offenders receiving light sentences for serious offenses, such as sexual crimes, have led to public calls for stronger judicial responses. There is a widespread demand for the legal system to align more closely with the severity of these crimes to ensure that justice is served and to prevent further harm.</p>
+<p>In terms of gender issues, the toxicity surrounding gender discussions had been on the decline until recently, when dissatisfaction surrounding National Service (NS) and toxic masculinity led to increased negative discourse. Public frustration grew over gender perceptions and stereotypes, with some expressing resentment towards gender equality movements. This fueled hate and gender biases, particularly targeting women and reinforcing harmful gender stereotypes.</p>
+<h2 id="3-recommendations">3. Recommendations<a class="headerlink" href="#3-recommendations" title="Permanent link">&para;</a></h2>
+<h3 id="31-improvements-for-classification-modelling">3.1 Improvements for Classification Modelling<a class="headerlink" href="#31-improvements-for-classification-modelling" title="Permanent link">&para;</a></h3>
+<p>To enhance and expand our solution for MDDI's Online Trust and Safety initiatives, we propose several future directions that address current limitations and broaden the utility of the model:</p>
+<ol>
+<li>Model Improvements: Fine-tuning the multilingual DistilBERT model with more diverse datasets could improve its sensitivity to nuances like Singlish and help address the underrepresentation of certain toxic categories. Additionally, exploring more advanced transformer-based models, such as XLM-RoBERTa, could strengthen performance across multilingual contexts and provide better classification accuracy, particularly for minority classes like Hate 3 and Toxic 3.</li>
+<li>Broader Application: Extending the model's applicability beyond Reddit to other platforms, such as Twitter, Facebook, and YouTube, would offer a broader perspective on harmful content trends and enhance the model's ability to capture patterns across various social media ecosystems. This cross-platform approach would enable MDDI to monitor and respond to toxic behavior trends more effectively, creating a more cohesive digital safety strategy.</li>
+<li>Explainability: Integrating explainable AI techniques would provide clearer insights into the reasons behind each classification. This added interpretability would help moderators, policymakers, and other stakeholders trust and utilize the model as a decision-support tool, reducing the opacity of the "black-box" nature often associated with machine learning models.</li>
+<li>Real-Time Monitoring and Intervention: Developing capabilities for real-time monitoring would enable the system to flag and address harmful content immediately as it’s posted. This proactive approach would allow for timely interventions, such as issuing warnings or suspending accounts, thereby preventing the escalation of toxic discussions and providing a safer online environment.</li>
+</ol>
+<p>These recommended directions align with the goals of enhancing interpretability, fairness, and deployability, offering MDDI a scalable path forward in adapting the solution to meet emerging challenges in online safety.</p>
+<h3 id="32-recommendations-based-on-topic-modelling">3.2 Recommendations based on Topic Modelling<a class="headerlink" href="#32-recommendations-based-on-topic-modelling" title="Permanent link">&para;</a></h3>
+<p>To address race, crime and gender being the most pressing issues, we propose several solutions in tackling hate and toxic speech.</p>
+<p>For <strong>race</strong> related recommendations, it is essential to enhance community engagement by developing and implementing initiatives that foster cross-cultural understanding and empathy among different racial groups. This approach aims to reduce the toxicity often associated with racial discussions. Simultaneously, there is a need for continuous evaluation and refinement of policies such as the Ethnic Integration Policy (EIP). This can be achieved through collaboration with the relevant ministries. By ensuring these policies are fair and responsive to the needs of all communities, we can minimize the unintended negative impacts that may arise, thus allowing us to progress towards a more inclusive and harmonious society.</p>
+<p>For <strong>crime</strong> related recommendations, educational campaigns that educate the public about cause and consequences of crimes, especially sexual crimes, are important. These campaigns should aim to shift the focus from a retribution-centric approach to one that emphasizes rehabilitation and prevention. Additionally, there is a need for judicial and sentencing reforms to adjust guidelines in a way that balances the severity of punishment with the potential for rehabilitation. Such reforms will ensure justice is served while also fostering opportunities for offenders’ reintegration into society, ultimately contributing to a safer and more understanding community.</p>
+<p>For <strong>gender</strong> related recommendations, promoting inclusive dialogues is key. Facilitating open discussions to address misconceptions about gender roles and National Service can help highlight the contributions of all genders to national development. Alongside this, it is vital to implement initiatives that support emotional well-being, especially for men. Addressing issues of toxic masculinity and promoting healthier emotional expression can foster a more supportive environment where everyone feels valued and understood. Together, these efforts can pave the way for a more gender-inclusive society.</p>
+<p>Together, these recommendations aim to promote understanding, empathy, and inclusivity in addressing race, crime, and gender issues, ultimately contributing to a more cohesive and supportive society.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+
+  
+  
+
+
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../methodology/application/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Application">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Application
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../appendix/" class="md-footer__link md-footer__link--next" aria-label="Next: Appendix">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Appendix
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["announce.dismiss", "content.code.annotate", "content.code.copy", "content.action.edit", "content.action.view", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
